@@ -4,22 +4,51 @@ include_once 'BaseModel.php';
 
 class ProviderGoodsSampleModel extends BaseModel
 {
-    public function getList($page, $rows)
+    public function getList($providerGoodsName, $page, $rows, $rowsOnly)
     {
-        $this->db->select(
+        $query = $this->db->join('provider_goods', 'pg_id = pgs_provider_goods_id', 'left');
+
+        if (!empty($providerGoodsName)) {
+            $query = $this->db->like('pg_name', $providerGoodsName);
+        }
+
+        $queryTotal = clone $query;
+        $queryList = clone  $query;
+
+        if (!$rowsOnly) {
+            // 获取总数
+            $queryTotal->select('count(1) as total');
+            $total = $queryTotal->get('provider_goods_sample')->result();
+            if (empty($total['0']) || empty($total['0']->total)) {
+                return array(
+                    'total' => 0,
+                    'rows'  => []
+                );
+            }
+        }
+
+        // 获取分页数据
+        $queryList->select(
             'pgs_id, pgs_provider_goods_id, 
             pg_name, pgs_weight, pgs_create_time, 
             pgs_update_time'
         );
 
-        $this->db->join('provider_goods', 'pg_id = pgs_provider_goods_id', 'left');
+        if (!$rowsOnly) {
+            $offset = ($page - 1) * $rows;
+            $queryList->limit($rows, $offset);
+        }
 
-        $offset = ($page - 1) * $rows;
-        $this->db->limit($rows, $offset);
+        $rows = $queryList->get('provider_goods_sample')->result();
 
-        $query = $this->db->get('provider_goods_sample');
-
-        return $query->result();
+        if ($rowsOnly) {
+            return $rows;
+        } else {
+            return array(
+                'total' => $total['0']->total,
+                'rows' => $rows
+            );
+        }
     }
 
     public function getProviderGoodsSampleInfo($id)

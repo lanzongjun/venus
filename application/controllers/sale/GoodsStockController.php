@@ -26,10 +26,11 @@ class GoodsStockController extends BaseController
         $providerGoodsName = isset($getData['provider_goods_name']) ? $getData['provider_goods_name'] : '';
         $page = isset($getData['page']) ? $getData['page'] : 1;
         $rows = isset($getData['rows']) ? $getData['rows'] : 50;
+        $rowsOnly = isset($getData['rows_only']) ? $getData['rows_only'] : false;
 
         $this->load->model($this->_s_model);
 
-        $result = $this->{$this->_s_model}->getList($startDate, $endDate, $providerGoodsName, $page, $rows);
+        $result = $this->{$this->_s_model}->getList($startDate, $endDate, $providerGoodsName, $page, $rows, $rowsOnly);
 
         echo json_encode($result);
     }

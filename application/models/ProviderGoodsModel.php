@@ -4,36 +4,56 @@ include_once 'BaseModel.php';
 
 class ProviderGoodsModel extends BaseModel
 {
-    public function getList($providerName, $providerGoodsName, $page, $rows)
+    public function getList($providerName, $providerGoodsName, $page, $rows, $rowsOnly)
     {
-        $this->db->select('pg_id, pg_provider_id, p_name, pg_name, pg_create_time, pg_update_time');
 
-        $this->db->join('provider', 'p_id = pg_provider_id', 'left');
+        $query = $this->db->join('provider', 'p_id = pg_provider_id', 'left');
 
         if (!empty($providerName)) {
-            $this->db->like('p_name', $providerName);
+            $query = $this->db->like('p_name', $providerName);
         }
 
         if (!empty($providerGoodsName)) {
-            $this->db->like('pg_name', $providerGoodsName);
+            $query = $this->db->like('pg_name', $providerGoodsName);
         }
 
-        $offset = ($page - 1) * $rows;
-        $this->db->limit($rows, $offset);
+        $queryTotal = clone $query;
+        $queryList = clone  $query;
 
-        $query = $this->db->get('provider_goods');
-
-        $providerGoods = $query->result();
-
-        if (empty($providerGoods)) {
-            return array();
+        if (!$rowsOnly) {
+            // 获取总数
+            $queryTotal->select('count(1) as total');
+            $total = $queryTotal->get('provider_goods')->result();
+            if (empty($total['0']) || empty($total['0']->total)) {
+                return array(
+                    'total' => 0,
+                    'rows'  => []
+                );
+            }
         }
 
-        foreach ($providerGoods as &$goods) {
-            $goods->provider_goods_format = "{$goods->pg_name}({$goods->p_name})";
+        // 获取分页数据
+        $queryList->select('pg_id, pg_provider_id, p_name, pg_name, pg_create_time, pg_update_time');
+
+        if (!$rowsOnly) {
+            $offset = ($page - 1) * $rows;
+            $queryList->limit($rows, $offset);
         }
 
-        return $providerGoods;
+        $rows = $queryList->get('provider_goods')->result();
+
+        foreach ($rows as &$row) {
+            $row->provider_goods_format = "{$row->pg_name}({$row->p_name})";
+        }
+
+        if ($rowsOnly) {
+            return $rows;
+        } else {
+            return array(
+                'total' => $total['0']->total,
+                'rows' => $rows
+            );
+        }
     }
 
     public function getProviderGoodsInfo($id)

@@ -39,22 +39,21 @@
     </div>
 </div>
 
-<div id="w_add_shop" class="easyui-window" title="新增商品进货信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:210px;padding:5px;">
-    <form id="f_add_shop" method="post">
+<div id="d_add_goods_stock" class="easyui-window" title="新增商品进货信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:210px;padding:5px;">
+    <form id="f_add_goods_stock" method="post">
         <table>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
                         <input class="easyui-combobox" name="pg_id" data-options="
-                        url:'../ProviderGoodsController/getList/',
+                        url:'../ProviderGoodsController/getList?rows_only=true',
                         method:'get',
                         valueField:'pg_id',
                         textField:'provider_goods_format',
-                        panelHeight:'auto',
                         label: '供应商商品信息:',
                         labelPosition: 'left',
                         labelWidth:'110',
-                        width:'300'
+                        width:'400'
                         ">
                     </div>
                 </td>

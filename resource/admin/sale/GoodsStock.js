@@ -16,16 +16,16 @@ function doLogClear(){
 
 
 function showAddWin() {
-    $('#w_add_shop').window('open');
+    $('#d_add_goods_stock').window('open');
 }
 
 // 新增
 function saveAddForm() {
-    $('#f_add_shop').form('submit');
+    $('#f_add_goods_stock').form('submit');
 }
 
 function closeAddWin() {
-    $('#w_add_shop').window('close');
+    $('#d_add_goods_stock').window('close');
 }
 
 function saveEditForm() {
@@ -90,7 +90,7 @@ $(function () {
         doSearch();
     });
 
-    $('#f_add_shop').form({
+    $('#f_add_goods_stock').form({
         url: '../sale/' + __s_c_name + '/addGoodsStock',
         type: "POST",
         success: function (data) {
@@ -100,7 +100,7 @@ $(function () {
             } else {
                 $.messager.alert('错误-更新失败', o_response.msg, 'error');
             }
-            $('#w_add_shop').window('close');
+            $('#d_add_goods_stock').window('close');
             $('#dg').datagrid('reload');
         }
     });

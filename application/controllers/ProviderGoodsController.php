@@ -35,10 +35,11 @@ class ProviderGoodsController extends BaseController
         $rows = isset($getData['rows']) ? $getData['rows'] : 50;
         $providerName = isset($getData['provider_name']) ? $getData['provider_name'] : '';
         $providerGoodsName = isset($getData['provider_goods_name']) ? $getData['provider_goods_name'] : '';
+        $rowsOnly = isset($getData['rows_only']) ? $getData['rows_only'] : false;
 
         $this->load->model($this->_s_model);
 
-        $o_result = $this->{$this->_s_model}->getList($providerName, $providerGoodsName, $page, $rows);
+        $o_result = $this->{$this->_s_model}->getList($providerName, $providerGoodsName, $page, $rows, $rowsOnly);
         echo json_encode($o_result);
     }
 

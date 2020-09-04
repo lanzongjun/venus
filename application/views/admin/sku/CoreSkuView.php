@@ -9,7 +9,7 @@
     <script type="text/javascript" src="<?php echo base_url("/resource/admin/jquery.easyui.min.js") ?>"></script>
 </head>
 <body>
-<table id="dg" title="商品供应商信息" class="easyui-datagrid" toolbar="#dom_toolbar1" data-options="border:false,fit:true,rownumbers:true,singleSelect:true,method:'get',url:'../<?php echo $c_name; ?>/getList/',pagination:true,pageSize:50,pageList: [50, 100, 200, 300]">
+<table id="dg" title="SKU信息" class="easyui-datagrid" toolbar="#dom_toolbar1" data-options="border:false,fit:true,rownumbers:true,singleSelect:true,method:'get',url:'../<?php echo $c_name; ?>/getList/',pagination:true,pageSize:50,pageList: [50, 100, 200, 300]">
     <thead>
     <tr>
         <th data-options="width:120,align:'center',field:'cs_code'">SKU</th>
@@ -32,8 +32,8 @@
         <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
     </div>
 </div>
-<div id="w_edit_shop" class="easyui-window" title="编辑供应商信息" data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:500px;height:210px;padding:5px;">
-    <form id="f_edit_shop" method="post">
+<div id="w_edit_sku" class="easyui-window" title="编辑SKU信息" data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:500px;height:210px;padding:5px;">
+    <form id="f_edit_sku" method="post">
         <table>
             <tr>
                 <td>
@@ -64,8 +64,8 @@
         </div>
     </form>
 </div>
-<div id="w_add_shop" class="easyui-window" title="新增SKU信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:500px;height:210px;padding:5px;">
-    <form id="f_add_shop" method="post">
+<div id="w_add_sku" class="easyui-window" title="新增SKU信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:500px;height:210px;padding:5px;">
+    <form id="f_add_sku" method="post">
         <table>
             <tr>
                 <td>

@@ -10,21 +10,47 @@ include_once 'BaseModel.php';
 
 class ProviderModel extends BaseModel
 {
-    public function getList($page, $rows, $providerName)
+    public function getList($providerName, $page, $rows, $rowsOnly)
     {
-        $this->db->select('p_id, p_name, p_create_time, p_update_time');
+        $query = $this->db;
 
         if (!empty($providerName)) {
-            $this->db->like('p_name', $providerName);
+            $query = $this->db->like('p_name', $providerName);
         }
 
-        $offset = ($page - 1) * $rows;
-        $this->db->limit($rows, $offset);
+        $queryTotal = clone $query;
+        $queryList = clone  $query;
 
-        $query = $this->db->get('provider');
+        if (!$rowsOnly) {
+            // 获取总数
+            $queryTotal->select('count(1) as total');
+            $total = $queryTotal->get('provider')->result();
+            if (empty($total['0']) || empty($total['0']->total)) {
+                return array(
+                    'total' => 0,
+                    'rows'  => []
+                );
+            }
+        }
 
-        //dd($this->db->last_query());
-        return $query->result();
+        // 获取分页数据
+        $queryList->select('p_id, p_name, p_create_time, p_update_time');
+
+        if (!$rowsOnly) {
+            $offset = ($page - 1) * $rows;
+            $queryList->limit($rows, $offset);
+        }
+
+        $rows = $queryList->get('provider')->result();
+
+        if ($rowsOnly) {
+            return $rows;
+        } else {
+            return array(
+                'total' => $total['0']->total,
+                'rows' => $rows
+            );
+        }
     }
 
     public function getProviderInfo($id)

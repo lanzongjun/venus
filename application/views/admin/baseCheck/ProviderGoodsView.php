@@ -9,7 +9,7 @@
     <script type="text/javascript" src="<?php echo base_url("/resource/admin/jquery.easyui.min.js") ?>"></script>
 </head>
 <body>
-<table id="dg" title="供应商商品信息" class="easyui-datagrid" toolbar="#dom_toolbar1" data-options="border:false,fit:true,rownumbers:true,singleSelect:true,method:'get',url:'../<?php echo $c_name; ?>/getList/',pagination:true,pageSize:50,pageList: [50, 100, 200, 300]">
+<table id="dg" title="商品信息" class="easyui-datagrid" toolbar="#dom_toolbar1" data-options="border:false,fit:true,rownumbers:true,singleSelect:true,method:'get',url:'../<?php echo $c_name; ?>/getList/',pagination:true,pageSize:50,pageList: [50, 100, 200, 300]">
     <thead>
     <tr>
         <th data-options="width:100,align:'center',field:'pg_id'">商品ID</th>
@@ -31,21 +31,21 @@
         <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
     </div>
 </div>
-<div id="w_edit_shop" class="easyui-window" title="编辑商品信息" data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:440px;height:170px;padding:5px;">
-    <form id="f_edit_shop" method="post">
+<div id="d_edit_provider_goods" class="easyui-window" title="编辑商品信息" data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:440px;height:170px;padding:5px;">
+    <form id="f_edit_provider_goods" method="post">
         <table>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
                         <input class="easyui-combobox" name="p_id" data-options="
-                        url:'../ProviderController/getList/',
+                        url:'../ProviderController/getList?rows_only=true',
                         method:'get',
                         valueField:'p_id',
                         textField:'p_name',
                         panelHeight:'auto',
                         label: '供应商名称:',
                         labelPosition: 'left',
-                        labelWidth:'110',
+                        labelWidth:'90',
                         width:'300'
                         ">
                     </div>
@@ -54,7 +54,7 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-textbox" name="pg_name" data-options="labelWidth:'100',label:'商品名称:',width:'240px'">
+                        <input class="easyui-textbox" name="pg_name" data-options="labelWidth:'90',label:'商品名称:',width:'240px'">
                     </div>
                 </td>
             </tr>
@@ -66,21 +66,21 @@
         </div>
     </form>
 </div>
-<div id="w_add_shop" class="easyui-window" title="新增商品信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:180px;padding:5px;">
-    <form id="f_add_shop" method="post">
+<div id="d_add_provider_goods" class="easyui-window" title="新增商品信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:180px;padding:5px;">
+    <form id="f_add_provider_goods" method="post">
         <table>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
                         <input class="easyui-combobox" name="p_id" data-options="
-                        url:'../ProviderController/getList/',
+                        url:'../ProviderController/getList?rows_only=true',
                         method:'get',
                         valueField:'p_id',
                         textField:'p_name',
                         panelHeight:'auto',
                         label: '供应商名称:',
                         labelPosition: 'left',
-                        labelWidth:'110',
+                        labelWidth:'90',
                         width:'300'
                         ">
                     </div>
@@ -89,7 +89,7 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-textbox" name="pg_name" data-options="labelWidth:'110',label:'商品名称:',width:'300px'">
+                        <input class="easyui-textbox" name="pg_name" data-options="labelWidth:'90',label:'商品名称:',width:'300px'">
                     </div>
                 </td>
             </tr>

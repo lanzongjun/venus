@@ -25,11 +25,13 @@ class ProviderGoodsSampleController extends BaseController
     {
         $getData = $this->input->get();
 
+        $providerGoodsName = isset($getData['provider_goods_name']) ? $getData['provider_goods_name'] : '';
         $page = isset($getData['page']) ? $getData['page'] : 1;
         $rows = isset($getData['rows']) ? $getData['rows'] : 50;
-        $this->load->model($this->_s_model);
+        $rowsOnly = isset($getData['rows_only']) ? $getData['rows_only'] : false;
 
-        $o_result = $this->{$this->_s_model}->getList($page, $rows);
+        $this->load->model($this->_s_model);
+        $o_result = $this->{$this->_s_model}->getList($providerGoodsName, $page, $rows, $rowsOnly);
         echo json_encode($o_result);
     }
 

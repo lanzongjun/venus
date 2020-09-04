@@ -24,7 +24,8 @@
     <thead frozen="true">
     <tr>
         <th data-options="width:150,align:'center',field:'pgs_sku_code'">SKU</th>
-        <th data-options="width:150,align:'center',field:'pg_name'">商品名称</th>
+        <th data-options="width:240,align:'center',field:'cs_name'">SKU名称</th>
+        <th data-options="width:180,align:'center',field:'pg_name'">商品名称</th>
         <th data-options="width:100,align:'center',field:'pgs_num'">数量(个)</th>
         <th data-options="width:200,align:'center',field:'pgs_create_time'">创建时间</th>
         <th data-options="width:200,align:'center',field:'pgs_update_time'">更新时间</th>

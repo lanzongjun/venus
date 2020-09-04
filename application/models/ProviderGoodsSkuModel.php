@@ -8,6 +8,7 @@ class ProviderGoodsSkuModel extends BaseModel
     {
 
         $query = $this->db->join('provider_goods', 'pgs_provider_goods_id = pg_id', 'left');
+        $query->join('core_sku', 'cs_code = pgs_sku_code', 'left');
 
         if (!empty($skuCode)) {
             $query = $this->db->like('pgs_sku_code', $skuCode);
@@ -31,8 +32,8 @@ class ProviderGoodsSkuModel extends BaseModel
         }
 
         // 获取分页数据
-        $queryList->select('pgs_id, pgs_sku_code, pg_name, pgs_num, pgs_create_time, pgs_update_time');
-        $queryList->order_by("pgs_id", "desc");
+        $queryList->select('pgs_id, pgs_sku_code, cs_name, cs_description, pg_name, pgs_num, pgs_create_time, pgs_update_time');
+        $queryList->order_by("pgs_id", "asc");
 
         $offset    = ($page - 1) * $rows;
         $queryList = $queryList->limit($rows, $offset);
