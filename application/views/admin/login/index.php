@@ -12,7 +12,7 @@
 <body>
     <div class="login">      
         <div class="center">
-            <form action="./check" method="post">
+            <form action="<?php echo site_url('admin/check') ?>" method="post">
             <h1>Login</h1>
             <div class="inputLi">
                 <strong>账户</strong>

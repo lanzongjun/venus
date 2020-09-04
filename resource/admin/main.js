@@ -12,9 +12,6 @@ var __o_mtoitd_refresh_handler;
 var __o_mtoir_refresh_handler;
 var __o_eboitd_refresh_handler;
 
-var __audio_order_new = new Audio(__audio_path_order_new);
-var __audio_order_refund = new Audio(__audio_path_order_refund);
-
 function beforeOpen(){
     clearTimeout(__o_mtoitd_refresh_handler);
     clearTimeout(__o_mtoir_refresh_handler);
@@ -32,22 +29,20 @@ function OrderMonitor(){
             var i_res = data-0;
             console.log('美团订单监控 返回状态:'+i_res);
             if (i_res === 1){
-                __audio_order_new.play();
             }
             if (i_res === 2){
-                __audio_order_refund.play();
             }
             if (i_res === 3){
-                __audio_order_new.play();
-                __audio_order_refund.play();
             }
         }
     });
+
     __o_OrderMonitor_refresh_handler = setTimeout(OrderMonitor,__i_OrderMonitor_refresh_rate);
 }
 
 $(function () {
-    OrderMonitor();
+    // 屏蔽
+    //OrderMonitor();
     $('#nav_base_eb_ShopGoods').bind('click', function () {
         beforeOpen();
         doShowShopGoods();
@@ -61,7 +56,6 @@ $(function () {
         beforeOpen();
         doShowYJShopStorage();
     });
-//    a
 //    $('#nav_temp_eb_order').bind('click', function () {
 //        beforeOpen();
 //        doShowTempEBOrder();
@@ -69,6 +63,10 @@ $(function () {
     $('#nav_balance_station').bind('click', function () {
         beforeOpen();
         doShowBalanceStation();
+    });
+    $('#goods_stock').bind('click', function () {
+        beforeOpen();
+        doGoodsStock();
     });
     
     $('#nav_balance_account').bind('click', function () {
@@ -121,9 +119,29 @@ $(function () {
         doShopInfoYJ();
     });
     
-    $('#nav_market_original').bind('click', function () {
+    $('#add_provider').bind('click', function () {
         beforeOpen();
-        doMarketOriginal();
+        doAddProvider();
+    });
+
+    $('#add_provider_goods').bind('click', function () {
+        beforeOpen();
+        doAddProviderGoods();
+    });
+
+    $('#provider_goods_check').bind('click', function () {
+        beforeOpen();
+        doProviderGoodsCheck();
+    });
+
+    $('#provider_goods_sample').bind('click', function () {
+       beforeOpen();
+       doProviderGoodsSample();
+    });
+
+    $('#provider_goods_sku').bind('click', function () {
+        beforeOpen();
+        doProviderGoodsSku();
     });
     
     $('#nav_goods_info_yj').bind('click', function () {
@@ -175,6 +193,10 @@ $(function () {
         beforeOpen();
         doShowMTShopGoods();
     });
+    $('#sku_list').bind('click', function () {
+        beforeOpen();
+        doShowSkuList();
+    })
 });
 
 function doOrderInfoMtToDo(){
@@ -213,13 +235,49 @@ function doGoodsInfoYJ(){
     });
 }
 
-function doMarketOriginal() {
+function doAddProvider() {
     $('#layout_center').panel({
-        href: '../IFSpiderDataC',
+        href: '../ProviderController',
         onLoad: function () {
 
         }
     });
+}
+
+function doAddProviderGoods() {
+    $('#layout_center').panel({
+        href: '../ProviderGoodsController',
+        onLoad: function () {
+
+        }
+    });
+}
+
+function doProviderGoodsCheck() {
+    $('#layout_center').panel({
+        href: '../ProviderGoodsController',
+        onLoad: function () {
+
+        }
+    })
+}
+
+function doProviderGoodsSample() {
+    $('#layout_center').panel({
+        href: '../ProviderGoodsSampleController',
+        onLoad: function () {
+
+        }
+    })
+}
+
+function doProviderGoodsSku() {
+    $('#layout_center').panel({
+        href: '../ProviderGoodsSkuController',
+        onLoad: function () {
+
+        }
+    })
 }
 
 function doBillInfoEB() {
@@ -288,6 +346,15 @@ function doShowTmpCashPool() {
 function doShowBalanceStation(){
     $('#layout_center').panel({
         href: '../AdBalanceStationC',
+        onLoad: function () {
+
+        }
+    });
+}
+
+function doGoodsStock() {
+    $('#layout_center').panel({
+        href: '../sale/GoodsStockController',
         onLoad: function () {
 
         }
@@ -378,6 +445,15 @@ function doShowYJShopStorage() {
 function doShowTempEBOrder() {
     $('#layout_center').panel({
         href: '../AdTmpOrderEBC',
+        onLoad: function () {
+
+        }
+    });
+}
+
+function doShowSkuList() {
+    $('#layout_center').panel({
+        href: '../CoreSkuController',
         onLoad: function () {
 
         }

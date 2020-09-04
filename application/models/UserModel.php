@@ -7,35 +7,35 @@
  */
 
 /**
- * Description of AdminUser
+ * Description of User
  *
- * @author Vincent
+ * @author zongjun.lan
  */
-class AdminUserM extends CI_Model {
+include_once 'BaseModel.php';
 
-    function __construct() {
-        parent::__construct();
-        $this->load->database();
-    }
+class UserModel extends BaseModel
+{
 
     function u_insert($arr) {
         $this->db->insert('user', $arr);
     }
 
     function u_update($id, $arr) {
-        $this->db->where('uid', $id);
+        $this->db->where('id', $id);
         $this->db->update('user', $arr);
     }
 
-    function u_del($id) {
-        $this->db->where('uid', $id);
+    public function u_del($id)
+    {
+        $this->db->where('id', $id);
         $this->db->delete('user');
     }
 
-    function u_select($name) {
-        $this->db->where('uname', $name);
+    public function u_select($name)
+    {
+        $this->db->where('u_name', $name);
         $this->db->select('*');
-        $query = $this->db->get('admin_user');
+        $query = $this->db->get('user');
         return $query->result();
     }
 

@@ -25,15 +25,16 @@ class Admin extends CI_Controller {
         $this->load->view('admin/login/index', $data);
     }
 
-    public function check() {
-        $this->load->model('AdminUserM');
-        $user = $this->AdminUserM->u_select($_POST['u_name']);
+    public function check()
+    {
+        $postData = $this->input->post();
+        $this->load->model('UserModel');
+        $user = $this->UserModel->u_select($postData['u_name']);
         if ($user) {
-            if ($user[0]->upw == $_POST['u_pw']) {
+            if ($user[0]->u_password == $postData['u_pw']) {
                 $this->load->library('session');
-                $arr = array('s_id' => $user[0]->uid);
-                $this->session->set_userdata($arr);
-                $s_userid = $this->session->userdata('s_id');
+                $this->session->set_userdata('s_user', $user[0]);
+                //$s_user = $this->session->all_userdata();
                 $this->load->helper('url');
                 redirect('admin/main');
             } else {
@@ -58,11 +59,12 @@ class Admin extends CI_Controller {
         $this->session->unset_userdata('s_id');
     }
 
-    function main() {
+    function main()
+    {
         $data['title'] = ucfirst('main');
         $this->load->library('session');
-        $s_userid = $this->session->userdata('s_id');
-        if (!$s_userid) {
+        $s_user = $this->session->userdata('s_user');
+        if (!$s_user) {
             $data['title'] = ucfirst('index');
             $this->load->helper('url');
             $this->load->view('admin/login/index', $data);
