@@ -70,14 +70,38 @@ class ProviderGoodsSampleModel extends BaseModel
         return array();
     }
 
-    public function addProviderGoodsSampleInfo($pgId, $pgsWeight)
+    public function addProviderGoodsSampleInfo($pgId, $weight, $num)
     {
-        $insertData = [
-            'pgs_provider_goods_id' => $pgId,
-            'pgs_weight' => $pgsWeight
+        $insertRecordData = [
+            'pgsr_provider_goods_id' => $pgId,
+            'pgsr_weight' => $weight,
+            'pgsr_num' => $num
         ];
 
-        $o_result = $this->db->insert('provider_goods_sample', $insertData);
+        $o_r_result = $this->db->insert('provider_goods_sample_record', $insertRecordData);
+
+        // 计算合计取样数据统计插入provider_goods_sample
+        $this->db->select('sum(pgsr_weight) as weight, sum(pgsr_num) as num');
+        $this->db->where('pgsr_provider_goods_id', $pgId);
+        $statistics = $this->db->get('provider_goods_sample_record')->result_array();
+        $statistics = $statistics['0'];
+        $weight = $statistics['weight'] * 1000; //转化成g
+        $avgWeight = empty($statistics['num']) ? 0 : round($weight/$statistics['num'], 3);
+        // 判断是否有取样记录
+        $exists = $this->db->where('pgs_provider_goods_id', $pgId)->get('provider_goods_sample')->first_row();
+
+        if (empty($exists)) {
+            $insertData = [
+                'pgs_provider_goods_id' => $pgId,
+                'pgs_weight' => $avgWeight
+            ];
+            $o_result = $this->db->insert('provider_goods_sample', $insertData);
+        } else {
+            $updateData = [
+                'pgs_weight' => $avgWeight
+            ];
+            $o_result = $this->db->where('pgs_provider_goods_id', $pgId)->update('provider_goods_sample', $updateData);
+        }
 
         $result = ['state' => $o_result, 'msg' => "添加成功"];
 

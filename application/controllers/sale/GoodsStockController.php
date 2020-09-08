@@ -51,7 +51,7 @@ class GoodsStockController extends BaseController
         }
 
         $this->load->model($this->_s_model);
-        $result = $this->{$this->_s_model}->addGoodsStock($this->shop_id, $providerGoodsId, $date, $stock);
+        $result = $this->{$this->_s_model}->addGoodsStock($this->user_id, $this->shop_id, $providerGoodsId, $date, $stock);
 
         echo json_encode($result);
     }

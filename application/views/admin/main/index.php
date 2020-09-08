@@ -75,7 +75,7 @@
                                     <span><a id='change' href="#">调度</a></span>
                                 </li>
                                 <li>
-                                    <span><a id='online' href="#">线上销售</a></span>
+                                    <span><a id='goods_sale_online' href="#">线上销售</a></span>
                                 </li>
                                 <li>
                                     <span><a id='exception_order' href="#">异常订单</a></span>

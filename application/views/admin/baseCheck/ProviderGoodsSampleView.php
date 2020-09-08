@@ -12,8 +12,8 @@
 <table id="dg" title="商品取样信息" class="easyui-datagrid" toolbar="#dom_toolbar1" data-options="border:false,fit:true,rownumbers:true,singleSelect:true,method:'get',url:'../<?php echo $c_name; ?>/getList/',pagination:true,pageSize:50,pageList: [50, 100, 200, 300]">
     <thead>
     <tr>
-        <th data-options="width:80,align:'center',field:'pgs_id'">商品采样ID</th>
-        <th data-options="width:80,align:'center',field:'pgs_provider_goods_id'">供应商商品ID</th>
+        <th data-options="width:100,align:'center',field:'pgs_id'">商品采样ID</th>
+        <th data-options="width:150,align:'center',field:'pgs_provider_goods_id'">供应商商品ID</th>
         <th data-options="width:300,align:'center',field:'pg_name'">供应商商品名称</th>
         <th data-options="width:150,align:'center',field:'pgs_weight'">重量/个(克)</th>
         <th data-options="width:200,align:'center',field:'pgs_create_time'">创建时间</th>
@@ -53,7 +53,7 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="pgs_weight" data-options="labelWidth:'110',label:'重量/个(克):',width:'300', min:0, precision:2">
+                        <input class="easyui-numberbox" name="pgs_weight" data-options="labelWidth:'110',label:'重量/个（克）:',width:'300', min:0, precision:3">
                     </div>
 
                 </td>
@@ -66,7 +66,7 @@
         </div>
     </form>
 </div>
-<div id="d_add_provider_goods_sample" class="easyui-window" title="新增商品取样信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:170px;padding:5px;">
+<div id="d_add_provider_goods_sample" class="easyui-window" title="新增商品取样信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:220px;padding:5px;">
     <form id="f_add_provider_goods_sample" method="post">
         <table>
             <tr>
@@ -88,7 +88,15 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="pgs_weight" data-options="labelWidth:'110',label:'重量/个(克):',width:'300', min:0, precision:2">
+                        <input class="easyui-numberbox" name="weight" data-options="labelWidth:'110',label:'重量(KG):',width:'300', min:0, precision:3">
+                    </div>
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'110',label:'数量（个）:',width:'300', min:0">
                     </div>
 
                 </td>

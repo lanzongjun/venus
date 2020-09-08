@@ -54,7 +54,6 @@ $(function () {
         type: "POST",
         success: function (data) {
             var o_response = $.parseJSON(data);
-            console.log(22222);
             if (o_response.state) {
                 $.messager.alert('信息-更新成功', o_response.msg, 'info');
             } else {

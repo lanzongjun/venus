@@ -84,9 +84,14 @@ $(function () {
         doShowEBOrdersInfo();
     });
     
-    $('#nav_temp_cash_pool').bind('click', function () {
+    // $('#nav_temp_cash_pool').bind('click', function () {
+    //     beforeOpen();
+    //     doShowTmpCashPool();
+    // });
+
+    $('#goods_sale_online').bind('click', function () {
         beforeOpen();
-        doShowTmpCashPool();
+        doGoodsSaleOnline();
     });
     
     $('#nav_temp_yj_expire').bind('click', function () {
@@ -255,7 +260,7 @@ function doAddProviderGoods() {
 
 function doProviderGoodsCheck() {
     $('#layout_center').panel({
-        href: '../ProviderGoodsController',
+        href: '../ProviderGoodsCheckController',
         onLoad: function () {
 
         }
@@ -334,9 +339,18 @@ function doShowTmpYJExpire() {
     });
 }
 
-function doShowTmpCashPool() {
+// function doShowTmpCashPool() {
+//     $('#layout_center').panel({
+//         href: '../AdTmpCashPoolC',
+//         onLoad: function () {
+//
+//         }
+//     });
+// }
+
+function doGoodsSaleOnline(){
     $('#layout_center').panel({
-        href: '../AdTmpCashPoolC',
+        href: '../sale/GoodsSaleOnlineController',
         onLoad: function () {
 
         }

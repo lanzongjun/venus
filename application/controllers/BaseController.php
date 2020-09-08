@@ -18,6 +18,11 @@ class BaseController extends CI_Controller
      */
     public $shop_id;
 
+    /**
+     * @var int 用户ID
+     */
+    public $user_id;
+
     public function __construct()
     {
 
@@ -32,6 +37,8 @@ class BaseController extends CI_Controller
         $this->user = $this->session->s_user;
 
         $this->shop_id = $this->session->s_user->u_shop_id;
+
+        $this->user_id = $this->session->s_user->u_id;
     }
 
     public function getPostData()

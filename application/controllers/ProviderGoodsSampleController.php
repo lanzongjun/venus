@@ -54,9 +54,10 @@ class ProviderGoodsSampleController extends BaseController
         $postData = $this->getPostData();
 
         $pgId = isset($postData['pg_id']) ? $postData['pg_id'] : '';
-        $pgsWeight = isset($postData['pgs_weight']) ? $postData['pgs_weight'] : '';
+        $weight = isset($postData['weight']) ? $postData['weight'] : '';
+        $num = isset($postData['num']) ? $postData['num'] : '';
 
-        if (empty($pgId) || empty($pgsWeight)) {
+        if (empty($pgId) || empty($weight) || empty($num)) {
             echo array(
                 'state' => false,
                 'msg'   => '请填写正确的参数'
@@ -65,7 +66,7 @@ class ProviderGoodsSampleController extends BaseController
         }
 
         $this->load->model($this->_s_model);
-        $o_result = $this->{$this->_s_model}->addProviderGoodsSampleInfo($pgId, $pgsWeight);
+        $o_result = $this->{$this->_s_model}->addProviderGoodsSampleInfo($pgId, $weight, $num);
 
         echo json_encode($o_result);
     }

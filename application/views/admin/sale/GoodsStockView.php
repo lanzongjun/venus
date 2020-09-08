@@ -17,6 +17,7 @@
         <th data-options="width:180,align:'center',field:'pg_name'">供应商商品</th>
         <th data-options="width:130,align:'center',field:'gs_date'">进货日期</th>
         <th data-options="width:100,align:'center',field:'gs_stock'">库存(KG)</th>
+        <th data-options="width:100,align:'center',field:'u_name'">操作人</th>
         <th data-options="width:200,align:'center',field:'gs_create_time'">创建时间</th>
         <th data-options="width:200,align:'center',field:'gs_update_time'">更新时间</th>
     </tr>

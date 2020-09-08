@@ -8,15 +8,16 @@ class GoodsStockModel extends BaseModel
     {
 
         $query = $this->db->join('provider_goods', 'gs_provider_goods_id = pg_id', 'left');
-        $query = $this->db->join('core_shop', 'cs_id = gs_shop_id', 'left');
+        $query->join('core_shop', 'cs_id = gs_shop_id', 'left');
+        $query->join('user', 'u_id = gs_operator_id', 'left');
 
         if (!empty($startDate) && !empty($endDate)) {
-            $query = $this->db->where('gs_date >=', $startDate);
-            $query = $this->db->where('gs_date <=', $endDate);
+            $query->where('gs_date >=', $startDate);
+            $query->where('gs_date <=', $endDate);
         }
 
         if (!empty($providerGoodsName)) {
-            $query = $this->db->like('pg_name', $providerGoodsName);
+            $query->like('pg_name', $providerGoodsName);
         }
 
         $queryTotal = clone $query;
@@ -35,7 +36,7 @@ class GoodsStockModel extends BaseModel
         }
 
         // 获取分页数据
-        $queryList->select('gs_id, cs_name, pg_name, gs_date, gs_stock, gs_create_time, gs_update_time');
+        $queryList->select('gs_id, cs_name, pg_name, gs_date, gs_stock, u_name, gs_create_time, gs_update_time');
 
         if (!$rowsOnly) {
             $offset = ($page - 1) * $rows;
@@ -54,13 +55,14 @@ class GoodsStockModel extends BaseModel
         }
     }
 
-    public function addGoodsStock($shopId, $providerGoodsId, $date, $stock)
+    public function addGoodsStock($userId, $shopId, $providerGoodsId, $date, $stock)
     {
         $insertData = [
             'gs_shop_id' => $shopId,
             'gs_provider_goods_id' => $providerGoodsId,
             'gs_date' => $date,
             'gs_stock' => $stock,
+            'gs_operator_id' => $userId
         ];
 
         $this->db->insert('goods_stock', $insertData);
