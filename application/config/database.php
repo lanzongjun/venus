@@ -75,9 +75,9 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-    'hostname' => '127.0.0.1',
+    'hostname' => '132.232.34.181',
     'username' => 'root',
-    'password' => '',
+    'password' => '234567',
 	'database' => 'venus',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => 'vms_',
