@@ -58,10 +58,10 @@ class ProviderGoodsSampleController extends BaseController
         $num = isset($postData['num']) ? $postData['num'] : '';
 
         if (empty($pgId) || empty($weight) || empty($num)) {
-            echo array(
+            echo json_encode(array(
                 'state' => false,
                 'msg'   => '请填写正确的参数'
-            );
+            ));
             exit();
         }
 

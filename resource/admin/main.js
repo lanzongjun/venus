@@ -89,9 +89,20 @@ $(function () {
     //     doShowTmpCashPool();
     // });
 
-    $('#goods_sale_online').bind('click', function () {
-        beforeOpen();
+    $('#goods_sale_online_ele').bind('click', function () {
         doGoodsSaleOnline();
+    });
+
+    $('#goods_sale_offline').bind('click', function () {
+        doGoodsSaleOffline();
+    });
+
+    $('#goods_loss_shop').bind('click', function () {
+        doGoodsLossShop();
+    });
+
+    $('#goods_loss_order').bind('click', function () {
+        doGoodsLossOrder();
     });
     
     $('#nav_temp_yj_expire').bind('click', function () {
@@ -351,6 +362,37 @@ function doShowTmpYJExpire() {
 function doGoodsSaleOnline(){
     $('#layout_center').panel({
         href: '../sale/GoodsSaleOnlineController',
+        onLoad: function () {
+
+        }
+    });
+}
+
+function doGoodsSaleOffline(){
+    $('#layout_center').panel({
+        href: '../sale/GoodsSaleOfflineController',
+        onLoad: function () {
+
+        }
+    });
+}
+
+function doGoodsLossShop(){
+    $('#layout_center').panel({
+        href: '../sale/GoodsLossController',
+        method: 'get',
+        queryParams: {'type':1},
+        onLoad: function () {
+
+        }
+    });
+}
+
+function doGoodsLossOrder(){
+    $('#layout_center').panel({
+        href: '../sale/GoodsLossController',
+        method: 'get',
+        queryParams: {'type':2},
         onLoad: function () {
 
         }

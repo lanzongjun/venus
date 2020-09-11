@@ -60,23 +60,40 @@
                             <span>销售管理</span>
                             <ul>
                                 <li>
-                                    <span><a id='nav_balance_guide' href="#">线下销售</a></span>
+                                    <span><a id='goods_sale_offline' href="#">线下销售</a></span>
                                 </li>
                                 <li>
-                                    <span><a id='nav_account_check_guide' href="#">破损</a></span>
+                                    <span>损耗</span>
+                                    <ul>
+                                        <li>
+                                            <span><a id='goods_loss_shop' href="#">店内破损</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a id='goods_loss_order' href="#">退单</a></span>
+                                        </li>
+                                    </ul>
                                 </li>
                                 <li>
                                     <span><a id='goods_stock' href="#">进货</a></span>
                                 </li>
                                 <li>
-                                    <span><a id='nav_balance_account' href="#">调度</a></span>
-                                </li>
-                                <li>
                                     <span><a id='change' href="#">调度</a></span>
                                 </li>
                                 <li>
-                                    <span><a id='goods_sale_online' href="#">线上销售</a></span>
+                                    <span><a id='staff' href="#">员工餐</a></span>
                                 </li>
+                                <li data-options="state:'open'">
+                                    <span>线上销售</span>
+                                    <ul>
+                                        <li>
+                                            <span><a id='goods_sale_online_ele' href="#">饿了么</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a id='goods_sale_online_mt' href="#">美团</a></span>
+                                        </li>
+                                    </ul>
+                                </li>
+
                                 <li>
                                     <span><a id='exception_order' href="#">异常订单</a></span>
                                 </li>

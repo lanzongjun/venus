@@ -19,6 +19,21 @@ class GoodsSaleOnlineController extends BaseController
         $this->load->view("admin/sale/$this->_s_view", $data);
     }
 
+    public function getList()
+    {
+        $getData = $this->getGetData();
+
+        $page = isset($getData['page']) ? $getData['page'] : 1;
+        $rows = isset($getData['rows']) ? $getData['rows'] : 50;
+        $rowsOnly = isset($getData['rows_only']) ? $getData['rows_only'] : false;
+
+        $this->load->model($this->_s_model);
+
+        $result = $this->{$this->_s_model}->getList($page, $rows, $rowsOnly);
+
+        echo json_encode($result);
+    }
+
     /**
      * 上传CSV信息
      * 并预览
@@ -65,7 +80,7 @@ class GoodsSaleOnlineController extends BaseController
         return $this->csvreader->parse_file($_file_path);
     }
 
-    public function importExcel()
+    public function importExcel2()
     {
         if ($_FILES['upload_file']['name']) {
             $tmp_file = $_FILES['upload_file']['tmp_name'];
@@ -100,7 +115,7 @@ class GoodsSaleOnlineController extends BaseController
             /**  加载要读取的文件  **/
             $objPHPExcel = $objReader->load($inputFileName);
             $sheetData =$objPHPExcel->getActiveSheet()->toArray(null,true,true,true);
-
+dd($sheetData);
             // 处理数据
             $insertData = [];
             foreach ($sheetData as $datum) {
@@ -122,6 +137,21 @@ class GoodsSaleOnlineController extends BaseController
         }
 
         echo 'error';
+    }
+
+    public function importExcel()
+    {
+        $file = $_FILES['upload_file'];
+        $excelData = $this->getExcelData($file);
+        if (isset($excelData['state']) && !$excelData['state']) {
+            echo json_encode($excelData);
+            exit();
+        }
+
+        $this->load->model($this->_s_model);
+        $result = $this->{$this->_s_model}->addSaleOnlineExcelData($excelData);
+
+        echo json_encode($result);
     }
 
     public function output()
