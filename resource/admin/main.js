@@ -1,27 +1,5 @@
 $(function () {
-    $('#goods_stock').bind('click', function () {
-        doGoodsStock();
-    });
-    $('#goods_change').bind('click', function () {
-        doGoodsChange();
-    });
 
-    $('#goods_sale_online_ele').bind('click', function () {
-        doGoodsSaleOnline();
-    });
-
-    $('#goods_sale_offline').bind('click', function () {
-        doGoodsSaleOffline();
-    });
-
-    $('#goods_loss_shop').bind('click', function () {
-        doGoodsLossShop();
-    });
-
-    $('#goods_loss_order').bind('click', function () {
-        doGoodsLossOrder();
-    });
-    
     $('#add_provider').bind('click', function () {
         doAddProvider();
     });
@@ -35,11 +13,39 @@ $(function () {
     });
 
     $('#provider_goods_sample').bind('click', function () {
-       doProviderGoodsSample();
+        doProviderGoodsSample();
     });
 
     $('#provider_goods_sku').bind('click', function () {
         doProviderGoodsSku();
+    });
+
+    $('#goods_sale_offline').bind('click', function () {
+        doGoodsSaleOffline();
+    });
+
+    $('#goods_loss_shop').bind('click', function () {
+        doGoodsLossShop();
+    });
+
+    $('#goods_loss_order').bind('click', function () {
+        doGoodsLossOrder();
+    });
+
+    $('#goods_stock').bind('click', function () {
+        doGoodsStock();
+    });
+
+    $('#goods_change').bind('click', function () {
+        doGoodsChange();
+    });
+
+    $('#goods_staff_meal').bind('click', function () {
+        doGoodsStaffMeal();
+    });
+
+    $('#goods_sale_online_ele').bind('click', function () {
+        doGoodsSaleOnline();
     });
 
     $('#sku_list').bind('click', function () {
@@ -92,15 +98,6 @@ function doProviderGoodsSku() {
     })
 }
 
-function doGoodsSaleOnline(){
-    $('#layout_center').panel({
-        href: '../sale/GoodsSaleOnlineController',
-        onLoad: function () {
-
-        }
-    });
-}
-
 function doGoodsSaleOffline(){
     $('#layout_center').panel({
         href: '../sale/GoodsSaleOfflineController',
@@ -144,6 +141,24 @@ function doGoodsStock() {
 function doGoodsChange() {
     $('#layout_center').panel({
         href: '../sale/GoodsChangeController',
+        onLoad: function () {
+
+        }
+    });
+}
+
+function doGoodsStaffMeal() {
+    $('#layout_center').panel({
+        href: '../sale/GoodsStaffMealController',
+        onLoad: function () {
+
+        }
+    });
+}
+
+function doGoodsSaleOnline(){
+    $('#layout_center').panel({
+        href: '../sale/GoodsSaleOnlineController',
         onLoad: function () {
 
         }

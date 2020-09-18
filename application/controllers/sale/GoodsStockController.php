@@ -1,6 +1,6 @@
 <?php
 
-include_once $_SERVER['DOCUMENT_ROOT'].'/application/controllers/BaseController.php';
+require_once APPPATH . 'controllers/BaseController.php';
 
 class GoodsStockController extends BaseController
 {

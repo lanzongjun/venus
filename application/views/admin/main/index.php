@@ -72,7 +72,7 @@
                                     <span><a id='goods_change' href="#">调度</a></span>
                                 </li>
                                 <li>
-                                    <span><a id='staff' href="#">员工餐</a></span>
+                                    <span><a id='goods_staff_meal' href="#">员工餐</a></span>
                                 </li>
                                 <li data-options="state:'open'">
                                     <span>线上销售</span>
