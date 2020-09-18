@@ -1,17 +1,3 @@
-const ENUM_REPAIR_NORMAL = 'normal';
-const ENUM_REPAIR_TODO = 'todo';
-const ENUM_REPAIR_DONE = 'done';
-
-const ENUM_ORDER_STATE_FINISH = 'finish';
-
-const ENUM_SEND_STATE_TODO = 'todo';
-const ENUM_SEND_STATE_SUCCESS = 'success';
-const ENUM_SEND_STATE_FAIL = 'fail';
-
-var __o_mtoitd_refresh_handler;
-var __o_mtoir_refresh_handler;
-var __o_eboitd_refresh_handler;
-
 $(function () {
     $('#goods_stock').bind('click', function () {
         doGoodsStock();
