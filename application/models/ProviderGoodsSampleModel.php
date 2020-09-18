@@ -134,4 +134,19 @@ class ProviderGoodsSampleModel extends BaseModel
         $o_result['msg'] = "更新记录数 : $i_rows 条";
         return $o_result;
     }
+
+    public function loadDetailData($goodsId)
+    {
+        $this->db->join('provider_goods', 'pgsr_provider_goods_id = pg_id', 'left');
+
+        $this->db->where('pgsr_provider_goods_id', $goodsId);
+
+        // 获取分页数据
+        $this->db->select('pgsr_id, pg_name, pgsr_provider_goods_id, pgsr_weight,
+        pgsr_num, pgsr_create_time, pgsr_update_time');
+
+        $result = $this->db->get('provider_goods_sample_record')->result_array();
+
+        return $result;
+    }
 }

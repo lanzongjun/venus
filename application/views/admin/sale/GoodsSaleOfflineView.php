@@ -18,6 +18,7 @@
         <th data-options="width:150,align:'center',field:'gso_sku_code'">SKU</th>
         <th data-options="width:400,align:'center',field:'sku_name'">SKU名称</th>
         <th data-options="width:100,align:'center',field:'gso_num'">销量</th>
+        <th data-options="width:50,align:'center',field:'unit'">单位</th>
         <th data-options="width:200,align:'center',field:'gso_create_time'">创建时间</th>
         <th data-options="width:200,align:'center',field:'gso_update_time'">更新时间</th>
     </tr>
@@ -43,7 +44,7 @@
     </div>
 </div>
 
-<div id="d_edit_sale_offline" class="easyui-window" title="编辑线下销售信息" data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:440px;height:210px;padding:5px;">
+<div id="d_edit_sale_offline" class="easyui-window" title="编辑线下销售信息" data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:440px;height:245px;padding:5px;">
     <form id="f_edit_sale_offline" method="post">
         <table>
             <tr>
@@ -77,6 +78,17 @@
 
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'70',label:'单位:',width:'130',panelHeight:'auto'">
+                            <option value="1" selected="true">个</option>
+                            <option value="2">份</option>
+                            <option value="3">斤</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
         </table>
         <input name="gso_id" type="hidden"/>
         <div style="text-align:center;padding:5px 0">
@@ -86,7 +98,7 @@
     </form>
 </div>
 
-<div id="d_add_sale_offline" class="easyui-window" title="新增线下销售信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:210px;padding:5px;">
+<div id="d_add_sale_offline" class="easyui-window" title="新增线下销售信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:245px;padding:5px;">
     <form id="f_add_sale_offline" method="post">
         <table>
             <tr>
@@ -121,17 +133,18 @@
                 </td>
             </tr>
 
-<!--            <tr>-->
-<!--                <td>-->
-<!--                    <div style="margin-left:5px;margin-bottom:5px">-->
-<!--                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'70',label:'单位:',width:'130',panelHeight:'auto'">-->
-<!--                            <option value="ge" selected="true">个</option>-->
-<!--                            <option value="fen">份</option>-->
-<!--                        </select>-->
-<!--                    </div>-->
-<!---->
-<!--                </td>-->
-<!--            </tr>-->
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'70',label:'单位:',width:'130',panelHeight:'auto'">
+                            <option value="1" selected="true">个</option>
+                            <option value="2">份</option>
+                            <option value="3">斤</option>
+                        </select>
+                    </div>
+
+                </td>
+            </tr>
 
         </table>
         <div style="text-align:center;padding:5px 0">

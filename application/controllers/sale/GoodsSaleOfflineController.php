@@ -60,16 +60,25 @@ class GoodsSaleOfflineController extends BaseController
         $skuCode = isset($postData['cs_code']) ? $postData['cs_code'] : '';
         $date = isset($postData['date']) ? $postData['date'] : '';
         $num = isset($postData['num']) ? $postData['num'] : '';
+        $unit = isset($postData['unit']) ? $postData['unit'] : '';
 
-        if (empty($skuCode) || empty($date) || empty($num)) {
-            return array(
+        if (empty($skuCode) || empty($date) || empty($num) || empty($unit)) {
+            echo json_encode(array(
                 'state' => false,
                 'msg'   => '参数不正确'
-            );
+            ));
+            exit();
         }
 
         $this->load->model($this->_s_model);
-        $result = $this->{$this->_s_model}->addGoodsSaleOffline($this->user_id, $this->shop_id, $skuCode, $date, $num);
+        $result = $this->{$this->_s_model}->addGoodsSaleOffline(
+            $this->user_id,
+            $this->shop_id,
+            $skuCode,
+            $date,
+            $num,
+            $unit
+        );
 
         echo json_encode($result);
     }
@@ -81,17 +90,20 @@ class GoodsSaleOfflineController extends BaseController
         $skuCode = isset($postData['cs_code']) ? $postData['cs_code'] : '';
         $date = isset($postData['date']) ? $postData['date'] : '';
         $num = isset($postData['num']) ? $postData['num'] : '';
+        $unit = isset($postData['unit']) ? $postData['unit'] : '';
         $id = isset($postData['gso_id']) ? $postData['gso_id'] : '';
 
-        if (empty($skuCode) || empty($date) || empty($num) || empty($id)) {
-            return array(
-                'state' => false,
-                'msg'   => '参数不正确'
+        if (empty($skuCode) || empty($date) || empty($num) || empty($id) || empty($unit)) {
+            echo json_encode(
+                array(
+                    'state' => false,
+                    'msg'   => '参数不正确'
+                )
             );
         }
 
         $this->load->model($this->_s_model);
-        $result = $this->{$this->_s_model}->editGoodsSaleOffline($id, $this->user_id, $skuCode, $date, $num);
+        $result = $this->{$this->_s_model}->editGoodsSaleOffline($id, $this->user_id, $skuCode, $date, $num, $unit);
 
         echo json_encode($result);
     }

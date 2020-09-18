@@ -47,9 +47,9 @@ function init() {
 
     $("#dg").datagrid({
         onClickRow: function (index, row) { //easyui封装好的时间（被单机行的索引，被单击行的值）
-            var p = $("#layout_room").layout("panel", "south")[0].clientWidth;
+            var p = $("#layout_room").layout("panel", "east")[0].clientWidth;
             if (p <= 0) {
-                $('#layout_room').layout('expand', 'south');
+                $('#layout_room').layout('expand', 'east');
             }
             loadDetailData(row.pgc_id);
         }

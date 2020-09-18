@@ -70,6 +70,7 @@ class GoodsLossController extends BaseController
         $goodsId = isset($postData['pg_id']) ? $postData['pg_id'] : '';
         $date    = isset($postData['date']) ? $postData['date'] : '';
         $num     = isset($postData['num']) ? $postData['num'] : '';
+        $order   = isset($postData['order']) ? $postData['order'] : '';
         $type    = isset($postData['type']) ? $postData['type'] : '';
 
         if (empty($goodsId) || empty($date) || empty($num) || empty($type)) {
@@ -87,7 +88,8 @@ class GoodsLossController extends BaseController
             $type,
             $goodsId,
             $date,
-            $num
+            $num,
+            $order
         );
 
         echo json_encode($o_result);
@@ -100,6 +102,7 @@ class GoodsLossController extends BaseController
         $goodsId = isset($postData['goods_id']) ? $postData['goods_id'] : '';
         $date    = isset($postData['date']) ? $postData['date'] : '';
         $num     = isset($postData['num']) ? $postData['num'] : '';
+        $order   = isset($postData['order']) ? $postData['order'] : '';
         $id      = isset($postData['gl_id']) ? $postData['gl_id'] : '';
 
         if (empty($goodsId) || empty($date) || empty($num) || empty($id)) {
@@ -111,7 +114,7 @@ class GoodsLossController extends BaseController
         }
 
         $this->load->model($this->_s_model);
-        $result = $this->{$this->_s_model}->editGoodsLossInfo($id, $this->user_id, $goodsId, $date, $num);
+        $result = $this->{$this->_s_model}->editGoodsLossInfo($id, $this->user_id, $goodsId, $date, $num, $order);
 
         echo json_encode($result);
     }

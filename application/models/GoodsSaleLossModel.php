@@ -31,8 +31,8 @@ class GoodsSaleLossModel extends BaseModel
         // 获取分页数据
         $queryList->select(
             'gl_id, gl_provider_goods_id, cs_name, cs_city,
-            pg_name, gl_date, gl_type, gl_num, gl_operator, u_name, gl_create_time, 
-            gl_update_time'
+            pg_name, gl_date, gl_type, gl_num, gl_operator, u_name, gl_order, 
+            gl_create_time, gl_update_time'
         );
 
         $offset = ($page - 1) * $rows;
@@ -49,7 +49,7 @@ class GoodsSaleLossModel extends BaseModel
     public function getGoodsLossInfo($id)
     {
         $this->db->select(
-            'gl_id, gl_provider_goods_id as goods_id, gl_num as num, gl_date as date'
+            'gl_id, gl_provider_goods_id as goods_id, gl_num as num, gl_date as date, gl_order as order'
         );
 
         $this->db->where('gl_id', $id);
@@ -61,7 +61,7 @@ class GoodsSaleLossModel extends BaseModel
         return array();
     }
 
-    public function addGoodsLossInfo($shopId, $userId, $type, $goodsId, $date, $num)
+    public function addGoodsLossInfo($shopId, $userId, $type, $goodsId, $date, $num, $order)
     {
         $insertData = [
             'gl_shop_id'           => $shopId,
@@ -69,6 +69,7 @@ class GoodsSaleLossModel extends BaseModel
             'gl_type'              => $type,
             'gl_provider_goods_id' => $goodsId,
             'gl_num'               => $num,
+            'gl_order'             => $order,
             'gl_operator'          => $userId
         ];
 
@@ -81,7 +82,7 @@ class GoodsSaleLossModel extends BaseModel
         return $result;
     }
 
-    public function editGoodsLossInfo($id, $userId, $goodsId, $date, $num)
+    public function editGoodsLossInfo($id, $userId, $goodsId, $date, $num, $order)
     {
         $o_result = array(
             'state' => false,
@@ -93,6 +94,7 @@ class GoodsSaleLossModel extends BaseModel
             'gl_provider_goods_id' => $goodsId,
             'gl_date'              => $date,
             'gl_num'               => $num,
+            'gl_order'             => $order
         ];
         $this->db->where('gl_id', $id);
 

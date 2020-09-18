@@ -14,9 +14,9 @@
         <table id="dg" toolbar="#d_mtoi_toolbar" class="easyui-datagrid" data-options="fit:true,rownumbers:true,singleSelect:true,method:'get',url:'../<?php echo $c_name; ?>/getList/',pagination:true,pageSize:50,pageList: [50, 100, 200, 300]">
             <thead>
             <tr>
-                <th data-options="width:200,align:'center',field:'shop_name'">店铺名称</th>
-                <th data-options="width:200,align:'center',field:'pgc_date'">盘点日期</th>
-                <th data-options="width:150,align:'center',field:'operator_name'">操作员</th>
+                <th data-options="width:120,align:'center',field:'shop_name'">店铺名称</th>
+                <th data-options="width:120,align:'center',field:'pgc_date'">盘点日期</th>
+                <th data-options="width:120,align:'center',field:'operator_name'">操作员</th>
                 <th data-options="width:200,align:'center',field:'pgc_create_time'">创建时间</th>
                 <th data-options="width:200,align:'center',field:'pgc_update_time'">更新时间</th>
             </tr>
@@ -35,7 +35,7 @@
             <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
         </div>
     </div>
-    <div id="detail_room" data-options="region:'south',title:'详情',hideCollapsedContent:false,collapsed:true,split:true" style="height:300px;">
+    <div id="detail_room" data-options="region:'east',title:'详情',hideCollapsedContent:false,collapsed:true,split:true" style="width:690px;height:300px;">
         <table id="dg2" class="easyui-datagrid" data-options="fit:true, rownumbers:true,singleSelect:true,method:'get'">
             <thead>
             <tr>

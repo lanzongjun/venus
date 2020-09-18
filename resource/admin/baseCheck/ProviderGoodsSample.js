@@ -38,6 +38,13 @@ function doSearch() {
     });
 }
 
+function loadDetailData(goods_id) {
+    $("#dg2").datagrid("options").url = '../'+__s_c_name+'/loadDetailData/';
+    $('#dg2').datagrid('load', {
+        goods_id: goods_id
+    });
+}
+
 $(function () {
     $('#btn_add').bind('click', function () {
         showAddWin();
@@ -47,6 +54,17 @@ $(function () {
     });
     $('#btn_search').bind('click', function () {
         doSearch();
+    });
+
+    $("#dg").datagrid({
+        onClickRow: function (index, row) { //easyui封装好的时间（被单机行的索引，被单击行的值）
+            // var p = $('#layout_room').layout("panel", "east")[0].clientWidth;
+            // if (p <= 0) {
+            //     $('#layout_room').layout('expand', 'east');
+            // }
+            $('#layout_room').layout('expand', 'east');
+            loadDetailData(row.pgs_provider_goods_id);
+        }
     });
 
     $('#f_add_provider_goods_sample').form({

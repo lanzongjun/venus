@@ -79,4 +79,19 @@ class ProviderGoodsSampleController extends BaseController
         $result = $this->{$this->_s_model}->editProviderGoodsSampleInfo($postData);
         echo json_encode($result);
     }
+
+    public function loadDetailData()
+    {
+        $getData = $this->getGetData();
+
+        $goodsId = isset($getData['goods_id']) ? $getData['goods_id'] : '';
+
+        if (!empty($goodsId)) {
+            $this->load->model($this->_s_model);
+            $result = $this->{$this->_s_model}->loadDetailData($goodsId);
+            echo json_encode($result);
+        } else {
+            echo '';
+        }
+    }
 }

@@ -19,16 +19,8 @@
     </head>
     <body class="easyui-layout">
         <div data-options="region:'north',border:false" style="height:60px;background:#333333;padding:10px;font-size:30px;">Venus(饺非饺进销存管理系统)</div>
-        <div data-options="region:'west',split:true" style="width:150px;">            
+        <div data-options="region:'west',split:true" style="width:180px;">
             <div class="easyui-accordion" data-options="fit:true,border:true">
-<!--                <div title="快捷-每日更新">-->
-<!--                    <a id='lnk_yj_shop_storage' href="#" class="easyui-linkbutton" style="margin:10px 10px 10px 10px;" data-options="iconCls:'icon-large-my-update',size:'large',iconAlign:'top'">易捷站点库存</a>-->
-<!--                    <a id='lnk_goods_info_yj' href="#" class="easyui-linkbutton" style="margin:10px 10px 10px 10px;" data-options="iconCls:'icon-large-my-update',size:'large',iconAlign:'top'">易捷总商品库</a>-->
-<!--                    <a id='lnk_temp_yj_price' href="#" class="easyui-linkbutton" style="margin:10px 10px 10px 10px;" data-options="iconCls:'icon-large-my-update',size:'large',iconAlign:'top'">易捷结算价格</a>-->
-<!--                    <a id='lnk_base_eb_ShopGoods' href="#" class="easyui-linkbutton" style="margin:10px 10px 10px 10px;" data-options="iconCls:'icon-large-my-update',size:'large',iconAlign:'top'">饿百店铺商品</a>-->
-<!--                    <a id='lnk_base_mt_ShopGoods' href="#" class="easyui-linkbutton" style="margin:10px 10px 10px 10px;" data-options="iconCls:'icon-large-my-update',size:'large',iconAlign:'top'">美团店铺商品</a>-->
-<!--                    <a id='lnk_base_mt_ShopGoods2' href="#" class="easyui-linkbutton" style="margin:10px 10px 10px 10px;" data-options="iconCls:'icon-large-my-update',size:'large',iconAlign:'top'">美团店铺商品2222</a>-->
-<!--                </div>-->
                 <div title="导航">
                     <ul class="easyui-tree">
                         <li data-options="state:'open'">
@@ -77,7 +69,7 @@
                                     <span><a id='goods_stock' href="#">进货</a></span>
                                 </li>
                                 <li>
-                                    <span><a id='change' href="#">调度</a></span>
+                                    <span><a id='goods_change' href="#">调度</a></span>
                                 </li>
                                 <li>
                                     <span><a id='staff' href="#">员工餐</a></span>
@@ -89,7 +81,13 @@
                                             <span><a id='goods_sale_online_ele' href="#">饿了么</a></span>
                                         </li>
                                         <li>
+                                            <span><a id='goods_sale_online_ele_summary' href="#">饿了么商品合计</a></span>
+                                        </li>
+                                        <li>
                                             <span><a id='goods_sale_online_mt' href="#">美团</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a id='goods_sale_online_mt_summary' href="#">美团商品合计</a></span>
                                         </li>
                                     </ul>
                                 </li>

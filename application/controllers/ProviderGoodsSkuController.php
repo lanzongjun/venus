@@ -56,10 +56,11 @@ class ProviderGoodsSkuController extends BaseController
         $num = isset($postData['pgs_num']) ? $postData['pgs_num'] : '';
 
         if (empty($skuCode) || empty($providerGoods) || empty($num)) {
-            return json_encode(array(
+            echo json_encode(array(
                 'state' => false,
                 'msg'   => '参数错误'
             ));
+            exit();
         }
 
         $this->load->model($this->_s_model);

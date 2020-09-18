@@ -22,7 +22,6 @@ function closeEditWin() {
 // 编辑
 function showEditWin() {
     var o_row = $("#dg").datagrid('getSelected');
-    console.log(o_row);
     if (!o_row || !o_row.gl_id) {
         $.messager.alert('错误', '请选择一条记录后，在进行此操作', 'error');
         return;
@@ -48,6 +47,13 @@ $(function () {
     });
     $('#btn_search').bind('click', function () {
         doSearch();
+    });
+
+    $('#d_add_goods_loss').window({
+        onBeforeClose:function(){
+            $('#d_add_goods_loss').window('destroy');
+
+        }
     });
 
     $('#f_add_goods_loss').form({

@@ -44,10 +44,11 @@ class GoodsStockController extends BaseController
         $stock = isset($postData['stock']) ? $postData['stock'] : '';
 
         if (empty($providerGoodsId) || empty($date) || empty($stock)) {
-            return array(
+            echo json_encode(array(
                 'state' => false,
                 'msg'   => '参数不正确'
-            );
+            ));
+            exit();
         }
 
         $this->load->model($this->_s_model);
@@ -63,10 +64,11 @@ class GoodsStockController extends BaseController
         $gsId = isset($postData['gs_id']) ? $postData['gs_id'] : '';
 
         if (empty($gsId)) {
-            return json_encode(array(
+            echo json_encode(array(
                 'state' => false,
                 'msg'   => '参数错误'
             ));
+            exit();
         }
 
         $this->load->model($this->_s_model);

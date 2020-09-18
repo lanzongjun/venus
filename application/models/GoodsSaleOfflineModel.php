@@ -24,7 +24,7 @@ class GoodsSaleOfflineModel extends BaseModel
 
         // 获取分页数据
         $queryList->select('gso_id, core_shop.cs_name as shop_name, cs_city, gso_date, 
-        gso_sku_code, core_sku.cs_name as sku_name, gso_num, gso_create_time, gso_update_time');
+        gso_sku_code, core_sku.cs_name as sku_name, gso_num, gso_unit, gso_create_time, gso_update_time');
 
         if (!$rowsOnly) {
             $offset = ($page - 1) * $rows;
@@ -32,6 +32,10 @@ class GoodsSaleOfflineModel extends BaseModel
         }
 
         $rows = $queryList->get('goods_sale_offline')->result_array();
+
+        foreach ($rows as &$row) {
+            $row['unit'] = self::unitMap($row['gso_unit']);
+        }
 
 
         return array(
@@ -52,17 +56,20 @@ class GoodsSaleOfflineModel extends BaseModel
         return $result;
     }
 
-    public function addGoodsSaleOffline($userId, $shopId, $skuCode, $date, $num)
+    public function addGoodsSaleOffline($userId, $shopId, $skuCode, $date, $num, $unit)
     {
         $insertData = [
             'gso_operator' => $userId,
             'gso_shop_id'  => $shopId,
             'gso_sku_code' => $skuCode,
             'gso_date'     => $date,
-            'gso_num'      => $num
+            'gso_num'      => $num,
+            'gso_unit'     => $unit
         ];
 
         $result = $this->db->insert('goods_sale_offline', $insertData);
+
+        // TODO 处理库存
 
         return array(
             'state' => true,
@@ -70,7 +77,7 @@ class GoodsSaleOfflineModel extends BaseModel
         );
     }
 
-    public function editGoodsSaleOffline($id, $userId, $skuCode, $date, $num)
+    public function editGoodsSaleOffline($id, $userId, $skuCode, $date, $num, $unit)
     {
         $o_result = array(
             'state' => false,
@@ -81,6 +88,7 @@ class GoodsSaleOfflineModel extends BaseModel
             'gso_date'     => $date,
             'gso_sku_code' => $skuCode,
             'gso_num'      => $num,
+            'gso_unit'     => $unit,
             'gso_operator' => $userId
         ];
         $this->db->where('gso_id', $id);
