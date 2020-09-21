@@ -48,6 +48,10 @@ $(function () {
         doGoodsSaleOnline();
     });
 
+    $('#goods_exception_claim').bind('click', function () {
+        doGoodsExceptionClaim();
+    });
+
     $('#sku_list').bind('click', function () {
         doShowSkuList();
     })
@@ -159,6 +163,15 @@ function doGoodsStaffMeal() {
 function doGoodsSaleOnline(){
     $('#layout_center').panel({
         href: '../sale/GoodsSaleOnlineController',
+        onLoad: function () {
+
+        }
+    });
+}
+
+function doGoodsExceptionClaim(){
+    $('#layout_center').panel({
+        href: '../sale/GoodsExceptionHandleController',
         onLoad: function () {
 
         }

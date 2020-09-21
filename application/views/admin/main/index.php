@@ -92,8 +92,13 @@
                                     </ul>
                                 </li>
 
-                                <li>
-                                    <span><a id='exception_order' href="#">异常订单</a></span>
+                                <li data-options="state:'open'">
+                                    <span>异常订单</span>
+                                    <ul>
+                                        <li>
+                                            <span><a id='goods_exception_claim' href="#">索赔单</a></span>
+                                        </li>
+                                    </ul>
                                 </li>
                             </ul>
                         </li>
