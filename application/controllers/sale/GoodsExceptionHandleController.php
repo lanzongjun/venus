@@ -41,8 +41,9 @@ class GoodsExceptionHandleController extends BaseController
         $date = isset($postData['date']) ? $postData['date'] : '';
         $unit = isset($postData['unit']) ? $postData['unit'] : '';
         $num = isset($postData['num']) ? $postData['num'] : '';
+        $order = isset($postData['order']) ? $postData['order'] : '';
 
-        if (empty($goodsId) || empty($date) || empty($unit) || empty($num)) {
+        if (empty($goodsId) || empty($date) || empty($unit) || empty($num) || empty($order)) {
             echo json_encode(array(
                 'state' => false,
                 'msg'   => '参数不正确'
@@ -57,7 +58,8 @@ class GoodsExceptionHandleController extends BaseController
             $goodsId,
             $date,
             $unit,
-            $num
+            $num,
+            $order
         );
 
         echo json_encode($result);
@@ -105,10 +107,11 @@ class GoodsExceptionHandleController extends BaseController
         $date = isset($postData['date']) ? $postData['date'] : '';
         $unit = isset($postData['unit']) ? $postData['unit'] : '';
         $num = isset($postData['num']) ? $postData['num'] : '';
-        $gsmId = isset($postData['gsm_id']) ? $postData['gsm_id'] : '';
+        $gehId = isset($postData['geh_id']) ? $postData['geh_id'] : '';
+        $order = isset($postData['order']) ? $postData['order'] : '';
 
         if (empty($goodsId) || empty($date) || empty($unit) || empty($num)
-            || empty($gsmId)) {
+            || empty($gehId) || empty($order)) {
             echo json_encode(array(
                 'state' => false,
                 'msg'   => '参数不正确'
@@ -118,12 +121,13 @@ class GoodsExceptionHandleController extends BaseController
 
         $this->load->model($this->_s_model);
         $result = $this->{$this->_s_model}->editExceptionHandle(
-            $gsmId,
+            $gehId,
             $this->user_id,
             $goodsId,
             $date,
             $unit,
-            $num
+            $num,
+            $order
         );
 
         echo json_encode($result);

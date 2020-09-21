@@ -12,15 +12,16 @@
 <table id="dg" title="异常订单-索赔单" class="easyui-datagrid" toolbar="#dom_toolbar1" data-options="border:false,fit:true,rownumbers:true,singleSelect:true,method:'get',url:'../<?php echo $c_name; ?>/getList/',pagination:true,pageSize:50,pageList: [50, 100, 200, 300]">
     <thead>
     <tr>
-        <th data-options="width:80, align:'center',field:'gsm_id'">异常订单ID</th>
+        <th data-options="width:80, align:'center',field:'geh_id'">异常订单ID</th>
         <th data-options="width:200,align:'center',field:'shop_name'">店铺名称</th>
-        <th data-options="width:180,align:'center',field:'gsm_date'">上报日期</th>
-        <th data-options="width:100,align:'center',field:'order'">订单号</th>
+        <th data-options="width:100,align:'center',field:'geh_order'">订单号</th>
         <th data-options="width:200,align:'center',field:'goods_name'">商品名称</th>
-        <th data-options="width:100,align:'center',field:'num_unit'">商品数量</th>
+        <th data-options="width:180,align:'center',field:'geh_date'">上报日期</th>
+        <th data-options="width:100,align:'center',field:'num_unit'">数量（单位）</th>
+        <th data-options="width:100,align:'center',field:'geh_type_text'">异常类型</th>
         <th data-options="width:100,align:'center',field:'operator'">操作员</th>
-        <th data-options="width:200,align:'center',field:'gsm_create_time'">创建时间</th>
-        <th data-options="width:200,align:'center',field:'gsm_update_time'">更新时间</th>
+        <th data-options="width:200,align:'center',field:'geh_create_time'">创建时间</th>
+        <th data-options="width:200,align:'center',field:'geh_update_time'">更新时间</th>
     </tr>
     </thead>
 </table>
@@ -71,17 +72,6 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'110',label:'单位:',width:'200',panelHeight:'auto'">
-                            <option value="1" selected="true">个</option>
-                            <option value="2">份</option>
-                            <option value="3">斤</option>
-                        </select>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div style="margin-left:5px;margin-bottom:5px">
                         <input class="easyui-numberbox" name="num" data-options="labelWidth:'110',label:'数量:',width:'200', min:0, precision:2">
                     </div>
 
@@ -90,7 +80,17 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-textbox" name="num" data-options="labelWidth:'110',label:'订单号:',width:'300', min:0">
+                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'110',label:'单位:',width:'200',panelHeight:'auto'">
+                            <option value="1" selected="true">个</option>
+                            <option value="2">斤</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <input class="easyui-textbox" name="order" data-options="labelWidth:'110',label:'订单号:',width:'300'">
                     </div>
 
                 </td>
@@ -133,10 +133,16 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
+                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'110',label:'数量:',width:'200', min:0, precision:2">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
                         <select class="easyui-combobox" name="unit" data-options="labelWidth:'110',label:'单位:',width:'200',panelHeight:'auto'">
                             <option value="1" selected="true">个</option>
-                            <option value="2">份</option>
-                            <option value="3">斤</option>
+                            <option value="2">斤</option>
                         </select>
                     </div>
                 </td>
@@ -144,15 +150,7 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'110',label:'数量:',width:'200', min:0, precision:2">
-                    </div>
-
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-textbox" name="num" data-options="labelWidth:'110',label:'订单号:',width:'300', min:0">
+                        <input class="easyui-textbox" name="order" data-options="labelWidth:'110',label:'订单号:',width:'300'">
                     </div>
 
                 </td>

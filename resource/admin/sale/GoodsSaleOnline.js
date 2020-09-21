@@ -16,6 +16,13 @@ var toolbar1 = [{
 
 $(function () {
     //预导入CSV文件
+
+    var status = false;
+
+    // var $btn = $('#btn_sale_online_ele_input');
+    // $btn.on('click', function (e) {
+    //     $('#goods_sale_online_form_input').form('submit');
+    // });
     $('#btn_sale_online_ele_input').bind('click', function () {
         $('#goods_sale_online_form_input').form('submit');
     });
@@ -24,11 +31,21 @@ $(function () {
         type: 'post',
         url: '../'+__s_c_name+'/importExcel',
         onSubmit: function () {
+
+            if(status) {
+                return false;
+            }
+
+            status = true;
+
+
+
             $('#sale_online_ele_win_input').window('close');
             ajaxLoading();
         },
         success: function (data) {
-            $('#sale_online_ele_win_input').window('destroy');
+            status = false;
+            //$('#sale_online_ele_win_input').window('destroy');
             var o_response = $.parseJSON(data);
             if (o_response.state === true) {
                 // $('#hid_tbn').val(o_response.tbn);

@@ -73,8 +73,7 @@
                     <div style="margin-left:5px;margin-bottom:5px">
                         <select class="easyui-combobox" name="unit" data-options="labelWidth:'110',label:'单位:',width:'200',panelHeight:'auto'">
                             <option value="1" selected="true">个</option>
-                            <option value="2">份</option>
-                            <option value="3">斤</option>
+                            <option value="2">斤</option>
                         </select>
                     </div>
                 </td>

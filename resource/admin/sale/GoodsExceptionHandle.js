@@ -22,7 +22,7 @@ function closeEditWin() {
 // 删除
 function showRemoveWin() {
     var o_row = $("#dg").datagrid('getSelected');
-    if (!o_row || !o_row.gsm_id) {
+    if (!o_row || !o_row.geh_id) {
         $.messager.alert('错误', '请选择一条记录后，在进行此操作', 'error');
         return;
     }
@@ -32,7 +32,7 @@ function showRemoveWin() {
             $.ajax({
                 url: '../' + __s_c_name + '/deleteExceptionHandleRecord',
                 type: "POST",
-                data: {"id": o_row.gsm_id},
+                data: {"id": o_row.geh_id},
                 success: function (data) {
                     ajaxLoadEnd();
                     var o_response = $.parseJSON(data);
@@ -51,12 +51,12 @@ function showRemoveWin() {
 // 编辑
 function showEditWin() {
     var o_row = $("#dg").datagrid('getSelected');
-    if (!o_row || !o_row.gsm_id) {
+    if (!o_row || !o_row.geh_id) {
         $.messager.alert('错误', '请选择一条记录后，在进行此操作', 'error');
         return;
     }
     $('#d_edit_exception_handle').window('open');
-    $('#f_edit_exception_handle').form('load', '../' + __s_c_name + '/getExceptionHandleInfo?id=' + o_row.gsm_id);
+    $('#f_edit_exception_handle').form('load', '../' + __s_c_name + '/getExceptionHandleInfo?id=' + o_row.geh_id);
 }
 
 // 查询

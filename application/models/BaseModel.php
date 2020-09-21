@@ -16,9 +16,6 @@ class BaseModel extends CI_Model
                 $unitMap = '个';
                 break;
             case '2':
-                $unitMap = '份';
-                break;
-            case '3':
                 $unitMap = '斤';
                 break;
             default:

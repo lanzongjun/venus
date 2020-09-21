@@ -3,17 +3,23 @@ include_once 'BaseModel.php';
 
 class GoodsExceptionHandleModel extends BaseModel
 {
+
+    /**
+     * 索赔单
+     */
+    const EXCEPTION_HANDLE_TYPE_CHAIM = 1;
+
     public function getList($startDate, $endDate, $providerGoodsName, $page, $rows)
     {
         $query = $this->db;
 
-        $query->join('provider_goods', 'gsm_provider_goods_id = pg_id', 'left');
-        $query->join('user', 'u_id = gsm_operator', 'left');
-        $query->join('core_shop', 'cs_id = gsm_shop_id', 'left');
+        $query->join('provider_goods', 'geh_provider_goods_id = pg_id', 'left');
+        $query->join('user', 'u_id = geh_operator', 'left');
+        $query->join('core_shop', 'cs_id = geh_shop_id', 'left');
 
         if (!empty($startDate) && !empty($endDate)) {
-            $query->where('gsm_date >=', $startDate);
-            $query->where('gsm_date <=', $endDate);
+            $query->where('geh_date >=', $startDate);
+            $query->where('geh_date <=', $endDate);
         }
 
         if (!empty($providerGoodsName)) {
@@ -25,7 +31,7 @@ class GoodsExceptionHandleModel extends BaseModel
 
         // 获取总数
         $queryTotal->select('count(1) as total');
-        $total = $queryTotal->get('goods_staff_meal')->first_row();
+        $total = $queryTotal->get('goods_exception_handle')->first_row();
         if (empty($total->total)) {
             return array(
                 'total' => 0,
@@ -34,16 +40,17 @@ class GoodsExceptionHandleModel extends BaseModel
         }
 
         // 获取分页数据
-        $queryList->select('gsm_id, cs_name as shop_name, pg_name as goods_name, 
-        gsm_date, gsm_unit, gsm_num, gsm_create_time, gsm_update_time');
+        $queryList->select('geh_id, cs_name as shop_name, pg_name as goods_name, 
+        geh_order, geh_date, geh_unit, geh_num, geh_type, u_name as operator, geh_create_time, geh_update_time');
 
         $offset = ($page - 1) * $rows;
         $queryList->limit($rows, $offset);
 
-        $rows = $queryList->get('goods_staff_meal')->result_array();
+        $rows = $queryList->get('goods_exception_handle')->result_array();
 
         foreach ($rows as &$row) {
-            $row['num_unit'] = $row['gsm_num'].'('. self::unitMap($row['gsm_unit']) .')';
+            $row['num_unit'] = $row['geh_num'].'('. self::unitMap($row['geh_unit']) .')';
+            $row['geh_type_text'] = $row['geh_type'] == 1 ? '索赔单' : '';
         }
 
         return array(
@@ -58,18 +65,21 @@ class GoodsExceptionHandleModel extends BaseModel
         $goodsId,
         $date,
         $unit,
-        $num)
+        $num,
+        $order)
     {
         $insertData = [
-            'gsm_shop_id'           => $shopId,
-            'gsm_provider_goods_id' => $goodsId,
-            'gsm_date'              => $date,
-            'gsm_unit'              => $unit,
-            'gsm_num'               => $num,
-            'gsm_operator'          => $userId
+            'geh_shop_id'           => $shopId,
+            'geh_provider_goods_id' => $goodsId,
+            'geh_date'              => $date,
+            'geh_unit'              => $unit,
+            'geh_num'               => $num,
+            'geh_operator'          => $userId,
+            'geh_order'             => $order,
+            'geh_type'              => self::EXCEPTION_HANDLE_TYPE_CHAIM
         ];
 
-        $this->db->insert('goods_staff_meal', $insertData);
+        $this->db->insert('goods_exception_handle', $insertData);
 
         return array(
             'state' => true,
@@ -79,10 +89,10 @@ class GoodsExceptionHandleModel extends BaseModel
 
     public function getExceptionHandleInfo($id)
     {
-        $this->db->select('gsm_id, gsm_provider_goods_id as goods_id, gsm_date as date,
-        gsm_unit as unit, gsm_num as num');
-        $this->db->where('gsm_id', $id);
-        $query = $this->db->get('goods_staff_meal');
+        $this->db->select('geh_id, geh_provider_goods_id as goods_id, geh_date as date,
+        geh_unit as unit, geh_num as num, geh_order as order');
+        $this->db->where('geh_id', $id);
+        $query = $this->db->get('goods_exception_handle');
         $result = $query->first_row();
         if (empty($result)) {
             return array();
@@ -91,7 +101,7 @@ class GoodsExceptionHandleModel extends BaseModel
         return $result;
     }
 
-    public function editExceptionHandle($id, $userId, $goodsId, $date, $unit, $num)
+    public function editExceptionHandle($id, $userId, $goodsId, $date, $unit, $num, $order)
     {
         $o_result = array(
             'state' => false,
@@ -99,16 +109,17 @@ class GoodsExceptionHandleModel extends BaseModel
         );
 
         $updateData = [
-            'gsm_operator'          => $userId,
-            'gsm_provider_goods_id' => $goodsId,
-            'gsm_date'              => $date,
-            'gsm_unit'              => $unit,
-            'gsm_num'               => $num,
+            'geh_operator'          => $userId,
+            'geh_provider_goods_id' => $goodsId,
+            'geh_date'              => $date,
+            'geh_unit'              => $unit,
+            'geh_num'               => $num,
+            'geh_order'             => $order
         ];
-        $this->db->where('gsm_id', $id);
+        $this->db->where('geh_id', $id);
 
         try {
-            $this->db->update('goods_staff_meal',$updateData);
+            $this->db->update('goods_exception_handle',$updateData);
             $i_rows = $this->db->affected_rows();
         } catch (Exception $ex) {
             log_message('error', "编辑商铺信息-异常中断！\r\n" . $ex->getMessage());
@@ -123,7 +134,7 @@ class GoodsExceptionHandleModel extends BaseModel
 
     public function deleteExceptionHandleRecord($id)
     {
-        $result = $this->db->delete('goods_staff_meal', array('gsm_id' => $id));
+        $result = $this->db->delete('goods_exception_handle', array('geh_id' => $id));
 
         return array(
             'state' => true,

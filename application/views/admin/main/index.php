@@ -78,16 +78,10 @@
                                     <span>线上销售</span>
                                     <ul>
                                         <li>
-                                            <span><a id='goods_sale_online_ele' href="#">饿了么</a></span>
+                                            <span><a id='goods_sale_online' href="#">销售记录</a></span>
                                         </li>
                                         <li>
-                                            <span><a id='goods_sale_online_ele_summary' href="#">饿了么商品合计</a></span>
-                                        </li>
-                                        <li>
-                                            <span><a id='goods_sale_online_mt' href="#">美团</a></span>
-                                        </li>
-                                        <li>
-                                            <span><a id='goods_sale_online_mt_summary' href="#">美团商品合计</a></span>
+                                            <span><a id='goods_sale_online_summary' href="#">销售合计</a></span>
                                         </li>
                                     </ul>
                                 </li>

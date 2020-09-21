@@ -44,8 +44,12 @@ $(function () {
         doGoodsStaffMeal();
     });
 
-    $('#goods_sale_online_ele').bind('click', function () {
+    $('#goods_sale_online').bind('click', function () {
         doGoodsSaleOnline();
+    });
+
+    $('#goods_sale_online_summary').bind('click', function () {
+        doGoodsSaleOnlineSummary();
     });
 
     $('#goods_exception_claim').bind('click', function () {
@@ -163,6 +167,15 @@ function doGoodsStaffMeal() {
 function doGoodsSaleOnline(){
     $('#layout_center').panel({
         href: '../sale/GoodsSaleOnlineController',
+        onLoad: function () {
+
+        }
+    });
+}
+
+function doGoodsSaleOnlineSummary(){
+    $('#layout_center').panel({
+        href: '../sale/GoodsSaleOnlineSummaryController',
         onLoad: function () {
 
         }

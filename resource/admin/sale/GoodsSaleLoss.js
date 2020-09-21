@@ -52,6 +52,7 @@ $(function () {
     $('#d_add_goods_loss').window({
         onBeforeClose:function(){
             $('#d_add_goods_loss').window('destroy');
+            //location.reload();
 
         }
     });
