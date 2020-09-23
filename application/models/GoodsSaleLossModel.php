@@ -53,7 +53,9 @@ class GoodsSaleLossModel extends BaseModel
     public function getGoodsLossInfo($id)
     {
         $this->db->select(
-            'gl_id, gl_provider_goods_id as goods_id, gl_num as num, gl_date as date, gl_order as order'
+            'gl_id, gl_provider_goods_id as goods_id, gl_num as num,
+             gl_unit as unit,
+             gl_date as date, gl_order as order, gl_type'
         );
 
         $this->db->where('gl_id', $id);
@@ -82,13 +84,15 @@ class GoodsSaleLossModel extends BaseModel
 
         $this->db->insert('goods_loss', $insertData);
 
+        $type = $type == 1 ? REPERTORY_TYPE_DELETE_SALE_SHOP_LOSS : REPERTORY_TYPE_DELETE_SALE_ORDER_LOSS;
+
         // 修改库存
         $modifyRes = $this->modifyRepertory(
             $shopId,
             $goodsId,
             -$num,
             $unit,
-            REPERTORY_TYPE_ADD_SALE_SHOP_LOSS
+            $type
         );
 
         if ($modifyRes['state'] === false) {
@@ -112,12 +116,35 @@ class GoodsSaleLossModel extends BaseModel
         );
     }
 
-    public function editGoodsLossInfo($id, $userId, $date, $num, $unit, $order)
+    public function editGoodsLossInfo($shopId, $id, $userId, $date, $num, $unit, $type, $order)
     {
         $o_result = array(
             'state' => false,
             'msg' => ''
         );
+
+        $this->db->trans_begin();
+
+        $constType = $type == 1 ? REPERTORY_TYPE_DELETE_SALE_SHOP_LOSS : REPERTORY_TYPE_DELETE_SALE_ORDER_LOSS;
+
+        // 修改库存
+        $editRes = $this->editRepertory(
+            $shopId,
+            'goods_loss',
+            'gl',
+            $id,
+            $num,
+            $unit,
+            $constType);
+
+        if ($editRes['state'] === false) {
+            $this->db->trans_rollback();
+
+            return array(
+                'state' => false,
+                'msg'   => $editRes['msg']
+            );
+        }
 
         $updateData = [
             'gl_operator'          => $userId,
@@ -139,11 +166,49 @@ class GoodsSaleLossModel extends BaseModel
         }
         $o_result['state'] = $i_rows == 1;
         $o_result['msg'] = "更新记录数 : $i_rows 条";
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+        } else {
+            $this->db->trans_commit();
+        }
+
         return $o_result;
     }
 
     public function deleteGoodsLoss($id)
     {
+        $this->db->trans_begin();
 
+        $row = $this->db->where('gl_id', $id)->get('goods_loss')->first_row();
+        if (empty($row)) {
+            return array(
+                'state' => true,
+                'msg'   => '该条记录不存在'
+            );
+        }
+
+        $type = $row->gl_type == 1 ? REPERTORY_TYPE_DELETE_SALE_SHOP_LOSS : REPERTORY_TYPE_DELETE_SALE_ORDER_LOSS;
+
+        // 删除记录
+        $this->db->delete('goods_loss', array('gl_id' => $id));
+
+        // 减少库存
+        $this->modifyRepertory(
+            $row->gl_shop_id,
+            $row->gl_provider_goods_id,
+            $row->gl_num,
+            $row->gl_unit, $type);
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+        } else {
+            $this->db->trans_commit();
+        }
+
+        return array(
+            'state' => true,
+            'msg' => '删除成功'
+        );
     }
 }

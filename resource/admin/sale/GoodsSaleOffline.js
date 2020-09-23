@@ -1,18 +1,3 @@
-function doLogClear(){
-    $.messager.confirm('确认', '此操作将删除所有日志数据，仅保留当日数据，是否进行此操作？', function (r) {
-        if (r) {
-            ajaxLoading();
-            $.ajax({
-                url: '../' + __s_c_name + '/keepUpdateTodayLog',
-                type: "POST",
-                success: function (data) {
-                    ajaxLoadEnd();
-                    $.messager.alert('信息', "受影响记录数:"+data, 'info');
-                }
-            });
-        }
-    });
-}
 
 
 function showAddWin() {

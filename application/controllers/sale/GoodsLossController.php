@@ -105,6 +105,7 @@ class GoodsLossController extends BaseController
         $num     = isset($postData['num']) ? $postData['num'] : '';
         $unit     = isset($postData['unit']) ? $postData['unit'] : '';
         $order   = isset($postData['order']) ? $postData['order'] : '';
+        $type   = isset($postData['gl_type']) ? $postData['gl_type'] : '';
         $id      = isset($postData['gl_id']) ? $postData['gl_id'] : '';
 
         if (empty($date) || empty($num) || empty($unit) || empty($id)) {
@@ -116,12 +117,35 @@ class GoodsLossController extends BaseController
         }
 
         $this->load->model($this->_s_model);
-        $result = $this->{$this->_s_model}->editGoodsLossInfo($id,
+        $result = $this->{$this->_s_model}->editGoodsLossInfo(
+            $this->shop_id,
+            $id,
             $this->user_id,
             $date,
             $num,
             $unit,
+            $type,
             $order);
+
+        echo json_encode($result);
+    }
+
+    public function deleteGoodsLoss()
+    {
+        $postData = $this->getPostData();
+
+        $id = isset($postData['id']) ? $postData['id'] : '';
+
+        if (empty($id)) {
+            echo array(
+                'state' => false,
+                'msg'   => '参数不正确'
+            );
+            exit();
+        }
+
+        $this->load->model($this->_s_model);
+        $result = $this->{$this->_s_model}->deleteGoodsLoss($id);
 
         echo json_encode($result);
     }

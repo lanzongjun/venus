@@ -117,7 +117,9 @@ class GoodsSaleOfflineModel extends BaseModel
 
         // 修改库存
         $editRes = $this->editRepertory(
-            $shopId, 'goods_sale_offline', 'gso',
+            $shopId,
+            'goods_sale_offline',
+            'gso',
             $id,
             $num,
             $unit,

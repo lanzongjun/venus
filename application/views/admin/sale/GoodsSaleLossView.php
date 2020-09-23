@@ -42,15 +42,14 @@ EOF;
         <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
         <a id="btn_add" href="#" data-options="iconCls:'icon-add'" class="easyui-linkbutton">新增</a>
         <a id="btn_edit" href="#" data-options="iconCls:'icon-edit'" class="easyui-linkbutton">编辑</a>
+        <a id="btn_remove" href="#" data-options="iconCls:'icon-remove'" class="easyui-linkbutton">删除</a>
         <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
     </div>
 </div>
-<?php
-if ($type == 1) {
-    $html = <<<EOF
-    <div id="d_edit_goods_loss" class="easyui-window" title="编辑损耗信息" 
-    data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:440px;height:210px;padding:5px;">
-    <form id="f_edit_goods_loss" method="post">
+
+<div id="d_edit_goods_loss1" class="easyui-window" title="编辑损耗信息"
+     data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:440px;height:245px;padding:5px;">
+    <form id="f_edit_goods_loss1" method="post">
         <table>
             <tr>
                 <td>
@@ -78,22 +77,34 @@ if ($type == 1) {
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量/个:',width:'300', min:0">
+                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',width:'300', min:0, precision:2, required:true">
+                    </div>
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'70',label:'单位:',width:'130',panelHeight:'auto'">
+                            <option value="1" selected="true">个</option>
+                            <option value="2">斤</option>
+                        </select>
                     </div>
 
                 </td>
             </tr>
         </table>
+        <input name="gl_type" type="hidden"/>
         <input name="gl_id" type="hidden"/>
         <div style="text-align:center;padding:5px 0">
-            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="saveEditForm()" style="width:80px">保存</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="closeEditWin()" style="width:80px">取消</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="saveEditForm1()" style="width:80px">保存</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="closeEditWin1()" style="width:80px">取消</a>
         </div>
     </form>
 </div>
-    <div id="d_add_goods_loss" class="easyui-window" title="新增损耗信息" 
-    data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:245px;padding:5px;">
-    <form id="f_add_goods_loss" method="post">
+<div id="d_add_goods_loss1" class="easyui-window" title="新增损耗信息"
+     data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:245px;padding:5px;">
+    <form id="f_add_goods_loss1" method="post">
         <table>
             <tr>
                 <td>
@@ -140,16 +151,15 @@ if ($type == 1) {
             </tr>
         </table>
         <div style="text-align:center;padding:5px 0">
-            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="saveAddForm()" style="width:80px">保存</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="closeAddWin()" style="width:80px">取消</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="saveAddForm1()" style="width:80px">保存</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="closeAddWin1()" style="width:80px">取消</a>
         </div>
     </form>
 </div>
-EOF;
-} else {
-    $html = <<<EOF
-    <div id="d_edit_goods_loss" class="easyui-window" title="编辑损耗信息" data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:440px;height:245px;padding:5px;">
-    <form id="f_edit_goods_loss" method="post">
+
+
+<div id="d_edit_goods_loss2" class="easyui-window" title="编辑损耗信息" data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:440px;height:280px;padding:5px;">
+    <form id="f_edit_goods_loss2" method="post">
         <table>
             <tr>
                 <td>
@@ -177,7 +187,18 @@ EOF;
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量/个:',width:'300', min:0">
+                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',width:'300', min:0, precision:2, required:true">
+                    </div>
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'70',label:'单位:',width:'130',panelHeight:'auto'">
+                            <option value="1" selected="true">个</option>
+                            <option value="2">斤</option>
+                        </select>
                     </div>
 
                 </td>
@@ -191,15 +212,16 @@ EOF;
                 </td>
             </tr>
         </table>
+        <input name="gl_type" type="hidden"/>
         <input name="gl_id" type="hidden"/>
         <div style="text-align:center;padding:5px 0">
-            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="saveEditForm()" style="width:80px">保存</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="closeEditWin()" style="width:80px">取消</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="saveEditForm2()" style="width:80px">保存</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="closeEditWin2()" style="width:80px">取消</a>
         </div>
     </form>
 </div>
-    <div id="d_add_goods_loss" class="easyui-window" title="新增损耗信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:280px;padding:5px;">
-    <form id="f_add_goods_loss" method="post">
+<div id="d_add_goods_loss2" class="easyui-window" title="新增损耗信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:280px;padding:5px;">
+    <form id="f_add_goods_loss2" method="post">
         <table>
             <tr>
                 <td>
@@ -254,16 +276,12 @@ EOF;
             </tr>
         </table>
         <div style="text-align:center;padding:5px 0">
-            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="saveAddForm()" style="width:80px">保存</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="closeAddWin()" style="width:80px">取消</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="saveAddForm2()" style="width:80px">保存</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="closeAddWin2()" style="width:80px">取消</a>
         </div>
     </form>
 </div>
-EOF;
-}
 
-echo $html;
-?>
 <style type="text/css">
     .datagrid-header-rownumber, .datagrid-cell-rownumber {
         width: 40px;
