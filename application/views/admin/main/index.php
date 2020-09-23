@@ -112,6 +112,14 @@
                                 </li>
                             </ul>
                         </li>
+                        <li>
+                            <span>库存管理</span>
+                            <ul>
+                                <li>
+                                    <span><a id="repertory_list" href="#">库存列表</a></span>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>

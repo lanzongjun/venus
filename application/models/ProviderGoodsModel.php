@@ -70,11 +70,12 @@ class ProviderGoodsModel extends BaseModel
         return array();
     }
 
-    public function addProviderGoods($providerId, $providerGoodsName)
+    public function addProviderGoods($providerId, $providerGoodsName, $isDumplings)
     {
         $insertData = [
             'pg_provider_id' => $providerId,
-            'pg_name'        => $providerGoodsName
+            'pg_name'        => $providerGoodsName,
+            'is_dumplings'   => $isDumplings
         ];
 
         $this->db->insert('provider_goods', $insertData);
@@ -94,7 +95,8 @@ class ProviderGoodsModel extends BaseModel
 
         $updateData = [
             'pg_provider_id' => $params['p_id'],
-            'pg_name' => $params['pg_name']
+            'pg_name' => $params['pg_name'],
+            'is_dumplings' => $params['is_dumplings']
         ];
         $this->db->where('pg_id', $params['pg_id']);
 
@@ -102,7 +104,7 @@ class ProviderGoodsModel extends BaseModel
             $this->db->update('provider_goods',$updateData);
             $i_rows = $this->db->affected_rows();
         } catch (Exception $ex) {
-            log_message('error', '编辑商铺信息-异常中断！\r\n' . $ex->getMessage());
+            log_message('error', "编辑商铺信息-异常中断！\r\n" . $ex->getMessage());
             $o_result['state'] = false;
             $o_result['msg'] = "编辑商铺信息-异常中断！\r\n" . $ex->getMessage();
             return $o_result;

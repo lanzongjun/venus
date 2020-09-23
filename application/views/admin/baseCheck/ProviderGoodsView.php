@@ -31,7 +31,7 @@
         <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
     </div>
 </div>
-<div id="d_edit_provider_goods" class="easyui-window" title="编辑商品信息" data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:440px;height:170px;padding:5px;">
+<div id="d_edit_provider_goods" class="easyui-window" title="编辑商品信息" data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:440px;height:210px;padding:5px;">
     <form id="f_edit_provider_goods" method="post">
         <table>
             <tr>
@@ -58,6 +58,16 @@
                     </div>
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <select class="easyui-combobox" name="is_dumplings" data-options="labelWidth:'90',label:'是否是饺子:',width:'150',panelHeight:'auto'">
+                            <option value="0">否</option>
+                            <option value="1" selected="true">是</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
         </table>
         <input name="pg_id" type="hidden"/>
         <div style="text-align:center;padding:5px 0">
@@ -66,7 +76,7 @@
         </div>
     </form>
 </div>
-<div id="d_add_provider_goods" class="easyui-window" title="新增商品信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:180px;padding:5px;">
+<div id="d_add_provider_goods" class="easyui-window" title="新增商品信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:210px;padding:5px;">
     <form id="f_add_provider_goods" method="post">
         <table>
             <tr>
@@ -90,6 +100,16 @@
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
                         <input class="easyui-textbox" name="pg_name" data-options="labelWidth:'90',label:'商品名称:',width:'300px'">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <select class="easyui-combobox" name="is_dumplings" data-options="labelWidth:'90',label:'是否是饺子:',width:'150',panelHeight:'auto'">
+                            <option value="0">否</option>
+                            <option value="1" selected="true">是</option>
+                        </select>
                     </div>
                 </td>
             </tr>

@@ -62,6 +62,7 @@ class ProviderGoodsController extends BaseController
 
         $providerId = isset($postData['p_id']) ? $postData['p_id'] : '';
         $providerGoodsName = isset($postData['pg_name']) ? $postData['pg_name'] : '';
+        $isDumplings = isset($postData['is_dumplings']) ? $postData['is_dumplings'] : 0;
 
         if (empty($providerId) || empty($providerGoodsName)) {
             echo json_encode(array(
@@ -72,7 +73,7 @@ class ProviderGoodsController extends BaseController
         }
 
         $this->load->model($this->_s_model);
-        $result = $this->{$this->_s_model}->addProviderGoods($providerId, $providerGoodsName);
+        $result = $this->{$this->_s_model}->addProviderGoods($providerId, $providerGoodsName, $isDumplings);
 
         echo json_encode($result);
     }

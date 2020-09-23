@@ -58,7 +58,11 @@ $(function () {
 
     $('#sku_list').bind('click', function () {
         doShowSkuList();
-    })
+    });
+
+    $('#repertory_list').bind('click', function () {
+        doShowRepertoryList();
+    });
 });
 
 function doAddProvider() {
@@ -194,6 +198,15 @@ function doGoodsExceptionClaim(){
 function doShowSkuList() {
     $('#layout_center').panel({
         href: '../CoreSkuController',
+        onLoad: function () {
+
+        }
+    });
+}
+
+function doShowRepertoryList() {
+    $('#layout_center').panel({
+        href: '../CoreRepertoryController',
         onLoad: function () {
 
         }
