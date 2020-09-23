@@ -114,7 +114,6 @@ class GoodsSaleOfflineModel extends BaseModel
 
         $this->db->trans_begin();
 
-
         // 修改库存
         $editRes = $this->editRepertory(
             $shopId,

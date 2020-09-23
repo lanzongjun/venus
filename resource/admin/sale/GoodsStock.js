@@ -1,20 +1,3 @@
-function doLogClear(){
-    $.messager.confirm('确认', '此操作将删除所有日志数据，仅保留当日数据，是否进行此操作？', function (r) {
-        if (r) {
-            ajaxLoading();
-            $.ajax({
-                url: '../' + __s_c_name + '/keepUpdateTodayLog',
-                type: "POST",
-                success: function (data) {
-                    ajaxLoadEnd();
-                    $.messager.alert('信息', "受影响记录数:"+data, 'info');
-                }
-            });
-        }
-    });
-}
-
-
 function showAddWin() {
     $('#d_add_goods_stock').window('open');
 }
@@ -29,11 +12,22 @@ function closeAddWin() {
 }
 
 function saveEditForm() {
-    $('#f_edit_shop').form('submit');
+    $('#f_edit_goods_stock').form('submit');
 }
 
 function closeEditWin() {
-    $('#w_edit_shop').window('close');
+    $('#d_edit_goods_stock').window('close');
+}
+
+// 编辑
+function showEditWin() {
+    var o_row = $("#dg").datagrid('getSelected');
+    if (!o_row || !o_row.gs_id) {
+        $.messager.alert('错误', '请选择一条记录后，在进行此操作', 'error');
+        return;
+    }
+    $('#d_edit_goods_stock').window('open');
+    $('#f_edit_goods_stock').form('load', '../' + __s_c_name + '/getGoodsStockInfo?id=' + o_row.gs_id);
 }
 
 // 删除
@@ -48,7 +42,7 @@ function showRemoveWin() {
         if (r) {
             ajaxLoading();
             $.ajax({
-                url: '../sale/' + __s_c_name + '/deleteGoodsStockRecord',
+                url: '../' + __s_c_name + '/deleteGoodsStockRecord',
                 type: "POST",
                 data: {"gs_id": o_row.gs_id},
                 success: function (data) {
@@ -83,6 +77,9 @@ $(function () {
     $('#btn_add').bind('click', function () {
         showAddWin();
     });
+    $('#btn_edit').bind('click', function () {
+        showEditWin();
+    });
     $('#btn_remove').bind('click', function () {
         showRemoveWin();
     });
@@ -91,7 +88,7 @@ $(function () {
     });
 
     $('#f_add_goods_stock').form({
-        url: '../sale/' + __s_c_name + '/addGoodsStock',
+        url: '../' + __s_c_name + '/addGoodsStock',
         type: "POST",
         success: function (data) {
             var o_response = $.parseJSON(data);
@@ -105,8 +102,8 @@ $(function () {
         }
     });
 
-    $('#f_edit_shop').form({
-        url: '../' + __s_c_name + '/editProviderInfo',
+    $('#f_edit_goods_stock').form({
+        url: '../' + __s_c_name + '/editGoodsStock',
         type: "POST",
         success: function (data) {
             var o_response = $.parseJSON(data);
@@ -115,7 +112,7 @@ $(function () {
             } else {
                 $.messager.alert('错误-更新失败', o_response.msg, 'error');
             }
-            $('#w_edit_shop').window('close');
+            $('#d_edit_goods_stock').window('close');
             $('#dg').datagrid('reload');
         }
     });

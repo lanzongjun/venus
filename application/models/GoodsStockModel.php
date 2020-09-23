@@ -143,4 +143,75 @@ class GoodsStockModel extends BaseModel
             'msg'   => '删除成功'
         );
     }
+
+    public function getGoodsStockInfo($id)
+    {
+        $this->db->select('gs_id, 
+        gs_provider_goods_id as goods_id, 
+        gs_date as date, gs_num as num, gs_unit as unit');
+
+        $this->db->where('gs_id', $id);
+
+        $result = $this->db->get('goods_stock')->first_row();
+
+        return $result;
+    }
+
+    public function editGoodsStock($shopId, $id, $userId, $date, $num, $unit)
+    {
+        $o_result = array(
+            'state' => false,
+            'msg' => ''
+        );
+
+        $this->db->trans_begin();
+
+        // 修改库存
+        $editRes = $this->editRepertory(
+            $shopId,
+            'goods_stock',
+            'gs',
+            $id,
+            $num,
+            $unit,
+            REPERTORY_TYPE_EDIT_STOCK,
+            true
+        );
+
+        if ($editRes['state'] === false) {
+            $this->db->trans_rollback();
+
+            return array(
+                'state' => false,
+                'msg'   => $editRes['msg']
+            );
+        }
+
+        $updateData = [
+            'gs_date'              => $date,
+            'gs_num'               => $num,
+            'gs_unit'              => $unit,
+            'gs_operator_id'          => $userId
+        ];
+        $this->db->where('gs_id', $id);
+
+        try {
+            $this->db->update('goods_stock',$updateData);
+            $i_rows = $this->db->affected_rows();
+        } catch (Exception $ex) {
+            log_message('error', "编辑进货信息-异常中断！\r\n" . $ex->getMessage());
+            $o_result['state'] = false;
+            $o_result['msg'] = "编辑进货信息-异常中断！\r\n" . $ex->getMessage();
+            return $o_result;
+        }
+        $o_result['state'] = $i_rows == 1;
+        $o_result['msg'] = "更新记录数 : $i_rows 条";
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+        } else {
+            $this->db->trans_commit();
+        }
+        return $o_result;
+    }
 }

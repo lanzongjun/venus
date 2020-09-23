@@ -1,5 +1,3 @@
-
-
 function showAddWin() {
     $('#d_add_sale_offline').window('open');
 }

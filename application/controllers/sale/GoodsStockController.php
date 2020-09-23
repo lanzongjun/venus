@@ -12,7 +12,7 @@ class GoodsStockController extends BaseController
      */
     public function index()
     {
-        $data['c_name'] = 'GoodsStockController';
+        $data['c_name'] = 'sale/GoodsStockController';
         $this->load->helper('url');
         $this->load->view("admin/sale/$this->_s_view", $data);
     }
@@ -39,12 +39,12 @@ class GoodsStockController extends BaseController
     {
         $postData = $this->getPostData();
 
-        $providerGoodsId = isset($postData['pg_id']) ? $postData['pg_id'] : '';
+        $goodsId = isset($postData['goods_id']) ? $postData['goods_id'] : '';
         $date = isset($postData['date']) ? $postData['date'] : '';
         $num = isset($postData['num']) ? $postData['num'] : '';
         $unit = isset($postData['unit']) ? $postData['unit'] : '';
 
-        if (empty($providerGoodsId) || empty($date) || empty($num) || empty($unit)) {
+        if (empty($goodsId) || empty($date) || empty($num) || empty($unit)) {
             echo json_encode(array(
                 'state' => false,
                 'msg'   => '参数不正确'
@@ -56,7 +56,7 @@ class GoodsStockController extends BaseController
         $result = $this->{$this->_s_model}->addGoodsStock(
             $this->user_id,
             $this->shop_id,
-            $providerGoodsId,
+            $goodsId,
             $date,
             $num,
             $unit
@@ -81,6 +81,52 @@ class GoodsStockController extends BaseController
 
         $this->load->model($this->_s_model);
         $result = $this->{$this->_s_model}->deleteGoodsStockRecord($gsId);
+
+        echo json_encode($result);
+    }
+
+    public function getGoodsStockInfo()
+    {
+        $getData = $this->getGetData();
+
+        $id = isset($getData['id']) ? $getData['id'] : '';
+        if ($id != '') {
+            $this->load->model($this->_s_model);
+            $o_result = $this->{$this->_s_model}->getGoodsStockInfo($id);
+            echo json_encode($o_result);
+        } else {
+            echo '';
+        }
+    }
+
+    public function editGoodsStock()
+    {
+        $postData = $this->getPostData();
+
+        $date = isset($postData['date']) ? $postData['date'] : '';
+        $num = isset($postData['num']) ? $postData['num'] : '';
+        $unit = isset($postData['unit']) ? $postData['unit'] : '';
+        $id   = isset($postData['gs_id']) ? $postData['gs_id'] : '';
+
+        if (empty($date) || empty($num) || empty($id) || empty($unit)) {
+            echo json_encode(
+                array(
+                    'state' => false,
+                    'msg'   => '参数不正确'
+                )
+            );
+            exit();
+        }
+
+        $this->load->model($this->_s_model);
+        $result = $this->{$this->_s_model}->editGoodsStock(
+            $this->shop_id,
+            $id,
+            $this->user_id,
+            $date,
+            $num,
+            $unit
+        );
 
         echo json_encode($result);
     }

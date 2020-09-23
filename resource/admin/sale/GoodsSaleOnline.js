@@ -38,8 +38,6 @@ $(function () {
 
             status = true;
 
-
-
             $('#sale_online_ele_win_input').window('close');
             ajaxLoading();
         },
