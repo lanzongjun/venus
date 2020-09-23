@@ -41,9 +41,10 @@ class GoodsStockController extends BaseController
 
         $providerGoodsId = isset($postData['pg_id']) ? $postData['pg_id'] : '';
         $date = isset($postData['date']) ? $postData['date'] : '';
-        $stock = isset($postData['stock']) ? $postData['stock'] : '';
+        $num = isset($postData['num']) ? $postData['num'] : '';
+        $unit = isset($postData['unit']) ? $postData['unit'] : '';
 
-        if (empty($providerGoodsId) || empty($date) || empty($stock)) {
+        if (empty($providerGoodsId) || empty($date) || empty($num) || empty($unit)) {
             echo json_encode(array(
                 'state' => false,
                 'msg'   => '参数不正确'
@@ -52,7 +53,14 @@ class GoodsStockController extends BaseController
         }
 
         $this->load->model($this->_s_model);
-        $result = $this->{$this->_s_model}->addGoodsStock($this->user_id, $this->shop_id, $providerGoodsId, $date, $stock);
+        $result = $this->{$this->_s_model}->addGoodsStock(
+            $this->user_id,
+            $this->shop_id,
+            $providerGoodsId,
+            $date,
+            $num,
+            $unit
+        );
 
         echo json_encode($result);
     }

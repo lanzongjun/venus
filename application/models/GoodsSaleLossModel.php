@@ -102,7 +102,7 @@ class GoodsSaleLossModel extends BaseModel
             $this->db->update('goods_loss',$updateData);
             $i_rows = $this->db->affected_rows();
         } catch (Exception $ex) {
-            log_message('error', '编辑商铺信息-异常中断！\r\n' . $ex->getMessage());
+            log_message('error', "编辑商铺信息-异常中断！\r\n" . $ex->getMessage());
             $o_result['state'] = false;
             $o_result['msg'] = "编辑商铺信息-异常中断！\r\n" . $ex->getMessage();
             return $o_result;

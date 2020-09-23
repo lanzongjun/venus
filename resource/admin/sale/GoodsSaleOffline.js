@@ -116,7 +116,7 @@ $(function () {
                 $.messager.alert('错误-更新失败', o_response.msg, 'error');
             }
             $('#d_add_sale_offline').window('close');
-            $('#f_add_sale_offline').form('clear');
+            //$('#f_add_sale_offline').form('clear');
 
             $('#dg').datagrid('reload');
         }
@@ -133,7 +133,7 @@ $(function () {
                 $.messager.alert('错误-更新失败', o_response.msg, 'error');
             }
             $('#d_edit_sale_offline').window('close');
-            $('#f_edit_sale_offline').form('clear');
+            //$('#f_edit_sale_offline').form('clear');
 
             $('#dg').datagrid('reload');
         }

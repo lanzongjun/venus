@@ -19,7 +19,16 @@
         <th data-options="width:100,align:'center',field:'cs_city'">店铺所在城市</th>
         <th data-options="width:300,align:'center',field:'pg_name'">供应商商品名称</th>
         <th data-options="width:150,align:'center',field:'gl_num'">数量</th>
-        <th data-options="width:200,align:'center',field:'gl_order'">订单号</th>
+        <?php
+
+        if ($type == 2) {
+            $line = <<<EOF
+                        <th data-options="width:150,align:'center',field:'gl_order'">订单</th>
+EOF;
+        echo $line;
+        }
+
+        ?>
         <th data-options="width:100,align:'center',field:'u_name'">操作员</th>
         <th data-options="width:200,align:'center',field:'gl_create_time'">创建时间</th>
         <th data-options="width:200,align:'center',field:'gl_update_time'">更新时间</th>
@@ -125,7 +134,6 @@ if ($type == 1) {
 
                 </td>
             </tr>
-            <?php  echo $type ?>
         </table>
         <div style="text-align:center;padding:5px 0">
             <a href="javascript:void(0)" class="easyui-linkbutton" onclick="saveAddForm()" style="width:80px">保存</a>
@@ -179,7 +187,6 @@ EOF;
 
                 </td>
             </tr>
-            <?php  echo $type ?>
         </table>
         <div style="text-align:center;padding:5px 0">
             <a href="javascript:void(0)" class="easyui-linkbutton" onclick="saveAddForm()" style="width:80px">保存</a>

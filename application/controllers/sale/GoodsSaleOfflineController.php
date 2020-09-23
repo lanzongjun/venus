@@ -57,12 +57,12 @@ class GoodsSaleOfflineController extends BaseController
     {
         $postData = $this->getPostData();
 
-        $skuCode = isset($postData['cs_code']) ? $postData['cs_code'] : '';
+        $goodsId = isset($postData['goods_id']) ? $postData['goods_id'] : '';
         $date = isset($postData['date']) ? $postData['date'] : '';
         $num = isset($postData['num']) ? $postData['num'] : '';
         $unit = isset($postData['unit']) ? $postData['unit'] : '';
 
-        if (empty($skuCode) || empty($date) || empty($num) || empty($unit)) {
+        if (empty($goodsId) || empty($date) || empty($num) || empty($unit)) {
             echo json_encode(array(
                 'state' => false,
                 'msg'   => '参数不正确'
@@ -74,7 +74,7 @@ class GoodsSaleOfflineController extends BaseController
         $result = $this->{$this->_s_model}->addGoodsSaleOffline(
             $this->user_id,
             $this->shop_id,
-            $skuCode,
+            $goodsId,
             $date,
             $num,
             $unit
@@ -87,23 +87,30 @@ class GoodsSaleOfflineController extends BaseController
     {
         $postData = $this->getPostData();
 
-        $skuCode = isset($postData['cs_code']) ? $postData['cs_code'] : '';
         $date = isset($postData['date']) ? $postData['date'] : '';
         $num = isset($postData['num']) ? $postData['num'] : '';
         $unit = isset($postData['unit']) ? $postData['unit'] : '';
         $id = isset($postData['gso_id']) ? $postData['gso_id'] : '';
 
-        if (empty($skuCode) || empty($date) || empty($num) || empty($id) || empty($unit)) {
+        if (empty($date) || empty($num) || empty($id) || empty($unit)) {
             echo json_encode(
                 array(
                     'state' => false,
                     'msg'   => '参数不正确'
                 )
             );
+            exit();
         }
 
         $this->load->model($this->_s_model);
-        $result = $this->{$this->_s_model}->editGoodsSaleOffline($id, $this->user_id, $skuCode, $date, $num, $unit);
+        $result = $this->{$this->_s_model}->editGoodsSaleOffline(
+            $this->shop_id,
+            $id,
+            $this->user_id,
+            $date,
+            $num,
+            $unit
+        );
 
         echo json_encode($result);
     }
@@ -115,10 +122,11 @@ class GoodsSaleOfflineController extends BaseController
         $id = isset($postData['gso_id']) ? $postData['gso_id'] : '';
 
         if (empty($id)) {
-            return array(
+            echo array(
                 'state' => false,
                 'msg'   => '参数不正确'
             );
+            exit();
         }
 
         $this->load->model($this->_s_model);

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: zongjun.lan
- * Date: 2020/8/31
- * Time: 3:52 PM
- */
 
 class BaseController extends CI_Controller
 {

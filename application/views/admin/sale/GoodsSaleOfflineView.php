@@ -14,11 +14,9 @@
     <tr>
         <th data-options="width:200,align:'center',field:'shop_name'">店铺</th>
         <th data-options="width:100,align:'center',field:'cs_city'">门店所在城市</th>
+        <th data-options="width:300,align:'center',field:'goods_name'">商品</th>
         <th data-options="width:150,align:'center',field:'gso_date'">销售日期</th>
-        <th data-options="width:150,align:'center',field:'gso_sku_code'">SKU</th>
-        <th data-options="width:400,align:'center',field:'sku_name'">SKU名称</th>
-        <th data-options="width:100,align:'center',field:'gso_num'">销量</th>
-        <th data-options="width:50,align:'center',field:'unit'">单位</th>
+        <th data-options="width:200,align:'center',field:'num_unit'">数量(单位)</th>
         <th data-options="width:200,align:'center',field:'gso_create_time'">创建时间</th>
         <th data-options="width:200,align:'center',field:'gso_update_time'">更新时间</th>
     </tr>
@@ -50,15 +48,16 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-combobox" name="cs_code" data-options="
-                        url:'../CoreSkuController/getList?rows_only=true',
+                        <input class="easyui-combobox" name="goods_id" readonly disabled data-options="
+                        url:'../ProviderGoodsController/getList?rows_only=true',
                         method:'get',
-                        valueField:'cs_code',
-                        textField:'show_name',
-                        label: 'SKU编码:',
+                        valueField:'pg_id',
+                        textField:'provider_goods_format',
+                        label: '商品信息:',
                         labelPosition: 'left',
                         labelWidth:'70',
                         width:'400',
+                        required:true
                         ">
                     </div>
                 </td>
@@ -73,7 +72,7 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',width:'300', min:0">
+                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',width:'300', min:0, precision:2">
                     </div>
 
                 </td>
@@ -103,15 +102,16 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-combobox" name="cs_code" data-options="
-                        url:'../CoreSkuController/getList?rows_only=true',
+                        <input class="easyui-combobox" name="goods_id" data-options="
+                        url:'../ProviderGoodsController/getList?rows_only=true',
                         method:'get',
-                        valueField:'cs_code',
-                        textField:'show_name',
-                        label: 'SKU编码:',
+                        valueField:'pg_id',
+                        textField:'provider_goods_format',
+                        label: '商品信息:',
                         labelPosition: 'left',
                         labelWidth:'70',
                         width:'400',
+                        required:true
                         ">
                     </div>
                 </td>
@@ -126,25 +126,22 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',width:'300', min:0">
+                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',width:'300', min:0, precision:2">
                     </div>
 
                 </td>
             </tr>
-
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
                         <select class="easyui-combobox" name="unit" data-options="labelWidth:'70',label:'单位:',width:'130',panelHeight:'auto'">
                             <option value="1" selected="true">个</option>
-                            <option value="2">份</option>
-                            <option value="3">斤</option>
+                            <option value="2">斤</option>
                         </select>
                     </div>
 
                 </td>
             </tr>
-
         </table>
         <div style="text-align:center;padding:5px 0">
             <a href="javascript:void(0)" class="easyui-linkbutton" onclick="saveAddForm()" style="width:80px">保存</a>

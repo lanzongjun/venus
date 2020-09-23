@@ -16,7 +16,7 @@
         <th data-options="width:120,align:'center',field:'cs_name'">店铺名称</th>
         <th data-options="width:180,align:'center',field:'pg_name'">供应商商品</th>
         <th data-options="width:130,align:'center',field:'gs_date'">进货日期</th>
-        <th data-options="width:100,align:'center',field:'gs_stock'">库存(KG)</th>
+        <th data-options="width:100,align:'center',field:'num_unit'">数量(单位)</th>
         <th data-options="width:100,align:'center',field:'u_name'">操作人</th>
         <th data-options="width:200,align:'center',field:'gs_create_time'">创建时间</th>
         <th data-options="width:200,align:'center',field:'gs_update_time'">更新时间</th>
@@ -40,7 +40,7 @@
     </div>
 </div>
 
-<div id="d_add_goods_stock" class="easyui-window" title="新增商品进货信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:210px;padding:5px;">
+<div id="d_add_goods_stock" class="easyui-window" title="新增商品进货信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:245px;padding:5px;">
     <form id="f_add_goods_stock" method="post">
         <table>
             <tr>
@@ -69,7 +69,18 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="stock" data-options="labelWidth:'110',label:'重量(KG):',width:'300', min:0, precision:2">
+                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'110',label:'数量:',width:'300', min:0, precision:2">
+                    </div>
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'110',label:'单位:',width:'200',panelHeight:'auto'">
+                            <option value="1" selected="true">个</option>
+                            <option value="2">斤</option>
+                        </select>
                     </div>
 
                 </td>
