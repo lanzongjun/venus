@@ -31,14 +31,18 @@ class GoodsSaleLossModel extends BaseModel
         // 获取分页数据
         $queryList->select(
             'gl_id, gl_provider_goods_id, cs_name, cs_city,
-            pg_name, gl_date, gl_type, gl_num, gl_operator, u_name, gl_order, 
+            pg_name, gl_date, gl_type, gl_num, gl_unit, gl_operator, u_name, gl_order, 
             gl_create_time, gl_update_time'
         );
 
         $offset = ($page - 1) * $rows;
         $queryList->limit($rows, $offset);
 
-        $rows = $queryList->get('goods_loss')->result();
+        $rows = $queryList->get('goods_loss')->result_array();
+
+        foreach ($rows as &$row) {
+            $row['num_unit'] = $row['gl_num'].'('. self::unitMap($row['gl_unit']) .')';
+        }
 
         return array(
             'total' => $total->total,
@@ -61,28 +65,54 @@ class GoodsSaleLossModel extends BaseModel
         return array();
     }
 
-    public function addGoodsLossInfo($shopId, $userId, $type, $goodsId, $date, $num, $order)
+    public function addGoodsLossInfo($shopId, $userId, $type, $goodsId, $date, $num, $unit, $order)
     {
+        $this->db->trans_begin();
+
         $insertData = [
             'gl_shop_id'           => $shopId,
             'gl_date'              => $date,
             'gl_type'              => $type,
             'gl_provider_goods_id' => $goodsId,
             'gl_num'               => $num,
+            'gl_unit'              => $unit,
             'gl_order'             => $order,
             'gl_operator'          => $userId
         ];
 
-        $o_result = $this->db->insert('goods_loss', $insertData);
+        $this->db->insert('goods_loss', $insertData);
 
-        // TODO 减少库存
+        // 修改库存
+        $modifyRes = $this->modifyRepertory(
+            $shopId,
+            $goodsId,
+            -$num,
+            $unit,
+            REPERTORY_TYPE_ADD_SALE_SHOP_LOSS
+        );
 
-        $result = ['state' => $o_result, 'msg' => "添加成功"];
+        if ($modifyRes['state'] === false) {
+            $this->db->trans_rollback();
 
-        return $result;
+            return array(
+                'state' => false,
+                'msg'   => $modifyRes['msg']
+            );
+        }
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+        } else {
+            $this->db->trans_commit();
+        }
+
+        return array(
+            'state' => true,
+            'msg'   => '添加成功'
+        );
     }
 
-    public function editGoodsLossInfo($id, $userId, $goodsId, $date, $num, $order)
+    public function editGoodsLossInfo($id, $userId, $date, $num, $unit, $order)
     {
         $o_result = array(
             'state' => false,
@@ -91,9 +121,9 @@ class GoodsSaleLossModel extends BaseModel
 
         $updateData = [
             'gl_operator'          => $userId,
-            'gl_provider_goods_id' => $goodsId,
             'gl_date'              => $date,
             'gl_num'               => $num,
+            'gl_unit'              => $unit,
             'gl_order'             => $order
         ];
         $this->db->where('gl_id', $id);
@@ -110,5 +140,10 @@ class GoodsSaleLossModel extends BaseModel
         $o_result['state'] = $i_rows == 1;
         $o_result['msg'] = "更新记录数 : $i_rows 条";
         return $o_result;
+    }
+
+    public function deleteGoodsLoss($id)
+    {
+
     }
 }

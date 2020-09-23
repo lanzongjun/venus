@@ -18,7 +18,7 @@
         <th data-options="width:100,align:'center',field:'cs_name'">店铺名称</th>
         <th data-options="width:100,align:'center',field:'cs_city'">店铺所在城市</th>
         <th data-options="width:300,align:'center',field:'pg_name'">供应商商品名称</th>
-        <th data-options="width:150,align:'center',field:'gl_num'">数量</th>
+        <th data-options="width:150,align:'center',field:'num_unit'">数量(单位)</th>
         <?php
 
         if ($type == 2) {
@@ -45,13 +45,116 @@ EOF;
         <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
     </div>
 </div>
-<div id="d_edit_goods_loss" class="easyui-window" title="编辑损耗信息" data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:440px;height:245px;padding:5px;">
+<?php
+if ($type == 1) {
+    $html = <<<EOF
+    <div id="d_edit_goods_loss" class="easyui-window" title="编辑损耗信息" 
+    data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:440px;height:210px;padding:5px;">
     <form id="f_edit_goods_loss" method="post">
         <table>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-combobox" name="goods_id" data-options="
+                        <input class="easyui-combobox" name="goods_id" readonly disabled data-options="
+                        url:'../ProviderGoodsController/getList?rows_only=true',
+                        method:'get',
+                        valueField:'pg_id',
+                        textField:'provider_goods_format',
+                        label: '商品信息:',
+                        labelPosition: 'left',
+                        labelWidth:'70',
+                        width:'400'
+                        ">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <input class="easyui-datebox" name="date" data-options="labelWidth:'70',label:'损耗日期:',width:'300px'">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量/个:',width:'300', min:0">
+                    </div>
+
+                </td>
+            </tr>
+        </table>
+        <input name="gl_id" type="hidden"/>
+        <div style="text-align:center;padding:5px 0">
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="saveEditForm()" style="width:80px">保存</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="closeEditWin()" style="width:80px">取消</a>
+        </div>
+    </form>
+</div>
+    <div id="d_add_goods_loss" class="easyui-window" title="新增损耗信息" 
+    data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:245px;padding:5px;">
+    <form id="f_add_goods_loss" method="post">
+        <table>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <input class="easyui-combobox" name="pg_id" data-options="
+                        url:'../ProviderGoodsController/getList?rows_only=true',
+                        method:'get',
+                        valueField:'pg_id',
+                        textField:'provider_goods_format',
+                        label: '商品信息:',
+                        labelPosition: 'left',
+                        labelWidth:'70',
+                        width:'400',
+                        required:true
+                        ">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <input class="easyui-datebox" name="date" data-options="labelWidth:'70',label:'损耗日期:',width:'300px',required:true">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',width:'300', min:0, precision:2, required:true">
+                    </div>
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'70',label:'单位:',width:'130',panelHeight:'auto'">
+                            <option value="1" selected="true">个</option>
+                            <option value="2">斤</option>
+                        </select>
+                    </div>
+
+                </td>
+            </tr>
+        </table>
+        <div style="text-align:center;padding:5px 0">
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="saveAddForm()" style="width:80px">保存</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="closeAddWin()" style="width:80px">取消</a>
+        </div>
+    </form>
+</div>
+EOF;
+} else {
+    $html = <<<EOF
+    <div id="d_edit_goods_loss" class="easyui-window" title="编辑损耗信息" data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:440px;height:245px;padding:5px;">
+    <form id="f_edit_goods_loss" method="post">
+        <table>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <input class="easyui-combobox" name="goods_id" readonly disabled data-options="
                         url:'../ProviderGoodsController/getList?rows_only=true',
                         method:'get',
                         valueField:'pg_id',
@@ -95,11 +198,7 @@ EOF;
         </div>
     </form>
 </div>
-<?php
-if ($type == 1) {
-    $html = <<<EOF
-    <div id="d_add_goods_loss" class="easyui-window" title="新增损耗信息" 
-    data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:210px;padding:5px;">
+    <div id="d_add_goods_loss" class="easyui-window" title="新增损耗信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:280px;padding:5px;">
     <form id="f_add_goods_loss" method="post">
         <table>
             <tr>
@@ -129,52 +228,7 @@ if ($type == 1) {
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量(个):',width:'300',min:0,required:true">
-                    </div>
-
-                </td>
-            </tr>
-        </table>
-        <div style="text-align:center;padding:5px 0">
-            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="saveAddForm()" style="width:80px">保存</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="closeAddWin()" style="width:80px">取消</a>
-        </div>
-    </form>
-</div>
-EOF;
-} else {
-    $html = <<<EOF
-    <div id="d_add_goods_loss" class="easyui-window" title="新增损耗信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:245px;padding:5px;">
-    <form id="f_add_goods_loss" method="post">
-        <table>
-            <tr>
-                <td>
-                    <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-combobox" name="pg_id" data-options="
-                        url:'../ProviderGoodsController/getList?rows_only=true',
-                        method:'get',
-                        valueField:'pg_id',
-                        textField:'provider_goods_format',
-                        label: '商品信息:',
-                        labelPosition: 'left',
-                        labelWidth:'70',
-                        width:'400',
-                        required:true
-                        ">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-datebox" name="date" data-options="labelWidth:'70',label:'损耗日期:',width:'300px',required:true">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量(个):',width:'300',min:0,required:true">
+                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',width:'300', min:0, precision:2, required:true">
                     </div>
 
                 </td>
@@ -182,7 +236,18 @@ EOF;
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-textbox" name="order" data-options="labelWidth:'70',label:'订单号:',width:'300'">
+                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'70',label:'单位:',width:'130',panelHeight:'auto'">
+                            <option value="1" selected="true">个</option>
+                            <option value="2">斤</option>
+                        </select>
+                    </div>
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <input class="easyui-textbox" name="order" data-options="labelWidth:'70',label:'订单号:',width:'300', required:true">
                     </div>
 
                 </td>

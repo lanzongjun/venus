@@ -94,4 +94,9 @@ class GoodsSaleOnlineModel extends BaseModel
         );
 
     }
+
+    public function getSummaryList()
+    {
+
+    }
 }

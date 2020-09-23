@@ -70,10 +70,11 @@ class GoodsLossController extends BaseController
         $goodsId = isset($postData['pg_id']) ? $postData['pg_id'] : '';
         $date    = isset($postData['date']) ? $postData['date'] : '';
         $num     = isset($postData['num']) ? $postData['num'] : '';
+        $unit     = isset($postData['unit']) ? $postData['unit'] : '';
         $order   = isset($postData['order']) ? $postData['order'] : '';
         $type    = isset($postData['type']) ? $postData['type'] : '';
 
-        if (empty($goodsId) || empty($date) || empty($num) || empty($type)) {
+        if (empty($goodsId) || empty($date) || empty($num) || empty($type) || empty($unit)) {
             echo array(
                 'state' => false,
                 'msg'   => '请填写正确的参数'
@@ -89,6 +90,7 @@ class GoodsLossController extends BaseController
             $goodsId,
             $date,
             $num,
+            $unit,
             $order
         );
 
@@ -99,13 +101,13 @@ class GoodsLossController extends BaseController
     {
         $postData = $this->getPostData();
 
-        $goodsId = isset($postData['goods_id']) ? $postData['goods_id'] : '';
         $date    = isset($postData['date']) ? $postData['date'] : '';
         $num     = isset($postData['num']) ? $postData['num'] : '';
+        $unit     = isset($postData['unit']) ? $postData['unit'] : '';
         $order   = isset($postData['order']) ? $postData['order'] : '';
         $id      = isset($postData['gl_id']) ? $postData['gl_id'] : '';
 
-        if (empty($goodsId) || empty($date) || empty($num) || empty($id)) {
+        if (empty($date) || empty($num) || empty($unit) || empty($id)) {
             echo json_encode(array(
                 'state' => false,
                 'msg'   => '请填写正确的参数'
@@ -114,7 +116,12 @@ class GoodsLossController extends BaseController
         }
 
         $this->load->model($this->_s_model);
-        $result = $this->{$this->_s_model}->editGoodsLossInfo($id, $this->user_id, $goodsId, $date, $num, $order);
+        $result = $this->{$this->_s_model}->editGoodsLossInfo($id,
+            $this->user_id,
+            $date,
+            $num,
+            $unit,
+            $order);
 
         echo json_encode($result);
     }

@@ -57,6 +57,14 @@ $(function () {
         }
     });
 
+    $('#d_edit_goods_loss').window({
+        onBeforeClose:function(){
+            $('#d_edit_goods_loss').window('destroy');
+            //location.reload();
+
+        }
+    });
+
     $('#f_add_goods_loss').form({
         url: '../' + __s_c_name + '/addGoodsLossInfo',
         type: "POST",
