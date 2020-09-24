@@ -48,7 +48,7 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-combobox" name="goods_id" data-options="
+                        <input class="easyui-combobox" name="goods_id" readonly disabled data-options="
                         url:'../ProviderGoodsController/getList?rows_only=true',
                         method:'get',
                         valueField:'pg_id',
@@ -209,6 +209,6 @@
 <script type="text/javascript">
     var __s_c_name = '<?php echo $c_name; ?>';
 </script>
-<script src="<?php echo base_url("/resource/admin/sale/GoodsSaleOnlineSummary.js?" . rand()) ?>" type="text/javascript"></script>
+<script src="<?php echo base_url("/resource/admin/sale/GoodsChange.js?" . rand()) ?>" type="text/javascript"></script>
 </body>
 </html>

@@ -43,18 +43,18 @@
     </div>
 </div>
 
-<div id="d_edit_exception_handle" class="easyui-window" title="编辑异常订单信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:320px;padding:5px;">
+<div id="d_edit_exception_handle" class="easyui-window" title="编辑异常订单信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:285px;padding:5px;">
     <form id="f_edit_exception_handle" method="post">
         <table>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-combobox" name="goods_id" data-options="
+                        <input class="easyui-combobox" name="goods_id" readonly disabled data-options="
                         url:'../ProviderGoodsController/getList?rows_only=true',
                         method:'get',
                         valueField:'pg_id',
                         textField:'provider_goods_format',
-                        label: '供应商商品信息:',
+                        label: '商品信息:',
                         labelPosition: 'left',
                         labelWidth:'110',
                         width:'400'
@@ -104,7 +104,7 @@
     </form>
 </div>
 
-<div id="d_add_exception_handle" class="easyui-window" title="新增异常订单信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:320px;padding:5px;">
+<div id="d_add_exception_handle" class="easyui-window" title="新增异常订单信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:285px;padding:5px;">
     <form id="f_add_exception_handle" method="post">
         <table>
             <tr>

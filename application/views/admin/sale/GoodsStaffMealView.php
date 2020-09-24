@@ -40,13 +40,13 @@
     </div>
 </div>
 
-<div id="d_edit_staff_meal" class="easyui-window" title="编辑员工餐信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:320px;padding:5px;">
+<div id="d_edit_staff_meal" class="easyui-window" title="编辑员工餐信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:245px;padding:5px;">
     <form id="f_edit_staff_meal" method="post">
         <table>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-combobox" name="goods_id" data-options="
+                        <input class="easyui-combobox" name="goods_id" readonly disabled data-options="
                         url:'../ProviderGoodsController/getList?rows_only=true',
                         method:'get',
                         valueField:'pg_id',
@@ -69,19 +69,19 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'110',label:'单位:',width:'200',panelHeight:'auto'">
-                            <option value="1" selected="true">个</option>
-                            <option value="2">斤</option>
-                        </select>
+                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'110',label:'数量:',width:'200', min:0, precision:2">
                     </div>
+
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'110',label:'数量:',width:'200', min:0, precision:2">
+                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'110',label:'单位:',width:'200',panelHeight:'auto'">
+                            <option value="1" selected="true">个</option>
+                            <option value="2">斤</option>
+                        </select>
                     </div>
-
                 </td>
             </tr>
         </table>
@@ -93,7 +93,7 @@
     </form>
 </div>
 
-<div id="d_add_staff_meal" class="easyui-window" title="新增员工餐信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:320px;padding:5px;">
+<div id="d_add_staff_meal" class="easyui-window" title="新增员工餐信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:245px;padding:5px;">
     <form id="f_add_staff_meal" method="post">
         <table>
             <tr>
@@ -122,19 +122,18 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'110',label:'单位:',width:'200',panelHeight:'auto'">
-                            <option value="1" selected="true">个</option>
-                            <option value="2">斤</option>
-                        </select>
+                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'110',label:'数量:',width:'200', min:0, precision:2">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'110',label:'数量:',width:'200', min:0, precision:2">
+                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'110',label:'单位:',width:'200',panelHeight:'auto'">
+                            <option value="1" selected="true">个</option>
+                            <option value="2">斤</option>
+                        </select>
                     </div>
-
                 </td>
             </tr>
         </table>
