@@ -29,7 +29,7 @@ class ProviderGoodsController extends BaseController
 
     public function getList()
     {
-        $getData = $this->input->get();
+        $getData = $this->getGetData();
 
         $page = isset($getData['page']) ? $getData['page'] : 1;
         $rows = isset($getData['rows']) ? $getData['rows'] : 50;

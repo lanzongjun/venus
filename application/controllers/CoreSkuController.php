@@ -1,12 +1,7 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: zongjun.lan
- * Date: 2020/8/28
- * Time: 4:54 PM
- */
+include_once 'BaseController.php';
 
-class CoreSkuController extends CI_Controller
+class CoreSkuController extends BaseController
 {
     public $_s_view = 'CoreSkuView';
     public $_s_model = 'CoreSkuModel';
@@ -23,7 +18,7 @@ class CoreSkuController extends CI_Controller
 
     public function getList()
     {
-        $getData = $this->input->get();
+        $getData = $this->getGetData();
 
         $page = isset($getData['page']) ? $getData['page'] : 1;
         $rows = isset($getData['rows']) ? $getData['rows'] : 50;

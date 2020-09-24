@@ -95,8 +95,53 @@ class GoodsSaleOnlineModel extends BaseModel
 
     }
 
-    public function getSummaryList()
+    public function getSummaryList($startDate, $endDate, $goodsName, $page, $rows)
     {
+        $query = $this->db;
+        $query->join('provider_goods_sku as b', 'gso_sku_code = pgs_sku_code', 'left');
+        $query->join('provider_goods', 'b.pgs_provider_goods_id = pg_id', 'left');
+        $query->join('provider_goods_sample as a', 'a.pgs_provider_goods_id = pg_id', 'left');
+        $query->group_by('b.pgs_provider_goods_id, gso_date');
+        $query->select('b.pgs_provider_goods_id,pg_name,sum(pgs_num) as total, is_dumplings, pgs_weight, gso_date');
 
+        if (!empty($startDate) && !empty($endDate)) {
+            $query->where('gso_date >=', $startDate);
+            $query->where('gso_date <=', $endDate);
+        }
+
+        if (!empty($goodsName)) {
+            $query->like('pg_name', $goodsName);
+        }
+
+        $queryTotal = clone $query;
+        $queryList  = clone  $query;
+
+        // 获取总数
+        $queryTotal->get('goods_sale_online')->first_row();
+        $total = $this->db->query("select count(1) as total from ({$queryTotal->last_query()}) as tmp")->first_row();
+        if (empty($total->total)) {
+            return array(
+                'total' => 0,
+                'rows'  => []
+            );
+        }
+
+        $offset = ($page - 1) * $rows;
+        $queryList->limit($rows, $offset);
+
+        $rows = $queryList->get('goods_sale_online')->result_array();
+
+        foreach ($rows as &$row) {
+            if ($row['is_dumplings'] && !empty($row['pgs_weight'])) {
+                $row['num_unit'] = round($row['total'] * $row['pgs_weight'] / 500, 2).'斤';
+            } else {
+                $row['num_unit'] = $row['total'].'个';
+            }
+        }
+
+        return array(
+            'total' => $total->total,
+            'rows' => $rows
+        );
     }
 }

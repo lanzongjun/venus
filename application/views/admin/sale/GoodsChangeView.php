@@ -209,6 +209,6 @@
 <script type="text/javascript">
     var __s_c_name = '<?php echo $c_name; ?>';
 </script>
-<script src="<?php echo base_url("/resource/admin/sale/GoodsChange.js?" . rand()) ?>" type="text/javascript"></script>
+<script src="<?php echo base_url("/resource/admin/sale/GoodsSaleOnlineSummary.js?" . rand()) ?>" type="text/javascript"></script>
 </body>
 </html>
