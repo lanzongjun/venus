@@ -75,7 +75,7 @@ class ProviderGoodsModel extends BaseModel
         $insertData = [
             'pg_provider_id' => $providerId,
             'pg_name'        => $providerGoodsName,
-            'is_dumplings'   => $isDumplings
+            'pg_is_dumplings'   => $isDumplings
         ];
 
         $this->db->insert('provider_goods', $insertData);
@@ -96,7 +96,7 @@ class ProviderGoodsModel extends BaseModel
         $updateData = [
             'pg_provider_id' => $params['p_id'],
             'pg_name' => $params['pg_name'],
-            'is_dumplings' => $params['is_dumplings']
+            'pg_is_dumplings' => $params['is_dumplings']
         ];
         $this->db->where('pg_id', $params['pg_id']);
 

@@ -33,7 +33,6 @@ function showEditWin() {
 // 删除
 function showRemoveWin() {
     var o_row = $("#dg").datagrid('getSelected');
-    console.log(o_row);
     if (!o_row || !o_row.gs_id) {
         $.messager.alert('错误', '请选择一条记录后，在进行此操作', 'error');
         return;

@@ -32,6 +32,8 @@
             <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
             <a id="btn_add" href="#" data-options="iconCls:'icon-add'" class="easyui-linkbutton">新增</a>
             <a id="btn_edit" href="#" data-options="iconCls:'icon-edit'" class="easyui-linkbutton">编辑</a>
+            <a id="btn_remove" href="#" data-options="iconCls:'icon-remove'" class="easyui-linkbutton">删除</a>
+            <a id="btn_reload" href="#" data-options="iconCls:'icon-reload'" class="easyui-linkbutton">校验库存</a>
             <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
         </div>
     </div>
@@ -40,7 +42,7 @@
             <thead>
             <tr>
                 <th data-options="width:200,align:'center',field:'goods_name'">商品名称</th>
-                <th data-options="width:150,align:'center',field:'pgcd_num'">数量</th>
+                <th data-options="width:150,align:'center',field:'num_unit'">数量(单位)</th>
                 <th data-options="width:150,align:'center',field:'operator_name'">操作员</th>
                 <th data-options="width:200,align:'center',field:'pgcd_create_time'">创建时间</th>
                 <th data-options="width:200,align:'center',field:'pgcd_update_time'">更新时间</th>
@@ -49,13 +51,13 @@
         </table>
     </div>
 </div>
-<div id="d_edit_provider_goods_check" class="easyui-window" title="编辑商品盘点信息" data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:440px;height:170px;padding:5px;">
+<div id="d_edit_provider_goods_check" class="easyui-window" title="编辑商品盘点信息" data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:440px;height:210px;padding:5px;">
     <form id="f_edit_provider_goods_check" method="post">
         <table>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-combobox" name="pg_id" data-options="
+                        <input class="easyui-combobox" name="goods_id" readonly disabled data-options="
                         url:'../ProviderGoodsController/getList?rows_only=true',
                         method:'get',
                         valueField:'pg_id',
@@ -72,7 +74,17 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-textbox" name="pgcd_num" data-options="labelWidth:'90',label:'商品数量:',width:'240px'">
+                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'90',label:'数量:',width:'240px', precision:2">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'90',label:'单位:',width:'240px',panelHeight:'auto'">
+                            <option value="1" selected="true">个</option>
+                            <option value="2">斤</option>
+                        </select>
                     </div>
                 </td>
             </tr>
@@ -84,13 +96,13 @@
         </div>
     </form>
 </div>
-<div id="d_add_provider_goods_check" class="easyui-window" title="新增商品盘点信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:180px;padding:5px;">
+<div id="d_add_provider_goods_check" class="easyui-window" title="新增商品盘点信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:210px;padding:5px;">
     <form id="f_add_provider_goods_check" method="post">
         <table>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-combobox" name="pg_id" data-options="
+                        <input class="easyui-combobox" name="goods_id" data-options="
                         url:'../ProviderGoodsController/getList?rows_only=true',
                         method:'get',
                         valueField:'pg_id',
@@ -107,7 +119,17 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="pgcd_num" data-options="labelWidth:'90',label:'商品数量:',width:'300px'">
+                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'90',label:'数量:',width:'240px', precision:2">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'90',label:'单位:',width:'240px',panelHeight:'auto'">
+                            <option value="1" selected="true">个</option>
+                            <option value="2">斤</option>
+                        </select>
                     </div>
                 </td>
             </tr>
@@ -118,6 +140,8 @@
         </div>
     </form>
 </div>
+
+
 <style type="text/css">
     .datagrid-header-rownumber, .datagrid-cell-rownumber {
         width: 40px;

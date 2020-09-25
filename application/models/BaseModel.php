@@ -53,7 +53,7 @@ class BaseModel extends CI_Model
         $isDumplings = $this->db
             ->where('pg_id', $goodsId)
             ->get('provider_goods')
-            ->row()->is_dumplings;
+            ->row()->pg_is_dumplings;
 
         $transferResult = $this->transferToGram($isDumplings, $unit, $goodsId, $num);
         if (!$transferResult) {
@@ -156,7 +156,7 @@ class BaseModel extends CI_Model
         // 比较一下,求出差值
         $originNum    = $row->{$rowKey . '_num'};
         $originUnit   = $row->{$rowKey . '_unit'};
-        $isDumplings  = $row->is_dumplings;
+        $isDumplings  = $row->pg_is_dumplings;
         $originWeight = $this->transferToGram($isDumplings, $originUnit, $goodsId, $originNum);
         $nowWeight    = $this->transferToGram($isDumplings, $unit, $goodsId, $num);
 

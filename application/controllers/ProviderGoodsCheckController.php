@@ -69,10 +69,11 @@ class ProviderGoodsCheckController extends BaseController
     {
         $postData = $this->getPostData();
 
-        $pgId = isset($postData['pg_id']) ? $postData['pg_id'] : '';
-        $num = isset($postData['pgcd_num']) ? $postData['pgcd_num'] : '';
+        $goodsId = isset($postData['goods_id']) ? $postData['goods_id'] : '';
+        $num = isset($postData['num']) ? $postData['num'] : '';
+        $unit = isset($postData['unit']) ? $postData['unit'] : '';
 
-        if (empty($pgId) || empty($num)) {
+        if (empty($goodsId) || empty($num) || empty($unit)) {
             echo json_encode(array(
                 'state' => false,
                 'msg'   => '参数错误'
@@ -83,7 +84,7 @@ class ProviderGoodsCheckController extends BaseController
         $date = date('Y-m-d');
 
         $this->load->model($this->_s_model);
-        $result = $this->{$this->_s_model}->addGoodsCheck($this->shop_id,$this->user_id, $date, $pgId, $num);
+        $result = $this->{$this->_s_model}->addGoodsCheck($this->shop_id,$this->user_id, $date, $goodsId, $num, $unit);
 
         echo json_encode($result);
     }
@@ -93,10 +94,10 @@ class ProviderGoodsCheckController extends BaseController
         $postData = $this->getPostData();
 
         $id = isset($postData['pgcd_id']) ? $postData['pgcd_id'] : '';
-        $pgId = isset($postData['pg_id']) ? $postData['pg_id'] : '';
-        $num = isset($postData['pgcd_num']) ? $postData['pgcd_num'] : '';
+        $num = isset($postData['num']) ? $postData['num'] : '';
+        $unit = isset($postData['unit']) ? $postData['unit'] : '';
 
-        if (empty($id) || empty($pgId) || empty($num))  {
+        if (empty($id) || empty($unit) || empty($num))  {
             echo json_encode(array(
                 'state' => false,
                 'msg'   => '参数错误'
@@ -105,7 +106,47 @@ class ProviderGoodsCheckController extends BaseController
         }
 
         $this->load->model($this->_s_model);
-        $result = $this->{$this->_s_model}->editGoodsCheck($this->user_id, $id, $pgId, $num);
+        $result = $this->{$this->_s_model}->editGoodsCheck($this->user_id, $id, $num, $unit);
+
+        echo json_encode($result);
+    }
+
+    public function reloadGoodsCheck()
+    {
+        $postData = $this->getPostData();
+
+        $id = isset($postData['id']) ? $postData['id'] : '';
+
+        if (empty($id))  {
+            echo json_encode(array(
+                'state' => false,
+                'msg'   => '参数错误'
+            ));
+            exit();
+        }
+
+        $this->load->model($this->_s_model);
+        $result = $this->{$this->_s_model}->reloadGoodsCheck($this->shop_id, $id);
+
+        echo json_encode($result);
+    }
+
+    public function deleteGoodsCheckDetail()
+    {
+        $postData = $this->getPostData();
+
+        $id = isset($postData['id']) ? $postData['id'] : '';
+
+        if (empty($id)) {
+            echo json_encode(array(
+                'state' => false,
+                'msg'   => '参数错误'
+            ));
+            exit();
+        }
+
+        $this->load->model($this->_s_model);
+        $result = $this->{$this->_s_model}->deleteGoodsCheckDetail($id);
 
         echo json_encode($result);
     }

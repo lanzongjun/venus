@@ -102,7 +102,7 @@ class GoodsSaleOnlineModel extends BaseModel
         $query->join('provider_goods', 'b.pgs_provider_goods_id = pg_id', 'left');
         $query->join('provider_goods_sample as a', 'a.pgs_provider_goods_id = pg_id', 'left');
         $query->group_by('b.pgs_provider_goods_id, gso_date');
-        $query->select('b.pgs_provider_goods_id,pg_name,sum(pgs_num) as total, is_dumplings, pgs_weight, gso_date');
+        $query->select('b.pgs_provider_goods_id,pg_name,sum(pgs_num) as total, pg_is_dumplings, pgs_weight, gso_date');
 
         if (!empty($startDate) && !empty($endDate)) {
             $query->where('gso_date >=', $startDate);
@@ -132,7 +132,7 @@ class GoodsSaleOnlineModel extends BaseModel
         $rows = $queryList->get('goods_sale_online')->result_array();
 
         foreach ($rows as &$row) {
-            if ($row['is_dumplings'] && !empty($row['pgs_weight'])) {
+            if ($row['pg_is_dumplings'] && !empty($row['pgs_weight'])) {
                 $row['num_unit'] = round($row['total'] * $row['pgs_weight'] / 500, 2).'斤';
             } else {
                 $row['num_unit'] = $row['total'].'个';
