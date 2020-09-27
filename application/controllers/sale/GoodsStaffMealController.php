@@ -101,13 +101,12 @@ class GoodsStaffMealController extends BaseController
     {
         $postData = $this->getPostData();
 
-        $goodsId = isset($postData['goods_id']) ? $postData['goods_id'] : '';
         $date = isset($postData['date']) ? $postData['date'] : '';
         $unit = isset($postData['unit']) ? $postData['unit'] : '';
         $num = isset($postData['num']) ? $postData['num'] : '';
         $gsmId = isset($postData['gsm_id']) ? $postData['gsm_id'] : '';
 
-        if (empty($goodsId) || empty($date) || empty($unit) || empty($num)
+        if (empty($date) || empty($unit) || empty($num)
             || empty($gsmId)) {
             echo json_encode(array(
                 'state' => false,
@@ -118,9 +117,9 @@ class GoodsStaffMealController extends BaseController
 
         $this->load->model($this->_s_model);
         $result = $this->{$this->_s_model}->editStaffMeal(
+            $this->shop_id,
             $gsmId,
             $this->user_id,
-            $goodsId,
             $date,
             $unit,
             $num

@@ -166,7 +166,9 @@ class BaseModel extends CI_Model
 
         // 没有差值 直接退出
         if (empty($diffWeight)) {
-            return true;
+            return array(
+                'state' => true
+            );
         }
 
         // 修改库存

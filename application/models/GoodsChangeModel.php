@@ -3,6 +3,10 @@ include_once 'BaseModel.php';
 
 class GoodsChangeModel extends BaseModel
 {
+    const CHANGE_TYPE_IN = 1;//转入
+
+    const CHANGE_TYPE_OUT = 2;//转出
+
     public function getList($startDate, $endDate, $providerGoodsName, $page, $rows)
     {
         // 获取店铺信息
@@ -75,6 +79,9 @@ class GoodsChangeModel extends BaseModel
         $changeType,
         $changeShop)
     {
+
+        $this->db->trans_begin();
+
         $insertData = [
             'gc_shop_id'           => $shopId,
             'gc_provider_goods_id' => $goodsId,
@@ -87,6 +94,79 @@ class GoodsChangeModel extends BaseModel
         ];
 
         $this->db->insert('goods_change', $insertData);
+
+        // 修改库存
+        if ($changeType == self::CHANGE_TYPE_IN) {
+            // 修改库存
+            $modifyRes = $this->modifyRepertory(
+                $shopId,
+                $goodsId,
+                $num,
+                $unit,
+                REPERTORY_TYPE_ADD_GOODS_CHANGE
+            );
+            if ($modifyRes['state'] === false) {
+                $this->db->trans_rollback();
+
+                return array(
+                    'state' => false,
+                    'msg'   => $modifyRes['msg']
+                );
+            }
+            $modifyRes = $this->modifyRepertory(
+                $changeShop,
+                $goodsId,
+                -$num,
+                $unit,
+                REPERTORY_TYPE_ADD_GOODS_CHANGE
+            );
+            if ($modifyRes['state'] === false) {
+                $this->db->trans_rollback();
+
+                return array(
+                    'state' => false,
+                    'msg'   => $modifyRes['msg']
+                );
+            }
+        } else {
+            // 修改库存
+            $modifyRes = $this->modifyRepertory(
+                $shopId,
+                $goodsId,
+                -$num,
+                $unit,
+                REPERTORY_TYPE_ADD_GOODS_CHANGE
+            );
+            if ($modifyRes['state'] === false) {
+                $this->db->trans_rollback();
+
+                return array(
+                    'state' => false,
+                    'msg'   => $modifyRes['msg']
+                );
+            }
+            $modifyRes = $this->modifyRepertory(
+                $changeShop,
+                $goodsId,
+                $num,
+                $unit,
+                REPERTORY_TYPE_ADD_GOODS_CHANGE
+            );
+            if ($modifyRes['state'] === false) {
+                $this->db->trans_rollback();
+
+                return array(
+                    'state' => false,
+                    'msg'   => $modifyRes['msg']
+                );
+            }
+        }
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+        } else {
+            $this->db->trans_commit();
+        }
 
         return array(
             'state' => true,
@@ -142,11 +222,95 @@ class GoodsChangeModel extends BaseModel
 
     public function deleteGoodsChangeRecord($id)
     {
-        $result = $this->db->delete('goods_change', array('gc_id' => $id));
+        $this->db->trans_begin();
+
+        $row = $this->db->where('gc_id', $id)->get('goods_change')->first_row();
+        if (empty($row)) {
+            return array(
+                'state' => true,
+                'msg'   => '该条记录不存在'
+            );
+        }
+
+        // 删除记录
+        $this->db->delete('goods_change', array('gc_id' => $id));
+
+        // 修改库存
+        if ($row->gc_change_type == self::CHANGE_TYPE_IN) {
+            // 修改库存
+            $modifyRes = $this->modifyRepertory(
+                $row->gc_shop_id,
+                $row->gc_provider_goods_id,
+                -$row->gc_num,
+                $row->gc_unit,
+                REPERTORY_TYPE_DELETE_GOODS_CHANGE
+            );
+            if ($modifyRes['state'] === false) {
+                $this->db->trans_rollback();
+
+                return array(
+                    'state' => false,
+                    'msg'   => $modifyRes['msg']
+                );
+            }
+            $modifyRes = $this->modifyRepertory(
+                $row->gc_change_shop,
+                $row->gc_provider_goods_id,
+                $row->gc_num,
+                $row->gc_unit,
+                REPERTORY_TYPE_DELETE_GOODS_CHANGE
+            );
+            if ($modifyRes['state'] === false) {
+                $this->db->trans_rollback();
+
+                return array(
+                    'state' => false,
+                    'msg'   => $modifyRes['msg']
+                );
+            }
+        } else {
+            // 修改库存
+            $modifyRes = $this->modifyRepertory(
+                $row->gc_shop_id,
+                $row->gc_provider_goods_id,
+                $row->gc_num,
+                $row->gc_unit,
+                REPERTORY_TYPE_DELETE_GOODS_CHANGE
+            );
+            if ($modifyRes['state'] === false) {
+                $this->db->trans_rollback();
+
+                return array(
+                    'state' => false,
+                    'msg'   => $modifyRes['msg']
+                );
+            }
+            $modifyRes = $this->modifyRepertory(
+                $row->gc_change_shop,
+                $row->gc_provider_goods_id,
+                -$row->gc_num,
+                $row->gc_unit,
+                REPERTORY_TYPE_DELETE_GOODS_CHANGE
+            );
+            if ($modifyRes['state'] === false) {
+                $this->db->trans_rollback();
+
+                return array(
+                    'state' => false,
+                    'msg'   => $modifyRes['msg']
+                );
+            }
+        }
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+        } else {
+            $this->db->trans_commit();
+        }
 
         return array(
             'state' => true,
-            'msg'   => $result ? 1 : 0
+            'msg' => '删除成功'
         );
     }
 }

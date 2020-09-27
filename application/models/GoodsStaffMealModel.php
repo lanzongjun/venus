@@ -60,6 +60,9 @@ class GoodsStaffMealModel extends BaseModel
         $unit,
         $num)
     {
+
+        $this->db->trans_begin();
+
         $insertData = [
             'gsm_shop_id'           => $shopId,
             'gsm_provider_goods_id' => $goodsId,
@@ -70,6 +73,30 @@ class GoodsStaffMealModel extends BaseModel
         ];
 
         $this->db->insert('goods_staff_meal', $insertData);
+
+        // 修改库存
+        $modifyRes = $this->modifyRepertory(
+            $shopId,
+            $goodsId,
+            -$num,
+            $unit,
+            REPERTORY_TYPE_ADD_STAFF_MEAL
+        );
+
+        if ($modifyRes['state'] === false) {
+            $this->db->trans_rollback();
+
+            return array(
+                'state' => false,
+                'msg'   => $modifyRes['msg']
+            );
+        }
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+        } else {
+            $this->db->trans_commit();
+        }
 
         return array(
             'state' => true,
@@ -91,16 +118,37 @@ class GoodsStaffMealModel extends BaseModel
         return $result;
     }
 
-    public function editStaffMeal($id, $userId, $goodsId, $date, $unit, $num)
+    public function editStaffMeal($shopId, $id, $userId, $date, $unit, $num)
     {
         $o_result = array(
             'state' => false,
             'msg' => ''
         );
 
+        $this->db->trans_begin();
+
+        // 修改库存
+        $editRes = $this->editRepertory(
+            $shopId,
+            'goods_staff_meal',
+            'gsm',
+            $id,
+            $num,
+            $unit,
+            REPERTORY_TYPE_EDIT_STAFF_MEAL
+        );
+
+        if ($editRes['state'] === false) {
+            $this->db->trans_rollback();
+
+            return array(
+                'state' => false,
+                'msg'   => $editRes['msg']
+            );
+        }
+
         $updateData = [
             'gsm_operator'          => $userId,
-            'gsm_provider_goods_id' => $goodsId,
             'gsm_date'              => $date,
             'gsm_unit'              => $unit,
             'gsm_num'               => $num,
@@ -118,16 +166,49 @@ class GoodsStaffMealModel extends BaseModel
         }
         $o_result['state'] = $i_rows == 1;
         $o_result['msg'] = "更新记录数 : $i_rows 条";
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+        } else {
+            $this->db->trans_commit();
+        }
+
         return $o_result;
     }
 
     public function deleteStaffMealRecord($id)
     {
-        $result = $this->db->delete('goods_staff_meal', array('gsm_id' => $id));
+        $this->db->trans_begin();
+
+        $row = $this->db->where('gsm_id', $id)->get('goods_staff_meal')->first_row();
+        if (empty($row)) {
+            return array(
+                'state' => true,
+                'msg'   => '该条记录不存在'
+            );
+        }
+
+        // 删除记录
+        $this->db->delete('goods_staff_meal', array('gsm_id' => $id));
+
+        // 减少库存
+        $this->modifyRepertory(
+            $row->gsm_shop_id,
+            $row->gsm_provider_goods_id,
+            $row->gsm_num,
+            $row->gsm_unit,
+            REPERTORY_TYPE_DELETE_STAFF_MEAL
+        );
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+        } else {
+            $this->db->trans_commit();
+        }
 
         return array(
             'state' => true,
-            'msg'   => $result ? 1 : 0
+            'msg' => '删除成功'
         );
     }
 }

@@ -35,7 +35,7 @@
         <a id="btn_search" data-options="iconCls:'icon-search'" href="#" class="easyui-linkbutton">查询</a>
         <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
         <a id="btn_add" href="#" data-options="iconCls:'icon-add'" class="easyui-linkbutton">新增</a>
-        <a id="btn_edit" href="#" data-options="iconCls:'icon-edit'" class="easyui-linkbutton">编辑</a>
+<!--        <a id="btn_edit" href="#" data-options="iconCls:'icon-edit'" class="easyui-linkbutton">编辑</a>-->
         <a id="btn_remove" href="#" data-options="iconCls:'icon-remove'" class="easyui-linkbutton">删除</a>
 
         <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
@@ -64,7 +64,42 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-datebox" name="date" data-options="labelWidth:'110',label:'进货日期:',width:'300px'">
+                        <input class="easyui-combobox" name="change_shop" readonly disabled data-options="
+                        url:'../CoreShopController/getList?rows_only=true',
+                        method:'get',
+                        valueField:'cs_id',
+                        textField:'cs_name',
+                        label: '调度店铺:',
+                        labelPosition: 'left',
+                        labelWidth:'110',
+                        width:'400',
+                        panelHeight:'auto'
+                        ">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <select class="easyui-combobox" name="change_type" readonly disabled
+                                data-options="labelWidth:'110',label:'入/出:',width:'200',panelHeight:'auto'">
+                            <option value="1" selected="true">转入</option>
+                            <option value="2">转出</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <input class="easyui-datebox" name="date" data-options="labelWidth:'110',label:'调度日期:',width:'300px'">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'110',label:'数量:',width:'200', min:0, precision:2">
                     </div>
                 </td>
             </tr>
@@ -75,41 +110,6 @@
                             <option value="1" selected="true">个</option>
                             <option value="2">斤</option>
                         </select>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'110',label:'数量:',width:'200', min:0, precision:2">
-                    </div>
-
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div style="margin-left:5px;margin-bottom:5px">
-                        <select class="easyui-combobox" name="change_type" data-options="labelWidth:'110',label:'入/出:',width:'200',panelHeight:'auto'">
-                            <option value="1" selected="true">转入</option>
-                            <option value="2">转出</option>
-                        </select>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-combobox" name="change_shop" data-options="
-                        url:'../CoreShopController/getList?rows_only=true',
-                        method:'get',
-                        valueField:'cs_id',
-                        textField:'cs_name',
-                        label: '店铺:',
-                        labelPosition: 'left',
-                        labelWidth:'110',
-                        width:'400',
-                        panelHeight:'auto'
-                        ">
                     </div>
                 </td>
             </tr>
@@ -144,26 +144,18 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-datebox" name="date" data-options="labelWidth:'110',label:'调度日期:',width:'300px'">
+                        <input class="easyui-combobox" name="change_shop" data-options="
+                        url:'../CoreShopController/getList?rows_only=true',
+                        method:'get',
+                        valueField:'cs_id',
+                        textField:'cs_name',
+                        label: '调度店铺:',
+                        labelPosition: 'left',
+                        labelWidth:'110',
+                        width:'400',
+                        panelHeight:'auto'
+                        ">
                     </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div style="margin-left:5px;margin-bottom:5px">
-                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'110',label:'单位:',width:'200',panelHeight:'auto'">
-                            <option value="1" selected="true">个</option>
-                            <option value="2">斤</option>
-                        </select>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'110',label:'数量:',width:'200', min:0, precision:2">
-                    </div>
-
                 </td>
             </tr>
             <tr>
@@ -179,17 +171,24 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-combobox" name="change_shop" data-options="
-                        url:'../CoreShopController/getList?rows_only=true',
-                        method:'get',
-                        valueField:'cs_id',
-                        textField:'cs_name',
-                        label: '店铺:',
-                        labelPosition: 'left',
-                        labelWidth:'110',
-                        width:'400',
-                        panelHeight:'auto'
-                        ">
+                        <input class="easyui-datebox" name="date" data-options="labelWidth:'110',label:'调度日期:',width:'300px'">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'110',label:'数量:',width:'200', min:0, precision:2">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'110',label:'单位:',width:'200',panelHeight:'auto'">
+                            <option value="1" selected="true">个</option>
+                            <option value="2">斤</option>
+                        </select>
                     </div>
                 </td>
             </tr>
