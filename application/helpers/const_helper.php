@@ -90,3 +90,8 @@ const REPERTORY_TYPE_DELETE_STAFF_MEAL = 17;
  * 编辑员工餐
  */
 const REPERTORY_TYPE_EDIT_STAFF_MEAL = 18;
+
+/**
+ * 添加线上销售
+ */
+const REPERTORY_TYPE_ADD_SALE_ONLINE = 19;

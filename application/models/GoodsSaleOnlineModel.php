@@ -44,7 +44,52 @@ class GoodsSaleOnlineModel extends BaseModel
         }
 
         if (!empty($formatData)) {
-            $result = $this->db->insert_batch('goods_sale_online', $formatData);
+
+            $this->db->trans_begin();
+
+            $this->db->insert_batch('goods_sale_online', $formatData);
+
+            //处理库存关系
+            $skuList = array_unique(array_column($formatData, 'gso_sku_code'));
+
+            $query = $this->db;
+            $query->where_in('pgs_sku_code', $skuList);
+            $query->select('pgs_sku_code, pgs_provider_goods_id, pgs_num');
+            $goodsSkuMap = $query->get('provider_goods_sku')->result_array();
+
+            foreach ($formatData as $formatDataItem) {
+                foreach ($goodsSkuMap as $goodsSkuMapItem) {
+
+                    if ($formatDataItem['gso_sku_code'] == $goodsSkuMapItem['pgs_sku_code']) {
+
+                        // 修改库存
+                        $modifyRes = $this->modifyRepertory(
+                            $formatDataItem['gso_shop_id'],
+                            $goodsSkuMapItem['pgs_provider_goods_id'],
+                            -round($formatDataItem['gso_num'] * $goodsSkuMapItem['pgs_num'], 2),
+                            1,
+                            REPERTORY_TYPE_ADD_SALE_ONLINE
+                        );
+
+                        if ($modifyRes['state'] === false) {
+                            $this->db->trans_rollback();
+
+                            return array(
+                                'state' => false,
+                                'msg'   => $modifyRes['msg']
+                            );
+                        }
+                    }
+
+
+                }
+            }
+
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+            } else {
+                $this->db->trans_commit();
+            }
 
             return array(
                 'state' => true,

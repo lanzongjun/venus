@@ -43,6 +43,14 @@ class GoodsSaleOnlineController extends BaseController
             exit();
         }
 
+        // 去除空数据
+        foreach ($excelData as $key => $val) {
+            if (empty($val['B']) || empty($val['G'])) {
+                unset($excelData[$key]);
+                continue;
+            }
+        }
+
         $this->load->model($this->_s_model);
         $result = $this->{$this->_s_model}->addSaleOnlineExcelData($excelData);
 
