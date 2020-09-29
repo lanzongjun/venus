@@ -21,14 +21,14 @@ class GoodsExceptionHandleController extends BaseController
         $getData = $this->getGetData();
 
         $startDate = isset($getData['start_date']) ? $getData['start_date'] : '';
-        $endDate = isset($getData['end_date']) ? $getData['end_date'] : '';
-        $providerGoodsName = isset($getData['provider_goods_name']) ? $getData['provider_goods_name'] : '';
-        $page = isset($getData['page']) ? $getData['page'] : 1;
-        $rows = isset($getData['rows']) ? $getData['rows'] : 50;
+        $endDate   = isset($getData['end_date']) ? $getData['end_date'] : '';
+        $goodsName = isset($getData['provider_goods_name']) ? $getData['provider_goods_name'] : '';
+        $page      = isset($getData['page']) ? $getData['page'] : 1;
+        $rows      = isset($getData['rows']) ? $getData['rows'] : 50;
 
         $this->load->model($this->_s_model);
 
-        $result = $this->{$this->_s_model}->getList($startDate, $endDate, $providerGoodsName, $page, $rows);
+        $result = $this->{$this->_s_model}->getList($this->shop_id, $startDate, $endDate, $goodsName, $page, $rows);
 
         echo json_encode($result);
     }
@@ -37,11 +37,12 @@ class GoodsExceptionHandleController extends BaseController
     {
         $postData = $this->getPostData();
 
-        $goodsId = isset($postData['goods_id']) ? $postData['goods_id'] : '';
-        $date = isset($postData['date']) ? $postData['date'] : '';
-        $unit = isset($postData['unit']) ? $postData['unit'] : '';
-        $num = isset($postData['num']) ? $postData['num'] : '';
-        $order = isset($postData['order']) ? $postData['order'] : '';
+        $goodsId       = isset($postData['goods_id']) ? $postData['goods_id'] : '';
+        $date          = isset($postData['date']) ? $postData['date'] : '';
+        $unit          = isset($postData['unit']) ? $postData['unit'] : '';
+        $num           = isset($postData['num']) ? $postData['num'] : '';
+        $order         = isset($postData['order']) ? $postData['order'] : '';
+        $isReduceStock = isset($postData['is_reduce_stock']) ? $postData['is_reduce_stock'] : 0;
 
         if (empty($goodsId) || empty($date) || empty($unit) || empty($num) || empty($order)) {
             echo json_encode(array(
@@ -59,7 +60,8 @@ class GoodsExceptionHandleController extends BaseController
             $date,
             $unit,
             $num,
-            $order
+            $order,
+            $isReduceStock
         );
 
         echo json_encode($result);
@@ -103,15 +105,14 @@ class GoodsExceptionHandleController extends BaseController
     {
         $postData = $this->getPostData();
 
-        $goodsId = isset($postData['goods_id']) ? $postData['goods_id'] : '';
-        $date = isset($postData['date']) ? $postData['date'] : '';
-        $unit = isset($postData['unit']) ? $postData['unit'] : '';
-        $num = isset($postData['num']) ? $postData['num'] : '';
-        $gehId = isset($postData['geh_id']) ? $postData['geh_id'] : '';
-        $order = isset($postData['order']) ? $postData['order'] : '';
+        $date          = isset($postData['date']) ? $postData['date'] : '';
+        $unit          = isset($postData['unit']) ? $postData['unit'] : '';
+        $num           = isset($postData['num']) ? $postData['num'] : '';
+        $gehId         = isset($postData['geh_id']) ? $postData['geh_id'] : '';
+        $order         = isset($postData['order']) ? $postData['order'] : '';
+        $isReduceStock = isset($postData['is_reduce_stock']) ? $postData['is_reduce_stock'] : 0;
 
-        if (empty($goodsId) || empty($date) || empty($unit) || empty($num)
-            || empty($gehId) || empty($order)) {
+        if (empty($date) || empty($unit) || empty($num) || empty($gehId) || empty($order)) {
             echo json_encode(array(
                 'state' => false,
                 'msg'   => '参数不正确'
@@ -121,13 +122,14 @@ class GoodsExceptionHandleController extends BaseController
 
         $this->load->model($this->_s_model);
         $result = $this->{$this->_s_model}->editExceptionHandle(
+            $this->shop_id,
             $gehId,
             $this->user_id,
-            $goodsId,
             $date,
             $unit,
             $num,
-            $order
+            $order,
+            $isReduceStock
         );
 
         echo json_encode($result);

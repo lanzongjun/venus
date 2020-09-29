@@ -56,7 +56,15 @@ function showEditWin() {
         return;
     }
     $('#d_edit_exception_handle').window('open');
-    $('#f_edit_exception_handle').form('load', '../' + __s_c_name + '/getExceptionHandleInfo?id=' + o_row.geh_id);
+    $('#f_edit_exception_handle').form('load', {
+        goods_id: o_row.goods_id,
+        date: o_row.geh_date,
+        num: o_row.geh_num,
+        unit: o_row.geh_unit,
+        order: o_row.geh_order,
+        is_reduce_stock: o_row.geh_is_reduce_stock,
+        geh_id: o_row.geh_id
+    });
 }
 
 // 查询

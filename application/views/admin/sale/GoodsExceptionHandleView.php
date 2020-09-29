@@ -19,6 +19,7 @@
         <th data-options="width:180,align:'center',field:'geh_date'">上报日期</th>
         <th data-options="width:100,align:'center',field:'num_unit'">数量（单位）</th>
         <th data-options="width:100,align:'center',field:'geh_type_text'">异常类型</th>
+        <th data-options="width:100,align:'center',field:'geh_is_reduce_stock_text'">是否减少库存</th>
         <th data-options="width:100,align:'center',field:'operator'">操作员</th>
         <th data-options="width:200,align:'center',field:'geh_create_time'">创建时间</th>
         <th data-options="width:200,align:'center',field:'geh_update_time'">更新时间</th>
@@ -43,7 +44,7 @@
     </div>
 </div>
 
-<div id="d_edit_exception_handle" class="easyui-window" title="编辑异常订单信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:285px;padding:5px;">
+<div id="d_edit_exception_handle" class="easyui-window" title="编辑异常订单信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:320px;padding:5px;">
     <form id="f_edit_exception_handle" method="post">
         <table>
             <tr>
@@ -92,7 +93,16 @@
                     <div style="margin-left:5px;margin-bottom:5px">
                         <input class="easyui-textbox" name="order" data-options="labelWidth:'110',label:'订单号:',width:'300'">
                     </div>
-
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <select class="easyui-combobox" name="is_reduce_stock" readonly data-options="labelWidth:'110',label:'是否减少库存:',width:'200',panelHeight:'auto'">
+                            <option value="0" selected="true">否</option>
+                            <option value="1">是</option>
+                        </select>
+                    </div>
                 </td>
             </tr>
         </table>
@@ -104,7 +114,7 @@
     </form>
 </div>
 
-<div id="d_add_exception_handle" class="easyui-window" title="新增异常订单信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:285px;padding:5px;">
+<div id="d_add_exception_handle" class="easyui-window" title="新增异常订单信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:320px;padding:5px;">
     <form id="f_add_exception_handle" method="post">
         <table>
             <tr>
@@ -153,6 +163,16 @@
                         <input class="easyui-textbox" name="order" data-options="labelWidth:'110',label:'订单号:',width:'300'">
                     </div>
 
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <select class="easyui-combobox" name="is_reduce_stock" data-options="labelWidth:'110',label:'是否减少库存:',width:'200',panelHeight:'auto'">
+                            <option value="0" selected="true">否</option>
+                            <option value="1">是</option>
+                        </select>
+                    </div>
                 </td>
             </tr>
         </table>

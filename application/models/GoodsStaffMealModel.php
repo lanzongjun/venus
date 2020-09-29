@@ -3,21 +3,22 @@ include_once 'BaseModel.php';
 
 class GoodsStaffMealModel extends BaseModel
 {
-    public function getList($startDate, $endDate, $providerGoodsName, $page, $rows)
+    public function getList($shopId, $startDate, $endDate, $goodsName, $page, $rows)
     {
         $query = $this->db;
 
         $query->join('provider_goods', 'gsm_provider_goods_id = pg_id', 'left');
         $query->join('user', 'u_id = gsm_operator', 'left');
         $query->join('core_shop', 'cs_id = gsm_shop_id', 'left');
+        $query->where('gsm_shop_id', $shopId);
 
         if (!empty($startDate) && !empty($endDate)) {
             $query->where('gsm_date >=', $startDate);
             $query->where('gsm_date <=', $endDate);
         }
 
-        if (!empty($providerGoodsName)) {
-            $query->like('pg_name', $providerGoodsName);
+        if (!empty($goodsName)) {
+            $query->like('pg_name', $goodsName);
         }
 
         $queryTotal = clone $query;
@@ -74,13 +75,17 @@ class GoodsStaffMealModel extends BaseModel
 
         $this->db->insert('goods_staff_meal', $insertData);
 
+        $insertId = $this->db->insert_id();
+
         // 修改库存
-        $modifyRes = $this->modifyRepertory(
+        $modifyRes = $this->addRepertory(
             $shopId,
             $goodsId,
+            $date,
             -$num,
             $unit,
-            REPERTORY_TYPE_ADD_STAFF_MEAL
+            REPERTORY_TYPE_STAFF_MEAL,
+            $insertId
         );
 
         if ($modifyRes['state'] === false) {
@@ -130,12 +135,11 @@ class GoodsStaffMealModel extends BaseModel
         // 修改库存
         $editRes = $this->editRepertory(
             $shopId,
-            'goods_staff_meal',
-            'gsm',
+            REPERTORY_TYPE_STAFF_MEAL,
             $id,
-            $num,
-            $unit,
-            REPERTORY_TYPE_EDIT_STAFF_MEAL
+            $date,
+            -$num,
+            $unit
         );
 
         if ($editRes['state'] === false) {
@@ -192,13 +196,20 @@ class GoodsStaffMealModel extends BaseModel
         $this->db->delete('goods_staff_meal', array('gsm_id' => $id));
 
         // 减少库存
-        $this->modifyRepertory(
+        $delRes = $this->deleteRepertory(
             $row->gsm_shop_id,
-            $row->gsm_provider_goods_id,
-            $row->gsm_num,
-            $row->gsm_unit,
-            REPERTORY_TYPE_DELETE_STAFF_MEAL
+            REPERTORY_TYPE_STAFF_MEAL,
+            $row->gsm_id
         );
+
+        if ($delRes['state'] === false) {
+            $this->db->trans_rollback();
+
+            return array(
+                'state' => false,
+                'msg'   => $delRes['msg']
+            );
+        }
 
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();

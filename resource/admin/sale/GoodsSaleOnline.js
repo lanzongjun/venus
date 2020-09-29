@@ -44,6 +44,7 @@ $(function () {
         success: function (data) {
             status = false;
             //$('#sale_online_ele_win_input').window('destroy');
+            ajaxLoadEnd();
             var o_response = $.parseJSON(data);
             if (o_response.state === true) {
                 // $('#hid_tbn').val(o_response.tbn);
@@ -51,10 +52,13 @@ $(function () {
                 // $('#dg2').datagrid('load', {
                 //     tbn: $('#hid_tbn').val()
                 // });
-                ajaxLoadEnd();
                 $.messager.alert('信息', '预导入完成!', 'info');
                 //$('#goods_sale_online_form_input').form('clear');
                 $("#dg").datagrid("reload");
+            } else {
+                $.messager.alert('错误', o_response.msg, 'error');
+                $("#dg").datagrid("reload");
+
             }
         }
     });

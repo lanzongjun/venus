@@ -28,23 +28,27 @@ class BaseModel extends CI_Model
     }
 
     /**
-     * 添加或删除库存
+     * 添加库存
      * @param $shopId  int 店铺
      * @param $goodsId int 商品
+     * @param $date string 日期
      * @param $num int|float 数量
      * @param $unit int 单位
      * @param $type int 类型
+     * @param $insertId int 关联插入ID
      * @return array
      * @author zongjun.lan
      */
-    public function modifyRepertory($shopId, $goodsId, $num, $unit, $type)
+    public function addRepertory($shopId, $goodsId, $date, $num, $unit, $type, $insertId)
     {
         $insertRecordData = [
             'crr_shop_id'           => $shopId,
             'crr_provider_goods_id' => $goodsId,
+            'crr_date'              => $date,
             'crr_num'               => $num,
             'crr_unit'              => $unit,
             'crr_type'              => $type,
+            'crr_ref_id'            => $insertId
         ];
 
         $this->db->insert('core_repertory_record', $insertRecordData);
@@ -55,7 +59,8 @@ class BaseModel extends CI_Model
             ->get('provider_goods')
             ->row()->pg_is_dumplings;
 
-        $transferResult = $this->transferToGram($isDumplings, $unit, $goodsId, $num);
+        $transferResult = $this->transferToGram($num, $unit, $goodsId, $isDumplings);
+
         if (!$transferResult) {
             return array(
                 'state' => false,
@@ -102,11 +107,95 @@ class BaseModel extends CI_Model
                 );
             }
 
-            $this->db
-                ->where('cr_shop_id', $shopId)
-                ->where('cr_provider_goods_id', $goodsId)
-                ->update('core_repertory', $updateData);
+            $updateWhere = [
+                'cr_shop_id' => $shopId,
+                'cr_provider_goods_id' => $goodsId
+            ];
+
+            $this->db->update('core_repertory', $updateData, $updateWhere);
         }
+
+        return array(
+            'state' => true
+        );
+    }
+
+    /**
+     * 删除库存
+     * @param $shopId int 店铺
+     * @param $type int 类型
+     * @param $insertId int 关联ID
+     * @return array
+     * @author zongjun.lan
+     */
+    public function deleteRepertory($shopId, $type, $insertId)
+    {
+        $row = $this->db
+            ->join('provider_goods', 'pg_id = crr_provider_goods_id', 'left')
+            ->where('crr_type', $type)
+            ->where('crr_ref_id', $insertId)
+            ->where('crr_shop_id', $shopId)
+            ->select('crr_num, crr_unit, crr_shop_id, crr_provider_goods_id, pg_is_dumplings')
+            ->get('core_repertory_record')
+            ->first_row();
+
+        if (empty($row)) {
+            return array(
+                'state' => false,
+                'msg'   => '该记录不存在，无法删除'
+            );
+        }
+
+        // 删除记录
+        $deleteWhere = [
+            'crr_type'    => $type,
+            'crr_ref_id'  => $insertId,
+            'crr_shop_id' => $shopId
+        ];
+        $this->db->delete('core_repertory_record', $deleteWhere);
+
+        // 判断是否是饺子
+        $isDumplings = $row->pg_is_dumplings;
+
+        // 删除记录 数据负负得正 添加-
+        $transferResult = $this->transferToGram(
+            -$row->crr_num,
+            $row->crr_unit,
+            $row->crr_provider_goods_id,
+            $isDumplings
+        );
+        if (!$transferResult) {
+            return array(
+                'state' => false,
+                'msg'   => '请先给该商品取样商品重量'
+            );
+        }
+
+
+        // 获取库存记录
+        $existsRep = $this->db
+            ->where('cr_shop_id', $shopId)
+            ->where('cr_provider_goods_id', $row->crr_provider_goods_id)
+            ->get('core_repertory')
+            ->first_row();
+        // 修改库存
+        $updateData = [
+            'cr_num' => $existsRep->cr_num + $transferResult
+        ];
+
+        if ($existsRep->cr_num + $transferResult < 0) {
+            return array(
+                'state' => false,
+                'msg'   => '商品库存不足，请检查库存'
+            );
+        }
+
+        $updateWhere = [
+            'cr_shop_id' => $shopId,
+            'cr_provider_goods_id' => $row->crr_provider_goods_id
+        ];
+
+        $this->db->update('core_repertory', $updateData, $updateWhere);
 
         return array(
             'state' => true
@@ -116,22 +205,25 @@ class BaseModel extends CI_Model
     /**
      * 修改库存
      * @param $shopId int 店铺
-     * @param $table  string 表名
-     * @param $rowKey string 表名字段前缀
-     * @param $rowId  string 主键唯一
-     * @param $num    int|float 数量
-     * @param $unit   int 单位
      * @param $type   int 类型
-     * @param bool $isAdd 是否是添加
+     * @param $insertId int 插入关联ID
+     * @param $date string 日期
+     * @param $num float 数量
+     * @param $unit   int 单位
      * @return array
      * @author zongjun.lan
      */
-    public function editRepertory($shopId, $table, $rowKey, $rowId, $num, $unit, $type, $isAdd = false)
+    public function editRepertory($shopId, $type, $insertId, $date, $num, $unit)
     {
         // 查出之前的数据
-        $row = $this->db->where($rowKey.'_id', $rowId)
-            ->join('provider_goods', 'pg_id = '.$rowKey.'_provider_goods_id', 'left')
-            ->get($table)->first_row();
+        $row = $this->db
+            ->join('provider_goods', 'pg_id = crr_provider_goods_id', 'left')
+            ->where('crr_type', $type)
+            ->where('crr_ref_id', $insertId)
+            ->where('crr_shop_id', $shopId)
+            ->select('crr_num, crr_unit, crr_shop_id, crr_provider_goods_id, pg_is_dumplings')
+            ->get('core_repertory_record')
+            ->first_row();
 
         if (empty($row)) {
             return array(
@@ -140,28 +232,32 @@ class BaseModel extends CI_Model
             );
         }
 
-        $goodsId = $row->{$rowKey . '_provider_goods_id'};
+        $goodsId = $row->crr_provider_goods_id;
 
-        // 添加记录
-        $insertRecordData = [
-            'crr_shop_id'           => $shopId,
-            'crr_provider_goods_id' => $goodsId,
-            'crr_num'               => $isAdd ? $num : -$num,
-            'crr_unit'              => $unit,
-            'crr_type'              => $type,
+        // 修改记录
+        $updateRecordData = [
+            'crr_date' => $date,
+            'crr_num'  => $num,
+            'crr_unit' => $unit,
+        ];
+        $updateRecordWhere = [
+            'crr_type'    => $type,
+            'crr_ref_id'  => $insertId,
+            'crr_shop_id' => $shopId
         ];
 
-        $this->db->insert('core_repertory_record', $insertRecordData);
+        $this->db->update('core_repertory_record', $updateRecordData, $updateRecordWhere);
 
         // 比较一下,求出差值
-        $originNum    = $row->{$rowKey . '_num'};
-        $originUnit   = $row->{$rowKey . '_unit'};
+        $originNum    = $row->crr_num;
+        $originUnit   = $row->crr_unit;
         $isDumplings  = $row->pg_is_dumplings;
-        $originWeight = $this->transferToGram($isDumplings, $originUnit, $goodsId, $originNum);
-        $nowWeight    = $this->transferToGram($isDumplings, $unit, $goodsId, $num);
+        $originWeight = $this->transferToGram($originNum, $originUnit, $goodsId, $isDumplings);
+        $nowWeight    = $this->transferToGram($num, $unit, $goodsId, $isDumplings);
 
         $diffWeight   = round($nowWeight-$originWeight, 2);
-        $diffWeight   = $isAdd ? $diffWeight : -$diffWeight;
+
+        //$diffWeight   = $isAdd ? $diffWeight : -$diffWeight;
 
 
         // 没有差值 直接退出
@@ -207,7 +303,7 @@ class BaseModel extends CI_Model
      * @param $num
      * @author zongjun.lan
      */
-    public function transferToGram($isDumplings, $unit, $goodsId, $num)
+    public function transferToGram($num, $unit, $goodsId, $isDumplings)
     {
 
         if ($isDumplings && $unit == 1) {//单位为个转化

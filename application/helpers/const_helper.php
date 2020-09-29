@@ -2,96 +2,49 @@
 
 
 /**
- * 添加库存
+ * 库存
+ * goods_stock
  */
-const REPERTORY_TYPE_ADD_STOCK = 1;
+const REPERTORY_TYPE_GOODS_STOCK = 1;
 
 /**
- * 删除库存
+ * 线下销售
+ * goods_sale_offline
  */
-const REPERTORY_TYPE_DELETE_STOCK = 2;
+const REPERTORY_TYPE_GOODS_SALE_OFFLINE = 2;
 
 /**
- * 编辑库存
+ * 损耗-店内破损
+ * goods_loss type = 1
  */
-const REPERTORY_TYPE_EDIT_STOCK = 3;
+const REPERTORY_TYPE_GOODS_SHOP_LOSS = 3;
 
 /**
- * 添加线下销售
+ * 损耗-退单
+ * goods_loss type = 2
  */
-const REPERTORY_TYPE_ADD_SALE_OFFLINE = 4;
+const REPERTORY_TYPE_GOODS_ORDER_LOSS = 4;
 
 /**
- * 删除线下销售
+ * 调度
+ * goods_change
  */
-const REPERTORY_TYPE_DELETE_SALE_OFFLINE = 5;
+const REPERTORY_TYPE_GOODS_CHANGE = 5;
 
 /**
- * 编辑线下销售
+ * 员工餐
+ * goods_staff_meal
  */
-const REPERTORY_TYPE_EDIT_SALE_OFFLINE = 6;
+const REPERTORY_TYPE_STAFF_MEAL = 6;
 
 /**
- * 添加损耗-店内破损
+ * 线上销售
+ * goods_sale_online
  */
-const REPERTORY_TYPE_ADD_SALE_SHOP_LOSS = 7;
+const REPERTORY_TYPE_GOODS_SALE_ONLINE = 7;
 
 /**
- * 删除损耗-店内破损
+ * 异常订单-索赔单
+ * goods_exception_handle
  */
-const REPERTORY_TYPE_DELETE_SALE_SHOP_LOSS = 8;
-
-/**
- * 编辑损耗-店内破损
- */
-const REPERTORY_TYPE_EDIT_SALE_SHOP_LOSS = 9;
-
-/**
- * 添加损耗-退单
- */
-const REPERTORY_TYPE_ADD_SALE_ORDER_LOSS = 10;
-
-/**
- * 删除损耗-退单
- */
-const REPERTORY_TYPE_DELETE_SALE_ORDER_LOSS = 11;
-
-/**
- * 编辑损耗-退单
- */
-const REPERTORY_TYPE_EDIT_SALE_ORDER_LOSS = 12;
-
-/**
- * 添加调度
- */
-const REPERTORY_TYPE_ADD_GOODS_CHANGE = 13;
-
-/**
- * 删除调度
- */
-const REPERTORY_TYPE_DELETE_GOODS_CHANGE = 14;
-
-/**
- * 编辑调度
- */
-const REPERTORY_TYPE_EDIT_GOODS_CHANGE = 15;
-
-/**
- * 添加员工餐
- */
-const REPERTORY_TYPE_ADD_STAFF_MEAL = 16;
-
-/**
- * 删除员工餐
- */
-const REPERTORY_TYPE_DELETE_STAFF_MEAL = 17;
-
-/**
- * 编辑员工餐
- */
-const REPERTORY_TYPE_EDIT_STAFF_MEAL = 18;
-
-/**
- * 添加线上销售
- */
-const REPERTORY_TYPE_ADD_SALE_ONLINE = 19;
+const REPERTORY_TYPE_GOODS_EXCEPTION_HANDLE = 8;

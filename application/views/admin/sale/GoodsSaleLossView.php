@@ -15,7 +15,7 @@
 <table id="dg" title="<?php echo $title; ?>" class="easyui-datagrid" toolbar="#dom_toolbar1" data-options="border:false,fit:true,rownumbers:true,singleSelect:true,method:'get',url:'../<?php echo $c_name; ?>/getList?type=<?php echo $type; ?>',pagination:true,pageSize:50,pageList: [50, 100, 200, 300]">
     <thead>
     <tr>
-        <th data-options="width:100,align:'center',field:'cs_name'">店铺名称</th>
+        <th data-options="width:300,align:'center',field:'cs_name'">店铺名称</th>
         <th data-options="width:100,align:'center',field:'cs_city'">店铺所在城市</th>
         <th data-options="width:300,align:'center',field:'pg_name'">供应商商品名称</th>
         <th data-options="width:150,align:'center',field:'num_unit'">数量(单位)</th>

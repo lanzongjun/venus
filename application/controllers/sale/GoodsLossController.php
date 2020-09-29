@@ -39,13 +39,13 @@ class GoodsLossController extends BaseController
     {
         $getData = $this->input->get();
 
-        $providerGoodsName = isset($getData['provider_goods_name']) ? $getData['provider_goods_name'] : '';
-        $lossType = isset($getData['type']) ? $getData['type'] : self::SHOP_TYPE;
-        $page = isset($getData['page']) ? $getData['page'] : 1;
-        $rows = isset($getData['rows']) ? $getData['rows'] : 50;
+        $goodsName = isset($getData['provider_goods_name']) ? $getData['provider_goods_name'] : '';
+        $lossType  = isset($getData['type']) ? $getData['type'] : self::SHOP_TYPE;
+        $page      = isset($getData['page']) ? $getData['page'] : 1;
+        $rows      = isset($getData['rows']) ? $getData['rows'] : 50;
 
         $this->load->model($this->_s_model);
-        $o_result = $this->{$this->_s_model}->getList($providerGoodsName, $lossType, $page, $rows);
+        $o_result = $this->{$this->_s_model}->getList($this->shop_id, $goodsName, $lossType, $page, $rows);
         echo json_encode($o_result);
     }
 

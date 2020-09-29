@@ -22,15 +22,22 @@ class GoodsStockController extends BaseController
         $getData = $this->getGetData();
 
         $startDate = isset($getData['start_date']) ? $getData['start_date'] : '';
-        $endDate = isset($getData['end_date']) ? $getData['end_date'] : '';
-        $providerGoodsName = isset($getData['provider_goods_name']) ? $getData['provider_goods_name'] : '';
-        $page = isset($getData['page']) ? $getData['page'] : 1;
-        $rows = isset($getData['rows']) ? $getData['rows'] : 50;
-        $rowsOnly = isset($getData['rows_only']) ? $getData['rows_only'] : false;
+        $endDate   = isset($getData['end_date']) ? $getData['end_date'] : '';
+        $goodsName = isset($getData['provider_goods_name']) ? $getData['provider_goods_name'] : '';
+        $page      = isset($getData['page']) ? $getData['page'] : 1;
+        $rows      = isset($getData['rows']) ? $getData['rows'] : 50;
+        $rowsOnly  = isset($getData['rows_only']) ? $getData['rows_only'] : false;
 
         $this->load->model($this->_s_model);
 
-        $result = $this->{$this->_s_model}->getList($startDate, $endDate, $providerGoodsName, $page, $rows, $rowsOnly);
+        $result = $this->{$this->_s_model}->getList(
+            $this->shop_id,
+            $startDate, $endDate,
+            $goodsName,
+            $page,
+            $rows,
+            $rowsOnly
+        );
 
         echo json_encode($result);
     }

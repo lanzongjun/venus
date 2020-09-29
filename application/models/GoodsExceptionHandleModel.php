@@ -9,21 +9,22 @@ class GoodsExceptionHandleModel extends BaseModel
      */
     const EXCEPTION_HANDLE_TYPE_CHAIM = 1;
 
-    public function getList($startDate, $endDate, $providerGoodsName, $page, $rows)
+    public function getList($shopId, $startDate, $endDate, $goodsName, $page, $rows)
     {
         $query = $this->db;
 
         $query->join('provider_goods', 'geh_provider_goods_id = pg_id', 'left');
         $query->join('user', 'u_id = geh_operator', 'left');
         $query->join('core_shop', 'cs_id = geh_shop_id', 'left');
+        $query->where('geh_shop_id', $shopId);
 
         if (!empty($startDate) && !empty($endDate)) {
             $query->where('geh_date >=', $startDate);
             $query->where('geh_date <=', $endDate);
         }
 
-        if (!empty($providerGoodsName)) {
-            $query->like('pg_name', $providerGoodsName);
+        if (!empty($goodsName)) {
+            $query->like('pg_name', $goodsName);
         }
 
         $queryTotal = clone $query;
@@ -41,7 +42,8 @@ class GoodsExceptionHandleModel extends BaseModel
 
         // 获取分页数据
         $queryList->select('geh_id, cs_name as shop_name, pg_name as goods_name, 
-        geh_order, geh_date, geh_unit, geh_num, geh_type, u_name as operator, geh_create_time, geh_update_time');
+        geh_order, geh_date, geh_unit, geh_num, geh_type, u_name as operator, 
+        geh_is_reduce_stock, geh_create_time, geh_update_time, geh_provider_goods_id as goods_id');
 
         $offset = ($page - 1) * $rows;
         $queryList->limit($rows, $offset);
@@ -51,6 +53,7 @@ class GoodsExceptionHandleModel extends BaseModel
         foreach ($rows as &$row) {
             $row['num_unit'] = $row['geh_num'].'('. self::unitMap($row['geh_unit']) .')';
             $row['geh_type_text'] = $row['geh_type'] == 1 ? '索赔单' : '';
+            $row['geh_is_reduce_stock_text'] = $row['geh_is_reduce_stock'] == 1 ? '是' : '否';
         }
 
         return array(
@@ -66,8 +69,12 @@ class GoodsExceptionHandleModel extends BaseModel
         $date,
         $unit,
         $num,
-        $order)
+        $order,
+        $isReduceStock
+    )
     {
+        $this->db->trans_begin();
+
         $insertData = [
             'geh_shop_id'           => $shopId,
             'geh_provider_goods_id' => $goodsId,
@@ -76,10 +83,42 @@ class GoodsExceptionHandleModel extends BaseModel
             'geh_num'               => $num,
             'geh_operator'          => $userId,
             'geh_order'             => $order,
-            'geh_type'              => self::EXCEPTION_HANDLE_TYPE_CHAIM
+            'geh_type'              => self::EXCEPTION_HANDLE_TYPE_CHAIM,
+            'geh_is_reduce_stock'   => $isReduceStock
         ];
 
         $this->db->insert('goods_exception_handle', $insertData);
+
+        // 判断是否需要减少库存
+        if ($isReduceStock) {
+            $insertId = $this->db->insert_id();
+
+            // 修改库存
+            $modifyRes = $this->addRepertory(
+                $shopId,
+                $goodsId,
+                $date,
+                -$num,
+                $unit,
+                REPERTORY_TYPE_GOODS_EXCEPTION_HANDLE,
+                $insertId
+            );
+
+            if ($modifyRes['state'] === false) {
+                $this->db->trans_rollback();
+
+                return array(
+                    'state' => false,
+                    'msg'   => $modifyRes['msg']
+                );
+            }
+        }
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+        } else {
+            $this->db->trans_commit();
+        }
 
         return array(
             'state' => true,
@@ -90,7 +129,7 @@ class GoodsExceptionHandleModel extends BaseModel
     public function getExceptionHandleInfo($id)
     {
         $this->db->select('geh_id, geh_provider_goods_id as goods_id, geh_date as date,
-        geh_unit as unit, geh_num as num, geh_order as order');
+        geh_unit as unit, geh_num as num, geh_order as order, geh_is_reduce_stock as is_reduce_stock');
         $this->db->where('geh_id', $id);
         $query = $this->db->get('goods_exception_handle');
         $result = $query->first_row();
@@ -101,20 +140,43 @@ class GoodsExceptionHandleModel extends BaseModel
         return $result;
     }
 
-    public function editExceptionHandle($id, $userId, $goodsId, $date, $unit, $num, $order)
+    public function editExceptionHandle($shopId, $id, $userId, $date, $unit, $num, $order, $isReduceStock)
     {
         $o_result = array(
             'state' => false,
             'msg' => ''
         );
 
+        $this->db->trans_begin();
+
+        // 判断是减少库存
+        if ($isReduceStock) {
+            // 修改库存
+            $editRes = $this->editRepertory(
+                $shopId,
+                REPERTORY_TYPE_GOODS_EXCEPTION_HANDLE,
+                $id,
+                $date,
+                -$num,
+                $unit
+            );
+
+            if ($editRes['state'] === false) {
+                $this->db->trans_rollback();
+
+                return array(
+                    'state' => false,
+                    'msg'   => $editRes['msg']
+                );
+            }
+        }
+
         $updateData = [
-            'geh_operator'          => $userId,
-            'geh_provider_goods_id' => $goodsId,
-            'geh_date'              => $date,
-            'geh_unit'              => $unit,
-            'geh_num'               => $num,
-            'geh_order'             => $order
+            'geh_operator' => $userId,
+            'geh_date'     => $date,
+            'geh_unit'     => $unit,
+            'geh_num'      => $num,
+            'geh_order'    => $order
         ];
         $this->db->where('geh_id', $id);
 
@@ -129,16 +191,59 @@ class GoodsExceptionHandleModel extends BaseModel
         }
         $o_result['state'] = $i_rows == 1;
         $o_result['msg'] = "更新记录数 : $i_rows 条";
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+        } else {
+            $this->db->trans_commit();
+        }
+
         return $o_result;
     }
 
     public function deleteExceptionHandleRecord($id)
     {
-        $result = $this->db->delete('goods_exception_handle', array('geh_id' => $id));
+        $this->db->trans_begin();
+
+        $row = $this->db->where('geh_id', $id)->get('goods_exception_handle')->first_row();
+        if (empty($row)) {
+            return array(
+                'state' => true,
+                'msg'   => '该条记录不存在'
+            );
+        }
+
+        // 判断是减少库存
+        if ($row->geh_is_reduce_stock) {
+            // 减少库存
+            $delRes = $this->deleteRepertory(
+                $row->geh_shop_id,
+                REPERTORY_TYPE_GOODS_EXCEPTION_HANDLE,
+                $row->geh_id
+            );
+
+            if ($delRes['state'] === false) {
+                $this->db->trans_rollback();
+
+                return array(
+                    'state' => false,
+                    'msg'   => $delRes['msg']
+                );
+            }
+        }
+
+        // 删除记录
+        $this->db->delete('goods_exception_handle', array('geh_id' => $id));
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+        } else {
+            $this->db->trans_commit();
+        }
 
         return array(
             'state' => true,
-            'msg'   => $result ? 1 : 0
+            'msg'   => '删除成功'
         );
     }
 }

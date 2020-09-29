@@ -49,6 +49,9 @@ class GoodsSaleOnlineModel extends BaseModel
 
             $this->db->insert_batch('goods_sale_online', $formatData);
 
+            // 返回的id 是最后一次插入的那段数据的第一个ID
+            $firstInsertId = $this->db->insert_id();
+
             //处理库存关系
             $skuList = array_unique(array_column($formatData, 'gso_sku_code'));
 
@@ -63,12 +66,14 @@ class GoodsSaleOnlineModel extends BaseModel
                     if ($formatDataItem['gso_sku_code'] == $goodsSkuMapItem['pgs_sku_code']) {
 
                         // 修改库存
-                        $modifyRes = $this->modifyRepertory(
+                        $modifyRes = $this->addRepertory(
                             $formatDataItem['gso_shop_id'],
                             $goodsSkuMapItem['pgs_provider_goods_id'],
+                            $formatDataItem['gso_date'],
                             -round($formatDataItem['gso_num'] * $goodsSkuMapItem['pgs_num'], 2),
                             1,
-                            REPERTORY_TYPE_ADD_SALE_ONLINE
+                            REPERTORY_TYPE_GOODS_SALE_ONLINE,
+                            $firstInsertId
                         );
 
                         if ($modifyRes['state'] === false) {
@@ -80,9 +85,8 @@ class GoodsSaleOnlineModel extends BaseModel
                             );
                         }
                     }
-
-
                 }
+                $firstInsertId++;
             }
 
             if ($this->db->trans_status() === FALSE) {

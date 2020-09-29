@@ -75,13 +75,17 @@ class GoodsSaleOfflineModel extends BaseModel
 
         $this->db->insert('goods_sale_offline', $insertData);
 
+        $insertId = $this->db->insert_id();
+
         // 修改库存
-        $modifyRes = $this->modifyRepertory(
+        $modifyRes = $this->addRepertory(
             $shopId,
             $goodsId,
+            $date,
             -$num,
             $unit,
-            REPERTORY_TYPE_ADD_SALE_OFFLINE
+            REPERTORY_TYPE_GOODS_SALE_OFFLINE,
+            $insertId
         );
 
         if ($modifyRes['state'] === false) {
@@ -117,12 +121,12 @@ class GoodsSaleOfflineModel extends BaseModel
         // 修改库存
         $editRes = $this->editRepertory(
             $shopId,
-            'goods_sale_offline',
-            'gso',
+            REPERTORY_TYPE_GOODS_SALE_OFFLINE,
             $id,
-            $num,
-            $unit,
-            REPERTORY_TYPE_EDIT_SALE_OFFLINE);
+            $date,
+            -$num,
+            $unit
+        );
 
         if ($editRes['state'] === false) {
             $this->db->trans_rollback();
@@ -177,11 +181,20 @@ class GoodsSaleOfflineModel extends BaseModel
         $this->db->delete('goods_sale_offline', array('gso_id' => $id));
 
         // 减少库存
-        $this->modifyRepertory(
+        $delRes = $this->deleteRepertory(
             $row->gso_shop_id,
-            $row->gso_provider_goods_id,
-            $row->gso_num,
-            $row->gso_unit, REPERTORY_TYPE_DELETE_SALE_OFFLINE);
+            REPERTORY_TYPE_GOODS_SALE_OFFLINE,
+            $row->gso_id
+        );
+
+        if ($delRes['state'] === false) {
+            $this->db->trans_rollback();
+
+            return array(
+                'state' => false,
+                'msg'   => $delRes['msg']
+            );
+        }
 
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();

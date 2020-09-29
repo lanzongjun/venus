@@ -4,20 +4,22 @@ include_once 'BaseModel.php';
 
 class GoodsStockModel extends BaseModel
 {
-    public function getList($startDate, $endDate, $providerGoodsName, $page, $rows, $rowsOnly)
+    public function getList($shopId, $startDate, $endDate, $goodsName, $page, $rows, $rowsOnly)
     {
 
-        $query = $this->db->join('provider_goods', 'gs_provider_goods_id = pg_id', 'left');
+        $query = $this->db;
+        $query->join('provider_goods', 'gs_provider_goods_id = pg_id', 'left');
         $query->join('core_shop', 'cs_id = gs_shop_id', 'left');
         $query->join('user', 'u_id = gs_operator_id', 'left');
+        $query->where('gs_shop_id', intval($shopId));
 
         if (!empty($startDate) && !empty($endDate)) {
             $query->where('gs_date >=', $startDate);
             $query->where('gs_date <=', $endDate);
         }
 
-        if (!empty($providerGoodsName)) {
-            $query->like('pg_name', $providerGoodsName);
+        if (!empty($goodsName)) {
+            $query->like('pg_name', $goodsName);
         }
 
         $queryTotal = clone $query;
@@ -61,13 +63,13 @@ class GoodsStockModel extends BaseModel
         }
     }
 
-    public function addGoodsStock($userId, $shopId, $providerGoodsId, $date, $num, $unit)
+    public function addGoodsStock($userId, $shopId, $goodsId, $date, $num, $unit)
     {
         $this->db->trans_begin();
         try {
             $insertData = [
                 'gs_shop_id'           => $shopId,
-                'gs_provider_goods_id' => $providerGoodsId,
+                'gs_provider_goods_id' => $goodsId,
                 'gs_date'              => $date,
                 'gs_num'               => $num,
                 'gs_unit'              => $unit,
@@ -76,10 +78,17 @@ class GoodsStockModel extends BaseModel
 
             $this->db->insert('goods_stock', $insertData);
 
+            $insertId = $this->db->insert_id();
+
             // 添加库存
-            $modifyRes = $this->modifyRepertory(
-                $shopId, $providerGoodsId, $num, $unit,
-                REPERTORY_TYPE_ADD_STOCK
+            $modifyRes = $this->addRepertory(
+                $shopId,
+                $goodsId,
+                $date,
+                $num,
+                $unit,
+                REPERTORY_TYPE_GOODS_STOCK,
+                $insertId
             );
 
             if ($modifyRes['state'] === false) {
@@ -126,11 +135,20 @@ class GoodsStockModel extends BaseModel
         $this->db->delete('goods_stock', array('gs_id' => $id));
 
         // 减少库存
-        $this->modifyRepertory(
+        $delRes = $this->deleteRepertory(
             $row->gs_shop_id,
-            $row->gs_provider_goods_id,
-            -$row->gs_num,
-            $row->gs_unit, REPERTORY_TYPE_DELETE_STOCK);
+            REPERTORY_TYPE_GOODS_STOCK,
+            $row->gs_id
+        );
+
+        if ($delRes['state'] === false) {
+            $this->db->trans_rollback();
+
+            return array(
+                'state' => false,
+                'msg'   => $delRes['msg']
+            );
+        }
 
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();
@@ -169,13 +187,11 @@ class GoodsStockModel extends BaseModel
         // 修改库存
         $editRes = $this->editRepertory(
             $shopId,
-            'goods_stock',
-            'gs',
+            REPERTORY_TYPE_GOODS_STOCK,
             $id,
+            $date,
             $num,
-            $unit,
-            REPERTORY_TYPE_EDIT_STOCK,
-            true
+            $unit
         );
 
         if ($editRes['state'] === false) {
