@@ -42,7 +42,7 @@
     </div>
 </div>
 
-<div id="d_edit_sale_offline" class="easyui-window" title="编辑线下销售信息" data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:440px;height:245px;padding:5px;">
+<div id="d_edit_sale_offline" class="easyui-window" title="编辑线下销售信息" data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:440px;height:280px;padding:5px;">
     <form id="f_edit_sale_offline" method="post">
         <table>
             <tr>
@@ -87,6 +87,16 @@
                     </div>
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <select class="easyui-combobox" name="type" data-options="labelWidth:'70',label:'类型:',width:'130',panelHeight:'auto'">
+                            <option value="1" selected="true">石化结算</option>
+                            <option value="2">线下销售</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
         </table>
         <input name="gso_id" type="hidden"/>
         <div style="text-align:center;padding:5px 0">
@@ -96,7 +106,7 @@
     </form>
 </div>
 
-<div id="d_add_sale_offline" class="easyui-window" title="新增线下销售信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:245px;padding:5px;">
+<div id="d_add_sale_offline" class="easyui-window" title="新增线下销售信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:280px;padding:5px;">
     <form id="f_add_sale_offline" method="post">
         <table>
             <tr>
@@ -120,6 +130,16 @@
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
                         <input class="easyui-datebox" name="date" data-options="labelWidth:'70',label:'销售日期:',width:'300px'">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <select class="easyui-combobox" name="type" data-options="labelWidth:'70',label:'类型:',width:'300',panelHeight:'auto'">
+                            <option value="1" selected="true">石化结算</option>
+                            <option value="2">线下销售</option>
+                        </select>
                     </div>
                 </td>
             </tr>
