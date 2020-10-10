@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: zongjun.lan
- * Date: 2020/8/28
- * Time: 5:22 PM
- */
 
 include_once 'BaseModel.php';
 

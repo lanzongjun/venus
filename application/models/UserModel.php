@@ -36,7 +36,7 @@ class UserModel extends BaseModel
         $this->db->where('u_name', $name);
         $this->db->select('*');
         $query = $this->db->get('user');
-        return $query->result();
+        return $query->first_row();
     }
 
 }

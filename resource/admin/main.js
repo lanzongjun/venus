@@ -63,6 +63,10 @@ $(function () {
     $('#repertory_list').bind('click', function () {
         doShowRepertoryList();
     });
+
+    $('#finance_account_list').bind('click', function () {
+        doFinanceAccountList();
+    });
 });
 
 function doAddProvider() {
@@ -207,6 +211,15 @@ function doShowSkuList() {
 function doShowRepertoryList() {
     $('#layout_center').panel({
         href: '../CoreRepertoryController',
+        onLoad: function () {
+
+        }
+    });
+}
+
+function doFinanceAccountList() {
+    $('#layout_center').panel({
+        href: '../FinanceAccountController',
         onLoad: function () {
 
         }

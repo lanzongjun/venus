@@ -1,4 +1,5 @@
 <?php
+
 include_once 'BaseController.php';
 
 class CoreRepertoryController extends BaseController
@@ -20,6 +21,8 @@ class CoreRepertoryController extends BaseController
     {
         $getData = $this->getGetData();
 
+        $startDate = isset($getData['start_date']) ? $getData['start_date'] : '';
+        $endDate = isset($getData['end_date']) ? $getData['end_date'] : '';
         $shopId = isset($getData['shop_id']) ? $getData['shop_id'] : '';
         $providerId = isset($getData['provider_id']) ? $getData['provider_id'] : '';
         $goodsName = isset($getData['goods_name']) ? $getData['goods_name'] : '';
@@ -28,7 +31,8 @@ class CoreRepertoryController extends BaseController
 
         $this->load->model($this->_s_model);
 
-        $o_result = $this->{$this->_s_model}->getList($shopId, $providerId, $goodsName, $page, $rows);
+        $o_result = $this->{$this->_s_model}->getList($startDate, $endDate,
+            $shopId, $providerId, $goodsName, $page, $rows);
 
         echo json_encode($o_result);
     }

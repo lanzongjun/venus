@@ -1,18 +1,10 @@
 <?php
-
 defined('BASEPATH') OR exit('No direct script access allowed');
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/**
- * Description of Admin
- *
- * @author Vincent
- */
-class Admin extends CI_Controller {
+include_once 'BaseController.php';
+
+class Admin extends CI_Controller
+{
     
     public function index() {
         if (!file_exists(APPPATH . 'views/admin/login/index.php')) {
@@ -27,21 +19,30 @@ class Admin extends CI_Controller {
 
     public function check()
     {
+
+
+
         $postData = $this->input->post();
         $this->load->model('UserModel');
         $user = $this->UserModel->u_select($postData['u_name']);
         if ($user) {
-            if ($user[0]->u_password == $postData['u_pw']) {
+            if ($user->u_password == $postData['u_pw']) {
                 $this->load->library('session');
-                $this->session->set_userdata('s_user', $user[0]);
+                $this->session->set_userdata('s_user', $user);
                 //$s_user = $this->session->all_userdata();
                 $this->load->helper('url');
+
+                // 记录库存
+                $this->hooks->call_hook('repertory_daily_'.$user->u_shop_id);
+
                 redirect('admin/main');
             } else {
                 echo 'pw wrong';
+                exit();
             }
         } else {
             echo 'name wrong';
+            exit();
         }
     }
 

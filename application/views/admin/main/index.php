@@ -118,6 +118,9 @@
                                 <li>
                                     <span><a id="repertory_list" href="#">库存列表</a></span>
                                 </li>
+                                <li>
+                                    <span><a id="finance_account_list" href="#">财务结算列表</a></span>
+                                </li>
                             </ul>
                         </li>
                     </ul>
