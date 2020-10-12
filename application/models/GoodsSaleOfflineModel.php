@@ -4,12 +4,32 @@ include_once 'BaseModel.php';
 
 class GoodsSaleOfflineModel extends BaseModel
 {
-    public function getList($page, $rows, $rowsOnly)
+    /**
+     * 石化结算
+     */
+    const TYPE_SHIHUA = 1;
+    /**
+     * 线下销售
+     */
+    const TYPE_LOCATE = 2;
+
+    public function getList($shopId, $type, $startDate, $endDate, $page, $rows, $rowsOnly)
     {
         $query = $this->db;
 
         $query->join('core_shop', 'cs_id = gso_shop_id', 'left');
         $query->join('provider_goods', 'pg_id = gso_provider_goods_id', 'left');
+
+        $query->where('gso_shop_id', $shopId);
+
+        if (!empty($type)) {
+            $query->where('gso_type', $type);
+        }
+
+        if (!empty($startDate) && !empty($endDate)) {
+            $query->where('gso_date >=', $startDate);
+            $query->where('gso_date <=', $endDate);
+        }
 
         $queryTotal = clone $query;
         $queryList = clone  $query;
@@ -26,7 +46,7 @@ class GoodsSaleOfflineModel extends BaseModel
 
         // 获取分页数据
         $queryList->select('gso_id, core_shop.cs_name as shop_name, cs_city, gso_date, 
-        pg_name as goods_name, gso_num, gso_unit, gso_create_time, gso_update_time');
+        pg_name as goods_name, gso_type, gso_num, gso_unit, gso_create_time, gso_update_time');
 
         if (!$rowsOnly) {
             $offset = ($page - 1) * $rows;
@@ -36,6 +56,7 @@ class GoodsSaleOfflineModel extends BaseModel
         $rows = $queryList->get('goods_sale_offline')->result_array();
 
         foreach ($rows as &$row) {
+            $row['gso_type_text'] = $row['gso_type'] == self::TYPE_SHIHUA ? '石化结算' : '线下销售';
             $row['num_unit'] = $row['gso_num'].'('. self::unitMap($row['gso_unit']) .')';
         }
 
@@ -51,7 +72,7 @@ class GoodsSaleOfflineModel extends BaseModel
 
         $this->db->select('gso_id, 
         gso_provider_goods_id as goods_id, 
-        gso_date as date, gso_num as num, gso_unit as unit');
+        gso_date as date, gso_type as type ,gso_num as num, gso_unit as unit');
 
         $this->db->where('gso_id', $id);
 
@@ -60,7 +81,7 @@ class GoodsSaleOfflineModel extends BaseModel
         return $result;
     }
 
-    public function addGoodsSaleOffline($userId, $shopId, $goodsId, $date, $num, $unit)
+    public function addGoodsSaleOffline($userId, $shopId, $goodsId, $date, $type, $num, $unit)
     {
         $this->db->trans_begin();
 
@@ -69,6 +90,7 @@ class GoodsSaleOfflineModel extends BaseModel
             'gso_shop_id'           => $shopId,
             'gso_provider_goods_id' => $goodsId,
             'gso_date'              => $date,
+            'gso_type'              => $type,
             'gso_num'               => $num,
             'gso_unit'              => $unit
         ];
@@ -77,6 +99,8 @@ class GoodsSaleOfflineModel extends BaseModel
 
         $insertId = $this->db->insert_id();
 
+        $constType = $type == self::TYPE_SHIHUA ? REPERTORY_TYPE_GOODS_SALE_OFFLINE_SHIHUA : REPERTORY_TYPE_GOODS_SALE_OFFLINE_LOCATE;
+
         // 修改库存
         $modifyRes = $this->addRepertory(
             $shopId,
@@ -84,7 +108,7 @@ class GoodsSaleOfflineModel extends BaseModel
             $date,
             -$num,
             $unit,
-            REPERTORY_TYPE_GOODS_SALE_OFFLINE,
+            $constType,
             $insertId
         );
 
@@ -109,19 +133,21 @@ class GoodsSaleOfflineModel extends BaseModel
         );
     }
 
-    public function editGoodsSaleOffline($shopId, $id, $userId, $date, $num, $unit)
+    public function editGoodsSaleOffline($shopId, $id, $userId, $date, $type, $num, $unit)
     {
         $o_result = array(
             'state' => false,
             'msg' => ''
         );
 
+        $constType = $type == self::TYPE_SHIHUA ? REPERTORY_TYPE_GOODS_SALE_OFFLINE_SHIHUA : REPERTORY_TYPE_GOODS_SALE_OFFLINE_LOCATE;
+
         $this->db->trans_begin();
 
         // 修改库存
         $editRes = $this->editRepertory(
             $shopId,
-            REPERTORY_TYPE_GOODS_SALE_OFFLINE,
+            $constType,
             $id,
             $date,
             -$num,
@@ -177,13 +203,16 @@ class GoodsSaleOfflineModel extends BaseModel
             );
         }
 
+        $constType = $row->gso_type == self::TYPE_SHIHUA ? REPERTORY_TYPE_GOODS_SALE_OFFLINE_SHIHUA : REPERTORY_TYPE_GOODS_SALE_OFFLINE_LOCATE;
+
+
         // 删除记录
         $this->db->delete('goods_sale_offline', array('gso_id' => $id));
 
         // 减少库存
         $delRes = $this->deleteRepertory(
             $row->gso_shop_id,
-            REPERTORY_TYPE_GOODS_SALE_OFFLINE,
+            $constType,
             $row->gso_id
         );
 

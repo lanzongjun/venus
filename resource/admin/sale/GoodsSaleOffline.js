@@ -22,7 +22,6 @@ function closeEditWin() {
 // 编辑
 function showEditWin() {
     var o_row = $("#dg").datagrid('getSelected');
-    console.log(o_row);
     if (!o_row || !o_row.gso_id) {
         $.messager.alert('错误', '请选择一条记录后，在进行此操作', 'error');
         return;
@@ -34,7 +33,6 @@ function showEditWin() {
 // 删除
 function showRemoveWin() {
     var o_row = $("#dg").datagrid('getSelected');
-    console.log(o_row);
     if (!o_row || !o_row.gso_id) {
         $.messager.alert('错误', '请选择一条记录后，在进行此操作', 'error');
         return;
@@ -63,10 +61,12 @@ function showRemoveWin() {
 
 // 查询
 function doSearch() {
+    var type = $("#type").val();
     var start_date = $("#start_date").val();
     var end_date = $("#end_date").val();
     var provider_goods_name = $("#provider_goods_name").val();
     $('#dg').datagrid('load', {
+        type: type,
         start_date: start_date,
         end_date: end_date,
         provider_goods_name: provider_goods_name

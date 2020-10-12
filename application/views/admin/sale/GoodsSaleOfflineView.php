@@ -16,6 +16,7 @@
         <th data-options="width:100,align:'center',field:'cs_city'">门店所在城市</th>
         <th data-options="width:300,align:'center',field:'goods_name'">商品</th>
         <th data-options="width:150,align:'center',field:'gso_date'">销售日期</th>
+        <th data-options="width:150,align:'center',field:'gso_type_text'">销售类型</th>
         <th data-options="width:200,align:'center',field:'num_unit'">数量(单位)</th>
         <th data-options="width:200,align:'center',field:'gso_create_time'">创建时间</th>
         <th data-options="width:200,align:'center',field:'gso_update_time'">更新时间</th>
@@ -25,12 +26,20 @@
 
 <div id="dom_toolbar1">
     <div>
-        <input id="start_date" class="easyui-datebox" labelWidth="70" style="width:180px;" label="开始时间:" labelPosition="left" data-options="formatter:myformatter,parser:myparser"/>
-        <input id="end_date" class="easyui-datebox" labelWidth="70" style="width:180px;" label="结束时间:" labelPosition="left" data-options="formatter:myformatter,parser:myparser"/>
-        <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
-        <input id="sku_code" class="easyui-textbox" labelWidth="90" style="width:220px;" label="SKU编码:" labelPosition="left"/>
-        <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
-        <input id="sku_code" class="easyui-textbox" labelWidth="90" style="width:220px;" label="SKU名称:" labelPosition="left"/>
+        <select id="type" class="easyui-combobox" data-options="
+                        panelHeight:'auto',
+                        label: '销售类型:',
+                        labelPosition: 'left',
+                        labelWidth:'70',
+                        width:'200px',
+                        panelHeight:'auto'
+                        ">
+            <option value="0">全部</option>
+            <option value="1">石化结算</option>
+            <option value="2">线下销售</option>
+        </select>
+        <input id="start_date" class="easyui-datebox" labelWidth="70" style="width:200px;" label="开始时间:" labelPosition="left" data-options="formatter:myformatter,parser:myparser"/>
+        <input id="end_date" class="easyui-datebox" labelWidth="70" style="width:200px;" label="结束时间:" labelPosition="left" data-options="formatter:myformatter,parser:myparser"/>
         <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
         <a id="btn_search" data-options="iconCls:'icon-search'" href="#" class="easyui-linkbutton">查询</a>
         <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
@@ -72,6 +81,16 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
+                        <select class="easyui-combobox" name="type" data-options="labelWidth:'70',label:'类型:',width:'300',panelHeight:'auto'">
+                            <option value="1" selected="true">石化结算</option>
+                            <option value="2">线下销售</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
                         <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',width:'300', min:0, precision:2">
                     </div>
 
@@ -83,16 +102,6 @@
                         <select class="easyui-combobox" name="unit" data-options="labelWidth:'70',label:'单位:',width:'130',panelHeight:'auto'">
                             <option value="1" selected="true">个</option>
                             <option value="2">斤</option>
-                        </select>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div style="margin-left:5px;margin-bottom:5px">
-                        <select class="easyui-combobox" name="type" data-options="labelWidth:'70',label:'类型:',width:'130',panelHeight:'auto'">
-                            <option value="1" selected="true">石化结算</option>
-                            <option value="2">线下销售</option>
                         </select>
                     </div>
                 </td>

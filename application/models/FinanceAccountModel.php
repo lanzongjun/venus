@@ -68,31 +68,35 @@ class FinanceAccountModel extends BaseModel
     private function dataFormat()
     {
         return [
-            '1' => [
+            REPERTORY_TYPE_GOODS_STOCK => [
                 'title' => '入库数量',
                 'num'   => 0,
             ],
-            '2' => [
-                'title' => '线下销售',
+            REPERTORY_TYPE_GOODS_SALE_OFFLINE_SHIHUA => [
+                'title' => '线下销售-石化结算',
                 'num'   => 0,
             ],
-            '7' => [
+            REPERTORY_TYPE_GOODS_SALE_OFFLINE_LOCATE => [
+                'title' => '线下销售-线下销售',
+                'num'   => 0,
+            ],
+            REPERTORY_TYPE_GOODS_SALE_ONLINE => [
                 'title' => '线上销售',
                 'num'   => 0,
             ],
-            '8' => [
+            REPERTORY_TYPE_GOODS_EXCEPTION_HANDLE => [
                 'title' => '异常订单-索赔单',
                 'num'   => 0,
             ],
-            '6' => [
+            REPERTORY_TYPE_STAFF_MEAL => [
                 'title' => '员工餐',
                 'num'   => 0,
             ],
-            '3' => [
+            REPERTORY_TYPE_GOODS_SHOP_LOSS => [
                 'title' => '损耗-店内破损',
                 'num'   => 0,
             ],
-            '4' => [
+            REPERTORY_TYPE_GOODS_ORDER_LOSS => [
                 'title' => '损耗-退单',
                 'num'   => 0,
             ],

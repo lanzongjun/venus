@@ -28,13 +28,21 @@ class GoodsSaleOfflineController extends BaseController
     {
         $getData = $this->getGetData();
 
-        $page = isset($getData['page']) ? $getData['page'] : 1;
-        $rows = isset($getData['rows']) ? $getData['rows'] : 50;
-        $rowsOnly = isset($getData['rows_only']) ? $getData['rows_only'] : false;
+        $type      = isset($getData['type']) ? $getData['type'] : '';
+        $startDate = isset($getData['start_date']) ? $getData['start_date'] : '';
+        $endDate   = isset($getData['end_date']) ? $getData['end_date'] : '';
+        $page      = isset($getData['page']) ? $getData['page'] : 1;
+        $rows      = isset($getData['rows']) ? $getData['rows'] : 50;
+        $rowsOnly  = isset($getData['rows_only']) ? $getData['rows_only'] : false;
 
         $this->load->model($this->_s_model);
 
-        $result = $this->{$this->_s_model}->getList($page, $rows, $rowsOnly);
+        $result = $this->{$this->_s_model}->getList(
+            $this->shop_id,
+            $type,
+            $startDate,
+            $endDate,
+            $page, $rows, $rowsOnly);
 
         echo json_encode($result);
     }
@@ -58,11 +66,12 @@ class GoodsSaleOfflineController extends BaseController
         $postData = $this->getPostData();
 
         $goodsId = isset($postData['goods_id']) ? $postData['goods_id'] : '';
-        $date = isset($postData['date']) ? $postData['date'] : '';
-        $num = isset($postData['num']) ? $postData['num'] : '';
-        $unit = isset($postData['unit']) ? $postData['unit'] : '';
+        $date    = isset($postData['date']) ? $postData['date'] : '';
+        $type    = isset($postData['type']) ? $postData['type'] : '';
+        $num     = isset($postData['num']) ? $postData['num'] : '';
+        $unit    = isset($postData['unit']) ? $postData['unit'] : '';
 
-        if (empty($goodsId) || empty($date) || empty($num) || empty($unit)) {
+        if (empty($goodsId) || empty($date) || empty($type) || empty($num) || empty($unit)) {
             echo json_encode(array(
                 'state' => false,
                 'msg'   => '参数不正确'
@@ -76,6 +85,7 @@ class GoodsSaleOfflineController extends BaseController
             $this->shop_id,
             $goodsId,
             $date,
+            $type,
             $num,
             $unit
         );
@@ -88,11 +98,12 @@ class GoodsSaleOfflineController extends BaseController
         $postData = $this->getPostData();
 
         $date = isset($postData['date']) ? $postData['date'] : '';
-        $num = isset($postData['num']) ? $postData['num'] : '';
+        $type = isset($postData['type']) ? $postData['type'] : '';
+        $num  = isset($postData['num']) ? $postData['num'] : '';
         $unit = isset($postData['unit']) ? $postData['unit'] : '';
-        $id = isset($postData['gso_id']) ? $postData['gso_id'] : '';
+        $id   = isset($postData['gso_id']) ? $postData['gso_id'] : '';
 
-        if (empty($date) || empty($num) || empty($id) || empty($unit)) {
+        if (empty($date) || empty($type) || empty($num) || empty($id) || empty($unit)) {
             echo json_encode(
                 array(
                     'state' => false,
@@ -108,6 +119,7 @@ class GoodsSaleOfflineController extends BaseController
             $id,
             $this->user_id,
             $date,
+            $type,
             $num,
             $unit
         );
