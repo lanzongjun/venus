@@ -37,12 +37,14 @@ class GoodsChangeController extends BaseController
     {
         $postData = $this->getPostData();
 
-        $goodsId = isset($postData['goods_id']) ? $postData['goods_id'] : '';
-        $date = isset($postData['date']) ? $postData['date'] : '';
-        $unit = isset($postData['unit']) ? $postData['unit'] : '';
-        $num = isset($postData['num']) ? $postData['num'] : '';
+        $goodsId    = isset($postData['goods_id']) ? $postData['goods_id'] : '';
+        $date       = isset($postData['date']) ? $postData['date'] : '';
+        $unit       = isset($postData['unit']) ? $postData['unit'] : '';
+        $num        = isset($postData['num']) ? $postData['num'] : '';
         $changeType = isset($postData['change_type']) ? $postData['change_type'] : '';
         $changeShop = isset($postData['change_shop']) ? $postData['change_shop'] : '';
+        $remark     = isset($postData['remark']) ? $postData['remark'] : '';
+
 
         if (empty($goodsId) || empty($date) || empty($unit) || empty($num)
         || empty($changeType) || empty($changeShop)) {
@@ -62,7 +64,8 @@ class GoodsChangeController extends BaseController
             $unit,
             $num,
             $changeType,
-            $changeShop
+            $changeShop,
+            $remark
         );
 
         echo json_encode($result);
@@ -106,13 +109,14 @@ class GoodsChangeController extends BaseController
     {
         $postData = $this->getPostData();
 
-        $goodsId = isset($postData['goods_id']) ? $postData['goods_id'] : '';
-        $date = isset($postData['date']) ? $postData['date'] : '';
-        $unit = isset($postData['unit']) ? $postData['unit'] : '';
-        $num = isset($postData['num']) ? $postData['num'] : '';
+        $goodsId    = isset($postData['goods_id']) ? $postData['goods_id'] : '';
+        $date       = isset($postData['date']) ? $postData['date'] : '';
+        $unit       = isset($postData['unit']) ? $postData['unit'] : '';
+        $num        = isset($postData['num']) ? $postData['num'] : '';
         $changeType = isset($postData['change_type']) ? $postData['change_type'] : '';
         $changeShop = isset($postData['change_shop']) ? $postData['change_shop'] : '';
-        $gcId = isset($postData['gc_id']) ? $postData['gc_id'] : '';
+        $remark     = isset($postData['remark']) ? $postData['remark'] : '';
+        $gcId       = isset($postData['gc_id']) ? $postData['gc_id'] : '';
 
         if (empty($goodsId) || empty($date) || empty($unit) || empty($num)
             || empty($changeType) || empty($changeShop) || empty($gcId)) {
@@ -132,7 +136,8 @@ class GoodsChangeController extends BaseController
             $unit,
             $num,
             $changeType,
-            $changeShop
+            $changeShop,
+            $remark
         );
 
         echo json_encode($result);

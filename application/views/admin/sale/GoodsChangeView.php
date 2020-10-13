@@ -19,6 +19,7 @@
         <th data-options="width:100,align:'center',field:'num_unit'">商品数量</th>
         <th data-options="width:100,align:'center',field:'change_type'">调货类型</th>
         <th data-options="width:200,align:'center',field:'change_shop'">调货店铺</th>
+        <th data-options="width:300,align:'center',field:'remark'">备注</th>
         <th data-options="width:200,align:'center',field:'gc_create_time'">创建时间</th>
         <th data-options="width:200,align:'center',field:'gc_update_time'">更新时间</th>
     </tr>
@@ -42,7 +43,7 @@
     </div>
 </div>
 
-<div id="d_edit_goods_change" class="easyui-window" title="编辑商品调度信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:320px;padding:5px;">
+<div id="d_edit_goods_change" class="easyui-window" title="编辑商品调度信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:390px;padding:5px;">
     <form id="f_edit_goods_change" method="post">
         <table>
             <tr>
@@ -81,18 +82,18 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <select class="easyui-combobox" name="change_type" readonly disabled
-                                data-options="labelWidth:'110',label:'入/出:',width:'200',panelHeight:'auto'">
-                            <option value="1" selected="true">转入</option>
-                            <option value="2">转出</option>
-                        </select>
+                        <input class="easyui-datebox" name="date" data-options="labelWidth:'110',label:'调度日期:',width:'240'">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-datebox" name="date" data-options="labelWidth:'110',label:'调度日期:',width:'300px'">
+                        <select class="easyui-combobox" name="change_type" readonly disabled
+                                data-options="labelWidth:'110',label:'入/出:',width:'200',panelHeight:'auto'">
+                            <option value="1" selected="true">转入</option>
+                            <option value="2">转出</option>
+                        </select>
                     </div>
                 </td>
             </tr>
@@ -113,6 +114,21 @@
                     </div>
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <input class="easyui-textbox" name="remark" data-options="
+                        label:'备注:',
+                        width:'400px',
+                        height:'60px',
+                        panelHeight:'auto',
+                        multiline: 'true',
+                        labelPosition: 'left',
+                        labelWidth:'110'
+                    ">
+                    </div>
+                </td>
+            </tr>
         </table>
         <input name="gc_id" type="hidden"/>
         <div style="text-align:center;padding:5px 0">
@@ -122,7 +138,7 @@
     </form>
 </div>
 
-<div id="d_add_goods_change" class="easyui-window" title="新增商品调度信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:320px;padding:5px;">
+<div id="d_add_goods_change" class="easyui-window" title="新增商品调度信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:390px;padding:5px;">
     <form id="f_add_goods_change" method="post">
         <table>
             <tr>
@@ -161,17 +177,17 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <select class="easyui-combobox" name="change_type" data-options="labelWidth:'110',label:'入/出:',width:'200',panelHeight:'auto'">
-                            <option value="1" selected="true">转入</option>
-                            <option value="2">转出</option>
-                        </select>
+                        <input class="easyui-datebox" name="date" data-options="labelWidth:'110',label:'调度日期:',width:'240'">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-datebox" name="date" data-options="labelWidth:'110',label:'调度日期:',width:'300px'">
+                        <select class="easyui-combobox" name="change_type" data-options="labelWidth:'110',label:'入/出:',width:'200',panelHeight:'auto'">
+                            <option value="1" selected="true">转入</option>
+                            <option value="2">转出</option>
+                        </select>
                     </div>
                 </td>
             </tr>
@@ -189,6 +205,21 @@
                             <option value="1" selected="true">个</option>
                             <option value="2">斤</option>
                         </select>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <input class="easyui-textbox" name="remark" data-options="
+                        label:'备注:',
+                        width:'400px',
+                        height:'60px',
+                        panelHeight:'auto',
+                        multiline: 'true',
+                        labelPosition: 'left',
+                        labelWidth:'110'
+                    ">
                     </div>
                 </td>
             </tr>

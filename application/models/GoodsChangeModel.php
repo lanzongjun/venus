@@ -42,7 +42,7 @@ class GoodsChangeModel extends BaseModel
 
         // 获取分页数据
         $queryList->select('gc_id, pg_name, gc_shop_id, gc_date, gc_unit, gc_num, 
-        gc_change_type, gc_change_shop, gc_create_time, gc_update_time');
+        gc_change_type, gc_change_shop, gc_remark, gc_create_time, gc_update_time');
 
         $offset = ($page - 1) * $rows;
         $queryList->limit($rows, $offset);
@@ -55,6 +55,7 @@ class GoodsChangeModel extends BaseModel
             $row['change_shop'] = isset($shopMap[$row['gc_change_shop']]) ? $shopMap[$row['gc_change_shop']]['cs_name'] : '';
             $row['num_unit'] = $row['gc_num'].'('. self::unitMap($row['gc_unit']) .')';
             $row['change_type'] = $row['gc_change_type'] == 1 ? '转入' : '转出';
+            $row['remark'] = empty($row['gc_remark']) ? '--' : $row['gc_remark'];
         }
 
         return array(
@@ -78,8 +79,9 @@ class GoodsChangeModel extends BaseModel
         $unit,
         $num,
         $changeType,
-        $changeShop)
-    {
+        $changeShop,
+        $remark
+    ) {
 
         $this->db->trans_begin();
 
@@ -91,7 +93,8 @@ class GoodsChangeModel extends BaseModel
             'gc_num'               => $num,
             'gc_change_type'       => $changeType,
             'gc_change_shop'       => $changeShop,
-            'gc_operator'          => $userId
+            'gc_operator'          => $userId,
+            'gc_remark'            => $remark
         ];
 
         $this->db->insert('goods_change', $insertData);
@@ -188,7 +191,8 @@ class GoodsChangeModel extends BaseModel
     public function getGoodsChangeInfo($id)
     {
         $this->db->select('gc_id, gc_provider_goods_id as goods_id, gc_date as date,
-        gc_unit as unit, gc_num as num, gc_change_type as change_type, gc_change_shop as change_shop');
+        gc_unit as unit, gc_num as num, gc_change_type as change_type, 
+        gc_change_shop as change_shop, gc_remark as remark');
         $this->db->where('gc_id', $id);
         $query = $this->db->get('goods_change');
         $result = $query->first_row();
@@ -199,7 +203,7 @@ class GoodsChangeModel extends BaseModel
         return $result;
     }
 
-    public function editGoodsChange($id, $userId, $goodsId, $date, $unit, $num, $changeType, $changeShop)
+    public function editGoodsChange($id, $userId, $goodsId, $date, $unit, $num, $changeType, $changeShop, $remark)
     {
         $o_result = array(
             'state' => false,
@@ -213,7 +217,8 @@ class GoodsChangeModel extends BaseModel
             'gc_unit'              => $unit,
             'gc_num'               => $num,
             'gc_change_type'       => $changeType,
-            'gc_change_shop'       => $changeShop
+            'gc_change_shop'       => $changeShop,
+            'gc_remark'            => $remark
         ];
         $this->db->where('gc_id', $id);
 
