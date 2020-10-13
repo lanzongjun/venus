@@ -1,5 +1,12 @@
 function showAddWin() {
     $('#d_add_goods_change').window('open');
+    $("#add_select_date").datebox().datebox('calendar').calendar({
+        validator : function(date){
+            var now = new Date();
+            var d1 = new Date(now.getFullYear(),now.getMonth(),now.getDate());
+            return d1 >= date;
+        }
+    });
 }
 
 // 新增
@@ -71,7 +78,6 @@ function doSearch() {
         provider_goods_name: provider_goods_name
     });
 }
-
 
 $(function () {
     $('#btn_add').bind('click', function () {

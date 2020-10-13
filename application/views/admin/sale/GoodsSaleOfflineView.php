@@ -75,7 +75,7 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-datebox" name="date" data-options="labelWidth:'70',label:'销售日期:',width:'300px'">
+                        <input id="edit_select_date" class="easyui-datebox" name="date" data-options="labelWidth:'70',label:'销售日期:',width:'300px'">
                     </div>
                 </td>
             </tr>
@@ -154,7 +154,7 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-datebox" name="date" data-options="labelWidth:'70',label:'销售日期:',width:'300px'">
+                        <input id="add_select_date" class="easyui-datebox" name="date" data-options="labelWidth:'70',label:'销售日期:',width:'300px'">
                     </div>
                 </td>
             </tr>

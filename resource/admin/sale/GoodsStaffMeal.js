@@ -1,5 +1,12 @@
 function showAddWin() {
     $('#d_add_staff_meal').window('open');
+    $("#add_select_date").datebox().datebox('calendar').calendar({
+        validator : function(date){
+            var now = new Date();
+            var d1 = new Date(now.getFullYear(),now.getMonth(),now.getDate());
+            return d1 >= date;
+        }
+    });
 }
 
 // 新增
@@ -56,6 +63,13 @@ function showEditWin() {
         return;
     }
     $('#d_edit_staff_meal').window('open');
+    $("#edit_select_date").datebox().datebox('calendar').calendar({
+        validator : function(date){
+            var now = new Date();
+            var d1 = new Date(now.getFullYear(),now.getMonth(),now.getDate());
+            return d1 >= date;
+        }
+    });
     $('#f_edit_staff_meal').form('load', '../' + __s_c_name + '/getStaffMealInfo?id=' + o_row.gsm_id);
 }
 
@@ -115,4 +129,4 @@ $(function () {
             $('#dg').datagrid('reload');
         }
     });
-})
+});

@@ -115,6 +115,9 @@ class BaseModel extends CI_Model
             $this->db->update('core_repertory', $updateData, $updateWhere);
         }
 
+        // 判断日期，不是今天的修改库存每日表
+        $this->modifyRepertoryDaily($shopId, $goodsId, $date, $transferResult);
+
         return array(
             'state' => true
         );
@@ -135,7 +138,7 @@ class BaseModel extends CI_Model
             ->where('crr_type', $type)
             ->where('crr_ref_id', $insertId)
             ->where('crr_shop_id', $shopId)
-            ->select('crr_num, crr_unit, crr_shop_id, crr_provider_goods_id, pg_is_dumplings')
+            ->select('crr_num, crr_unit, crr_shop_id, crr_provider_goods_id, crr_date, pg_is_dumplings')
             ->get('core_repertory_record')
             ->first_row();
 
@@ -171,7 +174,6 @@ class BaseModel extends CI_Model
             );
         }
 
-
         // 获取库存记录
         $existsRep = $this->db
             ->where('cr_shop_id', $shopId)
@@ -196,6 +198,9 @@ class BaseModel extends CI_Model
         ];
 
         $this->db->update('core_repertory', $updateData, $updateWhere);
+
+        // 判断日期，不是今天的修改库存每日表
+        $this->modifyRepertoryDaily($shopId, $row->crr_provider_goods_id, $row->crr_date, $transferResult);
 
         return array(
             'state' => true
@@ -290,6 +295,8 @@ class BaseModel extends CI_Model
             ->where('cr_provider_goods_id', $goodsId)
             ->update('core_repertory', $updateData);
 
+        // 判断日期，不是今天的修改库存每日表
+        $this->modifyRepertoryDaily($shopId, $goodsId, $date, $diffWeight);
 
         return array(
             'state' => true
@@ -328,5 +335,25 @@ class BaseModel extends CI_Model
         }
 
         return $allTotal;
+    }
+
+    public function modifyRepertoryDaily($shopId, $goodsId, $date, $num)
+    {
+        $today = date('Y-m-d');
+        if ($date >= $today) {
+            return true;
+        }
+
+        // 修改日期到昨天的库存信息
+        $res = $this->db
+            ->set('crd_num', 'crd_num + '.$num, false)
+            ->where('crd_shop_id', $shopId)
+            ->where('crd_provider_goods_id', $goodsId)
+            ->where('crd_date >=', $date)
+            ->where('crd_date <', $today)
+            ->update('core_repertory_daily');
+
+//        print_r($this->db->last_query());
+//        exit;
     }
 }

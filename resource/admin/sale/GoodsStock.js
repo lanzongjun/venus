@@ -1,5 +1,12 @@
 function showAddWin() {
     $('#d_add_goods_stock').window('open');
+    $("#add_select_date").datebox().datebox('calendar').calendar({
+        validator : function(date){
+            var now = new Date();
+            var d1 = new Date(now.getFullYear(),now.getMonth(),now.getDate());
+            return d1 >= date;
+        }
+    });
 }
 
 // 新增
@@ -27,6 +34,13 @@ function showEditWin() {
         return;
     }
     $('#d_edit_goods_stock').window('open');
+    $("#edit_select_date").datebox().datebox('calendar').calendar({
+        validator : function(date){
+            var now = new Date();
+            var d1 = new Date(now.getFullYear(),now.getMonth(),now.getDate());
+            return d1 >= date;
+        }
+    });
     $('#f_edit_goods_stock').form('load', '../' + __s_c_name + '/getGoodsStockInfo?id=' + o_row.gs_id);
 }
 
@@ -70,7 +84,6 @@ function doSearch() {
         provider_goods_name: provider_goods_name
     });
 }
-
 
 $(function () {
     $('#btn_add').bind('click', function () {

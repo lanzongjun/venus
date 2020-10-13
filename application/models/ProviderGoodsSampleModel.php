@@ -117,7 +117,7 @@ class ProviderGoodsSampleModel extends BaseModel
 
         $updateData = [
             'pgs_provider_goods_id' => $params['pg_id'],
-            'pgs_weight' => $params['pgs_weight']
+            'pgs_weight'            => $params['pgs_weight']
         ];
         $this->db->where('pgs_id', $params['pgs_id']);
 

@@ -1,5 +1,12 @@
 function showAddWin() {
     $('#d_add_exception_handle').window('open');
+    $("#add_select_date").datebox().datebox('calendar').calendar({
+        validator : function(date){
+            var now = new Date();
+            var d1 = new Date(now.getFullYear(),now.getMonth(),now.getDate());
+            return d1 >= date;
+        }
+    });
 }
 
 // 新增
@@ -56,6 +63,13 @@ function showEditWin() {
         return;
     }
     $('#d_edit_exception_handle').window('open');
+    $("#edit_select_date").datebox().datebox('calendar').calendar({
+        validator : function(date){
+            var now = new Date();
+            var d1 = new Date(now.getFullYear(),now.getMonth(),now.getDate());
+            return d1 >= date;
+        }
+    });
     $('#f_edit_exception_handle').form('load', {
         goods_id: o_row.goods_id,
         date: o_row.geh_date,
@@ -123,4 +137,4 @@ $(function () {
             $('#dg').datagrid('reload');
         }
     });
-})
+});

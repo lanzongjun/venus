@@ -70,7 +70,7 @@ class GoodsLossController extends BaseController
         $goodsId = isset($postData['pg_id']) ? $postData['pg_id'] : '';
         $date    = isset($postData['date']) ? $postData['date'] : '';
         $num     = isset($postData['num']) ? $postData['num'] : '';
-        $unit     = isset($postData['unit']) ? $postData['unit'] : '';
+        $unit    = isset($postData['unit']) ? $postData['unit'] : '';
         $order   = isset($postData['order']) ? $postData['order'] : '';
         $type    = isset($postData['type']) ? $postData['type'] : '';
 
