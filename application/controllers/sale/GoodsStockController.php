@@ -47,9 +47,10 @@ class GoodsStockController extends BaseController
         $postData = $this->getPostData();
 
         $goodsId = isset($postData['goods_id']) ? $postData['goods_id'] : '';
-        $date = isset($postData['date']) ? $postData['date'] : '';
-        $num = isset($postData['num']) ? $postData['num'] : '';
-        $unit = isset($postData['unit']) ? $postData['unit'] : '';
+        $date    = isset($postData['date']) ? $postData['date'] : '';
+        $num     = isset($postData['num']) ? $postData['num'] : '';
+        $unit    = isset($postData['unit']) ? $postData['unit'] : '';
+        $remark  = isset($postData['remark']) ? $postData['remark'] : '';
 
         if (empty($goodsId) || empty($date) || empty($num) || empty($unit)) {
             echo json_encode(array(
@@ -66,7 +67,8 @@ class GoodsStockController extends BaseController
             $goodsId,
             $date,
             $num,
-            $unit
+            $unit,
+            $remark
         );
 
         echo json_encode($result);
@@ -110,10 +112,11 @@ class GoodsStockController extends BaseController
     {
         $postData = $this->getPostData();
 
-        $date = isset($postData['date']) ? $postData['date'] : '';
-        $num = isset($postData['num']) ? $postData['num'] : '';
-        $unit = isset($postData['unit']) ? $postData['unit'] : '';
-        $id   = isset($postData['gs_id']) ? $postData['gs_id'] : '';
+        $date   = isset($postData['date']) ? $postData['date'] : '';
+        $num    = isset($postData['num']) ? $postData['num'] : '';
+        $unit   = isset($postData['unit']) ? $postData['unit'] : '';
+        $remark = isset($postData['remark']) ? $postData['remark'] : '';
+        $id     = isset($postData['gs_id']) ? $postData['gs_id'] : '';
 
         if (empty($date) || empty($num) || empty($id) || empty($unit)) {
             echo json_encode(
@@ -132,7 +135,8 @@ class GoodsStockController extends BaseController
             $this->user_id,
             $date,
             $num,
-            $unit
+            $unit,
+            $remark
         );
 
         echo json_encode($result);

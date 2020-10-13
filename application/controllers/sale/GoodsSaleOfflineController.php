@@ -70,6 +70,7 @@ class GoodsSaleOfflineController extends BaseController
         $type    = isset($postData['type']) ? $postData['type'] : '';
         $num     = isset($postData['num']) ? $postData['num'] : '';
         $unit    = isset($postData['unit']) ? $postData['unit'] : '';
+        $remark  = isset($postData['remark']) ? $postData['remark'] : '';
 
         if (empty($goodsId) || empty($date) || empty($type) || empty($num) || empty($unit)) {
             echo json_encode(array(
@@ -87,7 +88,8 @@ class GoodsSaleOfflineController extends BaseController
             $date,
             $type,
             $num,
-            $unit
+            $unit,
+            $remark
         );
 
         echo json_encode($result);
@@ -97,11 +99,12 @@ class GoodsSaleOfflineController extends BaseController
     {
         $postData = $this->getPostData();
 
-        $date = isset($postData['date']) ? $postData['date'] : '';
-        $type = isset($postData['type']) ? $postData['type'] : '';
-        $num  = isset($postData['num']) ? $postData['num'] : '';
-        $unit = isset($postData['unit']) ? $postData['unit'] : '';
-        $id   = isset($postData['gso_id']) ? $postData['gso_id'] : '';
+        $date   = isset($postData['date']) ? $postData['date'] : '';
+        $type   = isset($postData['type']) ? $postData['type'] : '';
+        $num    = isset($postData['num']) ? $postData['num'] : '';
+        $unit   = isset($postData['unit']) ? $postData['unit'] : '';
+        $remark = isset($postData['remark']) ? $postData['remark'] : '';
+        $id     = isset($postData['gso_id']) ? $postData['gso_id'] : '';
 
         if (empty($date) || empty($type) || empty($num) || empty($id) || empty($unit)) {
             echo json_encode(
@@ -121,7 +124,8 @@ class GoodsSaleOfflineController extends BaseController
             $date,
             $type,
             $num,
-            $unit
+            $unit,
+            $remark
         );
 
         echo json_encode($result);

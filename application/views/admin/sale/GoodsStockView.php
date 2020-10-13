@@ -17,6 +17,7 @@
         <th data-options="width:180,align:'center',field:'pg_name'">供应商商品</th>
         <th data-options="width:130,align:'center',field:'gs_date'">进货日期</th>
         <th data-options="width:100,align:'center',field:'num_unit'">数量(单位)</th>
+        <th data-options="width:300,align:'center',field:'remark'">备注</th>
         <th data-options="width:100,align:'center',field:'u_name'">操作人</th>
         <th data-options="width:200,align:'center',field:'gs_create_time'">创建时间</th>
         <th data-options="width:200,align:'center',field:'gs_update_time'">更新时间</th>
@@ -41,7 +42,7 @@
     </div>
 </div>
 
-<div id="d_edit_goods_stock" class="easyui-window" title="编辑商品进货信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:245px;padding:5px;">
+<div id="d_edit_goods_stock" class="easyui-window" title="编辑商品进货信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:310px;padding:5px;">
     <form id="f_edit_goods_stock" method="post">
         <table>
             <tr>
@@ -86,6 +87,21 @@
 
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <input class="easyui-textbox" name="remark" data-options="
+                        label:'备注:',
+                        width:'400px',
+                        height:'60px',
+                        panelHeight:'auto',
+                        multiline: 'true',
+                        labelPosition: 'left',
+                        labelWidth:'110'
+                    ">
+                    </div>
+                </td>
+            </tr>
         </table>
         <input name="gs_id" type="hidden"/>
         <div style="text-align:center;padding:5px 0">
@@ -95,7 +111,7 @@
     </form>
 </div>
 
-<div id="d_add_goods_stock" class="easyui-window" title="新增商品进货信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:245px;padding:5px;">
+<div id="d_add_goods_stock" class="easyui-window" title="新增商品进货信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:310px;padding:5px;">
     <form id="f_add_goods_stock" method="post">
         <table>
             <tr>
@@ -137,7 +153,21 @@
                             <option value="2">斤</option>
                         </select>
                     </div>
-
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <input class="easyui-textbox" name="remark" data-options="
+                        label:'备注:',
+                        width:'400px',
+                        height:'60px',
+                        panelHeight:'auto',
+                        multiline: 'true',
+                        labelPosition: 'left',
+                        labelWidth:'110'
+                    ">
+                    </div>
                 </td>
             </tr>
         </table>

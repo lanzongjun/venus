@@ -18,6 +18,7 @@
         <th data-options="width:150,align:'center',field:'gso_date'">销售日期</th>
         <th data-options="width:150,align:'center',field:'gso_type_text'">销售类型</th>
         <th data-options="width:200,align:'center',field:'num_unit'">数量(单位)</th>
+        <th data-options="width:400,align:'center',field:'remark'">备注</th>
         <th data-options="width:200,align:'center',field:'gso_create_time'">创建时间</th>
         <th data-options="width:200,align:'center',field:'gso_update_time'">更新时间</th>
     </tr>
@@ -51,7 +52,7 @@
     </div>
 </div>
 
-<div id="d_edit_sale_offline" class="easyui-window" title="编辑线下销售信息" data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:440px;height:280px;padding:5px;">
+<div id="d_edit_sale_offline" class="easyui-window" title="编辑线下销售信息" data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:440px;height:350px;padding:5px;">
     <form id="f_edit_sale_offline" method="post">
         <table>
             <tr>
@@ -106,6 +107,21 @@
                     </div>
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <input class="easyui-textbox" name="remark" data-options="
+                        label:'备注:',
+                        width:'400px',
+                        height:'60px',
+                        panelHeight:'auto',
+                        multiline: 'true',
+                        labelPosition: 'left',
+                        labelWidth:'70'
+                    ">
+                    </div>
+                </td>
+            </tr>
         </table>
         <input name="gso_id" type="hidden"/>
         <div style="text-align:center;padding:5px 0">
@@ -115,7 +131,7 @@
     </form>
 </div>
 
-<div id="d_add_sale_offline" class="easyui-window" title="新增线下销售信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:280px;padding:5px;">
+<div id="d_add_sale_offline" class="easyui-window" title="新增线下销售信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:350px;padding:5px;">
     <form id="f_add_sale_offline" method="post">
         <table>
             <tr>
@@ -169,6 +185,21 @@
                         </select>
                     </div>
 
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <input class="easyui-textbox" name="remark" data-options="
+                        label:'备注:',
+                        width:'400px',
+                        height:'60px',
+                        panelHeight:'auto',
+                        multiline: 'true',
+                        labelPosition: 'left',
+                        labelWidth:'70'
+                    ">
+                    </div>
                 </td>
             </tr>
         </table>

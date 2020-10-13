@@ -46,7 +46,7 @@ class GoodsSaleOfflineModel extends BaseModel
 
         // 获取分页数据
         $queryList->select('gso_id, core_shop.cs_name as shop_name, cs_city, gso_date, 
-        pg_name as goods_name, gso_type, gso_num, gso_unit, gso_create_time, gso_update_time');
+        pg_name as goods_name, gso_type, gso_num, gso_unit, gso_remark, gso_create_time, gso_update_time');
 
         if (!$rowsOnly) {
             $offset = ($page - 1) * $rows;
@@ -58,6 +58,7 @@ class GoodsSaleOfflineModel extends BaseModel
         foreach ($rows as &$row) {
             $row['gso_type_text'] = $row['gso_type'] == self::TYPE_SHIHUA ? '石化结算' : '线下销售';
             $row['num_unit'] = $row['gso_num'].'('. self::unitMap($row['gso_unit']) .')';
+            $row['remark'] = empty($row['gso_remark']) ? '--' : $row['gso_remark'];
         }
 
 
@@ -72,7 +73,7 @@ class GoodsSaleOfflineModel extends BaseModel
 
         $this->db->select('gso_id, 
         gso_provider_goods_id as goods_id, 
-        gso_date as date, gso_type as type ,gso_num as num, gso_unit as unit');
+        gso_date as date, gso_type as type ,gso_num as num, gso_unit as unit, gso_remark as remark');
 
         $this->db->where('gso_id', $id);
 
@@ -81,7 +82,7 @@ class GoodsSaleOfflineModel extends BaseModel
         return $result;
     }
 
-    public function addGoodsSaleOffline($userId, $shopId, $goodsId, $date, $type, $num, $unit)
+    public function addGoodsSaleOffline($userId, $shopId, $goodsId, $date, $type, $num, $unit, $remark)
     {
         $this->db->trans_begin();
 
@@ -92,7 +93,8 @@ class GoodsSaleOfflineModel extends BaseModel
             'gso_date'              => $date,
             'gso_type'              => $type,
             'gso_num'               => $num,
-            'gso_unit'              => $unit
+            'gso_unit'              => $unit,
+            'gso_remark'            => $remark
         ];
 
         $this->db->insert('goods_sale_offline', $insertData);
@@ -133,7 +135,7 @@ class GoodsSaleOfflineModel extends BaseModel
         );
     }
 
-    public function editGoodsSaleOffline($shopId, $id, $userId, $date, $type, $num, $unit)
+    public function editGoodsSaleOffline($shopId, $id, $userId, $date, $type, $num, $unit, $remark)
     {
         $o_result = array(
             'state' => false,
@@ -164,10 +166,11 @@ class GoodsSaleOfflineModel extends BaseModel
         }
 
         $updateData = [
-            'gso_date'              => $date,
-            'gso_num'               => $num,
-            'gso_unit'              => $unit,
-            'gso_operator'          => $userId
+            'gso_date'     => $date,
+            'gso_num'      => $num,
+            'gso_unit'     => $unit,
+            'gso_remark'   => $remark,
+            'gso_operator' => $userId
         ];
         $this->db->where('gso_id', $id);
 

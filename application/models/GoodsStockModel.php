@@ -39,7 +39,7 @@ class GoodsStockModel extends BaseModel
 
         // 获取分页数据
         $queryList->select('gs_id, cs_name, pg_name, gs_date, gs_num, gs_unit,
-         u_name, gs_create_time, gs_update_time');
+         u_name, gs_remark, gs_create_time, gs_update_time');
 
         if (!$rowsOnly) {
             $offset = ($page - 1) * $rows;
@@ -49,8 +49,8 @@ class GoodsStockModel extends BaseModel
         $rows = $queryList->get('goods_stock')->result_array();
 
         foreach ($rows as &$row) {
+            $row['remark'] = empty($row['gs_remark']) ? '--' : $row['gs_remark'];
             $row['num_unit'] = $row['gs_num'].'('. self::unitMap($row['gs_unit']) .')';
-
         }
 
         if ($rowsOnly) {
@@ -63,7 +63,7 @@ class GoodsStockModel extends BaseModel
         }
     }
 
-    public function addGoodsStock($userId, $shopId, $goodsId, $date, $num, $unit)
+    public function addGoodsStock($userId, $shopId, $goodsId, $date, $num, $unit, $remark)
     {
         $this->db->trans_begin();
         try {
@@ -73,7 +73,8 @@ class GoodsStockModel extends BaseModel
                 'gs_date'              => $date,
                 'gs_num'               => $num,
                 'gs_unit'              => $unit,
-                'gs_operator_id'       => $userId
+                'gs_operator_id'       => $userId,
+                'gs_remark'            => $remark
             ];
 
             $this->db->insert('goods_stock', $insertData);
@@ -166,7 +167,7 @@ class GoodsStockModel extends BaseModel
     {
         $this->db->select('gs_id, 
         gs_provider_goods_id as goods_id, 
-        gs_date as date, gs_num as num, gs_unit as unit');
+        gs_date as date, gs_num as num, gs_unit as unit, gs_remark as remark');
 
         $this->db->where('gs_id', $id);
 
@@ -175,7 +176,7 @@ class GoodsStockModel extends BaseModel
         return $result;
     }
 
-    public function editGoodsStock($shopId, $id, $userId, $date, $num, $unit)
+    public function editGoodsStock($shopId, $id, $userId, $date, $num, $unit, $remark)
     {
         $o_result = array(
             'state' => false,
@@ -204,10 +205,11 @@ class GoodsStockModel extends BaseModel
         }
 
         $updateData = [
-            'gs_date'              => $date,
-            'gs_num'               => $num,
-            'gs_unit'              => $unit,
-            'gs_operator_id'          => $userId
+            'gs_date'        => $date,
+            'gs_num'         => $num,
+            'gs_unit'        => $unit,
+            'gs_remark'      => $remark,
+            'gs_operator_id' => $userId
         ];
         $this->db->where('gs_id', $id);
 
