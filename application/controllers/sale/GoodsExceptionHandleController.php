@@ -43,6 +43,7 @@ class GoodsExceptionHandleController extends BaseController
         $num           = isset($postData['num']) ? $postData['num'] : '';
         $order         = isset($postData['order']) ? $postData['order'] : '';
         $isReduceStock = isset($postData['is_reduce_stock']) ? $postData['is_reduce_stock'] : 0;
+        $remark        = isset($postData['remark']) ? $postData['remark'] : '';
 
         if (empty($goodsId) || empty($date) || empty($unit) || empty($num) || empty($order)) {
             echo json_encode(array(
@@ -61,7 +62,8 @@ class GoodsExceptionHandleController extends BaseController
             $unit,
             $num,
             $order,
-            $isReduceStock
+            $isReduceStock,
+            $remark
         );
 
         echo json_encode($result);
@@ -111,6 +113,7 @@ class GoodsExceptionHandleController extends BaseController
         $gehId         = isset($postData['geh_id']) ? $postData['geh_id'] : '';
         $order         = isset($postData['order']) ? $postData['order'] : '';
         $isReduceStock = isset($postData['is_reduce_stock']) ? $postData['is_reduce_stock'] : 0;
+        $remark        = isset($postData['remark']) ? $postData['remark'] : '';
 
         if (empty($date) || empty($unit) || empty($num) || empty($gehId) || empty($order)) {
             echo json_encode(array(
@@ -129,7 +132,8 @@ class GoodsExceptionHandleController extends BaseController
             $unit,
             $num,
             $order,
-            $isReduceStock
+            $isReduceStock,
+            $remark
         );
 
         echo json_encode($result);

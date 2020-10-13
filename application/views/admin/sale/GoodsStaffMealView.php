@@ -17,6 +17,7 @@
         <th data-options="width:180,align:'center',field:'gsm_date'">就餐日期</th>
         <th data-options="width:200,align:'center',field:'goods_name'">商品名称</th>
         <th data-options="width:100,align:'center',field:'num_unit'">商品数量</th>
+        <th data-options="width:300,align:'center',field:'remark'">备注</th>
         <th data-options="width:200,align:'center',field:'gsm_create_time'">创建时间</th>
         <th data-options="width:200,align:'center',field:'gsm_update_time'">更新时间</th>
     </tr>
@@ -40,7 +41,7 @@
     </div>
 </div>
 
-<div id="d_edit_staff_meal" class="easyui-window" title="编辑员工餐信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:245px;padding:5px;">
+<div id="d_edit_staff_meal" class="easyui-window" title="编辑员工餐信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:310px;padding:5px;">
     <form id="f_edit_staff_meal" method="post">
         <table>
             <tr>
@@ -62,7 +63,7 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-datebox" name="date" data-options="labelWidth:'110',label:'进货日期:',width:'300px'">
+                        <input class="easyui-datebox" name="date" data-options="labelWidth:'110',label:'消费日期:',width:'240'">
                     </div>
                 </td>
             </tr>
@@ -84,6 +85,21 @@
                     </div>
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <input class="easyui-textbox" name="remark" data-options="
+                        label:'备注:',
+                        width:'400px',
+                        height:'60px',
+                        panelHeight:'auto',
+                        multiline: 'true',
+                        labelPosition: 'left',
+                        labelWidth:'110'
+                    ">
+                    </div>
+                </td>
+            </tr>
         </table>
         <input name="gsm_id" type="hidden"/>
         <div style="text-align:center;padding:5px 0">
@@ -93,7 +109,7 @@
     </form>
 </div>
 
-<div id="d_add_staff_meal" class="easyui-window" title="新增员工餐信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:245px;padding:5px;">
+<div id="d_add_staff_meal" class="easyui-window" title="新增员工餐信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:310px;padding:5px;">
     <form id="f_add_staff_meal" method="post">
         <table>
             <tr>
@@ -115,7 +131,7 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-datebox" name="date" data-options="labelWidth:'110',label:'消费日期:',width:'300px'">
+                        <input class="easyui-datebox" name="date" data-options="labelWidth:'110',label:'消费日期:',width:'240'">
                     </div>
                 </td>
             </tr>
@@ -133,6 +149,21 @@
                             <option value="1" selected="true">个</option>
                             <option value="2">斤</option>
                         </select>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <input class="easyui-textbox" name="remark" data-options="
+                        label:'备注:',
+                        width:'400px',
+                        height:'60px',
+                        panelHeight:'auto',
+                        multiline: 'true',
+                        labelPosition: 'left',
+                        labelWidth:'110'
+                    ">
                     </div>
                 </td>
             </tr>

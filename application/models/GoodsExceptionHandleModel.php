@@ -43,7 +43,8 @@ class GoodsExceptionHandleModel extends BaseModel
         // 获取分页数据
         $queryList->select('geh_id, cs_name as shop_name, pg_name as goods_name, 
         geh_order, geh_date, geh_unit, geh_num, geh_type, u_name as operator, 
-        geh_is_reduce_stock, geh_create_time, geh_update_time, geh_provider_goods_id as goods_id');
+        geh_is_reduce_stock, geh_create_time, geh_update_time, 
+        geh_provider_goods_id as goods_id, geh_remark');
 
         $offset = ($page - 1) * $rows;
         $queryList->limit($rows, $offset);
@@ -51,6 +52,7 @@ class GoodsExceptionHandleModel extends BaseModel
         $rows = $queryList->get('goods_exception_handle')->result_array();
 
         foreach ($rows as &$row) {
+            $row['remark'] = empty($row['geh_remark']) ? '--' : $row['geh_remark'];
             $row['num_unit'] = $row['geh_num'].'('. self::unitMap($row['geh_unit']) .')';
             $row['geh_type_text'] = $row['geh_type'] == 1 ? '索赔单' : '';
             $row['geh_is_reduce_stock_text'] = $row['geh_is_reduce_stock'] == 1 ? '是' : '否';
@@ -70,9 +72,9 @@ class GoodsExceptionHandleModel extends BaseModel
         $unit,
         $num,
         $order,
-        $isReduceStock
-    )
-    {
+        $isReduceStock,
+        $remark
+    ) {
         $this->db->trans_begin();
 
         $insertData = [
@@ -84,7 +86,8 @@ class GoodsExceptionHandleModel extends BaseModel
             'geh_operator'          => $userId,
             'geh_order'             => $order,
             'geh_type'              => self::EXCEPTION_HANDLE_TYPE_CHAIM,
-            'geh_is_reduce_stock'   => $isReduceStock
+            'geh_is_reduce_stock'   => $isReduceStock,
+            'geh_remark'            => $remark
         ];
 
         $this->db->insert('goods_exception_handle', $insertData);
@@ -129,7 +132,8 @@ class GoodsExceptionHandleModel extends BaseModel
     public function getExceptionHandleInfo($id)
     {
         $this->db->select('geh_id, geh_provider_goods_id as goods_id, geh_date as date,
-        geh_unit as unit, geh_num as num, geh_order as order, geh_is_reduce_stock as is_reduce_stock');
+        geh_unit as unit, geh_num as num, geh_order as order, 
+        geh_is_reduce_stock as is_reduce_stock, geh_remark as remark');
         $this->db->where('geh_id', $id);
         $query = $this->db->get('goods_exception_handle');
         $result = $query->first_row();
@@ -140,7 +144,7 @@ class GoodsExceptionHandleModel extends BaseModel
         return $result;
     }
 
-    public function editExceptionHandle($shopId, $id, $userId, $date, $unit, $num, $order, $isReduceStock)
+    public function editExceptionHandle($shopId, $id, $userId, $date, $unit, $num, $order, $isReduceStock, $remark)
     {
         $o_result = array(
             'state' => false,
@@ -176,7 +180,8 @@ class GoodsExceptionHandleModel extends BaseModel
             'geh_date'     => $date,
             'geh_unit'     => $unit,
             'geh_num'      => $num,
-            'geh_order'    => $order
+            'geh_order'    => $order,
+            'geh_remark'   => $remark
         ];
         $this->db->where('geh_id', $id);
 

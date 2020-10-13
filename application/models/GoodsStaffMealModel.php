@@ -36,7 +36,7 @@ class GoodsStaffMealModel extends BaseModel
 
         // 获取分页数据
         $queryList->select('gsm_id, cs_name as shop_name, pg_name as goods_name, 
-        gsm_date, gsm_unit, gsm_num, gsm_create_time, gsm_update_time');
+        gsm_date, gsm_unit, gsm_num, gsm_remark, gsm_create_time, gsm_update_time');
 
         $offset = ($page - 1) * $rows;
         $queryList->limit($rows, $offset);
@@ -44,6 +44,7 @@ class GoodsStaffMealModel extends BaseModel
         $rows = $queryList->get('goods_staff_meal')->result_array();
 
         foreach ($rows as &$row) {
+            $row['remark'] = empty($row['gsm_remark']) ? '--' : $row['gsm_remark'];
             $row['num_unit'] = $row['gsm_num'].'('. self::unitMap($row['gsm_unit']) .')';
         }
 
@@ -59,8 +60,9 @@ class GoodsStaffMealModel extends BaseModel
         $goodsId,
         $date,
         $unit,
-        $num)
-    {
+        $num,
+        $remark
+    ) {
 
         $this->db->trans_begin();
 
@@ -70,7 +72,8 @@ class GoodsStaffMealModel extends BaseModel
             'gsm_date'              => $date,
             'gsm_unit'              => $unit,
             'gsm_num'               => $num,
-            'gsm_operator'          => $userId
+            'gsm_operator'          => $userId,
+            'gsm_remark'            => $remark
         ];
 
         $this->db->insert('goods_staff_meal', $insertData);
@@ -112,7 +115,7 @@ class GoodsStaffMealModel extends BaseModel
     public function getStaffMealInfo($id)
     {
         $this->db->select('gsm_id, gsm_provider_goods_id as goods_id, gsm_date as date,
-        gsm_unit as unit, gsm_num as num');
+        gsm_unit as unit, gsm_num as num, gsm_remark as remark');
         $this->db->where('gsm_id', $id);
         $query = $this->db->get('goods_staff_meal');
         $result = $query->first_row();
@@ -123,7 +126,7 @@ class GoodsStaffMealModel extends BaseModel
         return $result;
     }
 
-    public function editStaffMeal($shopId, $id, $userId, $date, $unit, $num)
+    public function editStaffMeal($shopId, $id, $userId, $date, $unit, $num, $remark)
     {
         $o_result = array(
             'state' => false,
@@ -152,10 +155,11 @@ class GoodsStaffMealModel extends BaseModel
         }
 
         $updateData = [
-            'gsm_operator'          => $userId,
-            'gsm_date'              => $date,
-            'gsm_unit'              => $unit,
-            'gsm_num'               => $num,
+            'gsm_operator' => $userId,
+            'gsm_date'     => $date,
+            'gsm_unit'     => $unit,
+            'gsm_num'      => $num,
+            'gsm_remark'   => $remark
         ];
         $this->db->where('gsm_id', $id);
 
