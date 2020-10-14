@@ -56,8 +56,8 @@ $(function () {
         doGoodsSaleOnlineSummary();
     });
 
-    $('#goods_exception_claim').bind('click', function () {
-        doGoodsExceptionClaim();
+    $('#goods_exception').bind('click', function () {
+        doGoodsException();
     });
 
     $('#sku_list').bind('click', function () {
@@ -183,7 +183,7 @@ function doGoodsSaleOnlineSummary(){
     });
 }
 
-function doGoodsExceptionClaim(){
+function doGoodsException(){
     $('#layout_center').panel({
         href: '../sale/GoodsExceptionHandleController',
         onLoad: function () {

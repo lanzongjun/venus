@@ -9,7 +9,7 @@ class GoodsExceptionHandleModel extends BaseModel
      */
     const EXCEPTION_HANDLE_TYPE_CHAIM = 1;
 
-    public function getList($shopId, $startDate, $endDate, $goodsName, $page, $rows)
+    public function getList($shopId, $type, $startDate, $endDate, $goodsName, $page, $rows)
     {
         $query = $this->db;
 
@@ -17,6 +17,10 @@ class GoodsExceptionHandleModel extends BaseModel
         $query->join('user', 'u_id = geh_operator', 'left');
         $query->join('core_shop', 'cs_id = geh_shop_id', 'left');
         $query->where('geh_shop_id', $shopId);
+
+        if (!empty($type)) {
+            $query->where('geh_type', $type);
+        }
 
         if (!empty($startDate) && !empty($endDate)) {
             $query->where('geh_date >=', $startDate);
@@ -44,7 +48,7 @@ class GoodsExceptionHandleModel extends BaseModel
         $queryList->select('geh_id, cs_name as shop_name, pg_name as goods_name, 
         geh_order, geh_date, geh_unit, geh_num, geh_type, u_name as operator, 
         geh_is_reduce_stock, geh_create_time, geh_update_time, 
-        geh_provider_goods_id as goods_id, geh_remark');
+        geh_provider_goods_id as goods_id, geh_remark, geh_type');
 
         $offset = ($page - 1) * $rows;
         $queryList->limit($rows, $offset);
@@ -52,6 +56,7 @@ class GoodsExceptionHandleModel extends BaseModel
         $rows = $queryList->get('goods_exception_handle')->result_array();
 
         foreach ($rows as &$row) {
+            $row['type'] = $row['geh_type'] == self::EXCEPTION_HANDLE_TYPE_CHAIM ? '索赔单' : '--';
             $row['remark'] = empty($row['geh_remark']) ? '--' : $row['geh_remark'];
             $row['num_unit'] = $row['geh_num'].'('. self::unitMap($row['geh_unit']) .')';
             $row['geh_type_text'] = $row['geh_type'] == 1 ? '索赔单' : '';
@@ -69,6 +74,7 @@ class GoodsExceptionHandleModel extends BaseModel
         $shopId,
         $goodsId,
         $date,
+        $type,
         $unit,
         $num,
         $order,
@@ -85,7 +91,7 @@ class GoodsExceptionHandleModel extends BaseModel
             'geh_num'               => $num,
             'geh_operator'          => $userId,
             'geh_order'             => $order,
-            'geh_type'              => self::EXCEPTION_HANDLE_TYPE_CHAIM,
+            'geh_type'              => $type,
             'geh_is_reduce_stock'   => $isReduceStock,
             'geh_remark'            => $remark
         ];
@@ -133,7 +139,7 @@ class GoodsExceptionHandleModel extends BaseModel
     {
         $this->db->select('geh_id, geh_provider_goods_id as goods_id, geh_date as date,
         geh_unit as unit, geh_num as num, geh_order as order, 
-        geh_is_reduce_stock as is_reduce_stock, geh_remark as remark');
+        geh_is_reduce_stock as is_reduce_stock, geh_remark as remark, geh_type as type');
         $this->db->where('geh_id', $id);
         $query = $this->db->get('goods_exception_handle');
         $result = $query->first_row();

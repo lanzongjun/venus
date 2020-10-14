@@ -66,7 +66,10 @@
                                 <li>
                                     <span><a id='goods_staff_meal' href="#">员工餐</a></span>
                                 </li>
-                                <li data-options="state:'open'">
+                                <li>
+                                    <span><a id='goods_exception' href="#">异常订单</a></span>
+                                </li>
+                                <li data-options="state:'closed'">
                                     <span>线上销售</span>
                                     <ul>
                                         <li>
@@ -74,15 +77,6 @@
                                         </li>
                                         <li>
                                             <span><a id='goods_sale_online_summary' href="#">销售合计</a></span>
-                                        </li>
-                                    </ul>
-                                </li>
-
-                                <li data-options="state:'open'">
-                                    <span>异常订单</span>
-                                    <ul>
-                                        <li>
-                                            <span><a id='goods_exception_claim' href="#">索赔单</a></span>
                                         </li>
                                     </ul>
                                 </li>
@@ -100,7 +94,7 @@
                             <span>SKU管理</span>
                             <ul>
                                 <li>
-                                    <span><a id="sku_list" href="#">sku列表</a></span>
+                                    <span><a id="sku_list" href="#">SKU列表</a></span>
                                 </li>
                             </ul>
                         </li>

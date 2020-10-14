@@ -20,6 +20,7 @@ class GoodsExceptionHandleController extends BaseController
     {
         $getData = $this->getGetData();
 
+        $type      = isset($getData['type']) ? $getData['type'] : '';
         $startDate = isset($getData['start_date']) ? $getData['start_date'] : '';
         $endDate   = isset($getData['end_date']) ? $getData['end_date'] : '';
         $goodsName = isset($getData['provider_goods_name']) ? $getData['provider_goods_name'] : '';
@@ -28,7 +29,7 @@ class GoodsExceptionHandleController extends BaseController
 
         $this->load->model($this->_s_model);
 
-        $result = $this->{$this->_s_model}->getList($this->shop_id, $startDate, $endDate, $goodsName, $page, $rows);
+        $result = $this->{$this->_s_model}->getList($this->shop_id, $type, $startDate, $endDate, $goodsName, $page, $rows);
 
         echo json_encode($result);
     }
@@ -39,13 +40,14 @@ class GoodsExceptionHandleController extends BaseController
 
         $goodsId       = isset($postData['goods_id']) ? $postData['goods_id'] : '';
         $date          = isset($postData['date']) ? $postData['date'] : '';
-        $unit          = isset($postData['unit']) ? $postData['unit'] : '';
+        $type          = isset($postData['type']) ? $postData['type'] : '';
         $num           = isset($postData['num']) ? $postData['num'] : '';
+        $unit          = isset($postData['unit']) ? $postData['unit'] : '';
         $order         = isset($postData['order']) ? $postData['order'] : '';
         $isReduceStock = isset($postData['is_reduce_stock']) ? $postData['is_reduce_stock'] : 0;
         $remark        = isset($postData['remark']) ? $postData['remark'] : '';
 
-        if (empty($goodsId) || empty($date) || empty($unit) || empty($num) || empty($order)) {
+        if (empty($goodsId) || empty($date) || empty($type) || empty($unit) || empty($num) || empty($order)) {
             echo json_encode(array(
                 'state' => false,
                 'msg'   => '参数不正确'
@@ -59,6 +61,7 @@ class GoodsExceptionHandleController extends BaseController
             $this->shop_id,
             $goodsId,
             $date,
+            $type,
             $unit,
             $num,
             $order,

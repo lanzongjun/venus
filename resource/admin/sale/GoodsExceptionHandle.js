@@ -83,10 +83,12 @@ function showEditWin() {
 
 // 查询
 function doSearch() {
+    var type = $("#type").val();
     var start_date = $("#start_date").val();
     var end_date = $("#end_date").val();
     var provider_goods_name = $("#provider_goods_name").val();
     $('#dg').datagrid('load', {
+        type: type,
         start_date: start_date,
         end_date: end_date,
         provider_goods_name: provider_goods_name

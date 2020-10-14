@@ -34,15 +34,35 @@ class CoreRepertoryDailyModel extends BaseModel
             return true;
         }
 
+        // 获取上一条每日库存日期，用于补全没有登录的日期
+        $lastDailyRepertory = $this->db
+            ->where('crd_shop_id', $shopId)
+            ->order_by('crd_date desc')
+            ->get($this->model)
+            ->first_row();
+        if (empty($lastDailyRepertory)) {
+            $lastInsertDate = $yesterday;
+        } else {
+            $lastInsertDate = date('Y-m-d', strtotime($lastDailyRepertory->crd_date) + 86400);
+        }
+
+
         $insertDailyData = [];
-        foreach ($coreRepertory as $item) {
-            $insertDailyData[] = [
-                'crd_shop_id'           => $shopId,
-                'crd_provider_goods_id' => $item['cr_provider_goods_id'],
-                'crd_date'              => $yesterday,
-                'crd_num'               => $item['cr_num'],
-                'crd_unit'              => $item['cr_unit'],
-            ];
+        while (true) {
+            foreach ($coreRepertory as $item) {
+                $insertDailyData[] = [
+                    'crd_shop_id'           => $shopId,
+                    'crd_provider_goods_id' => $item['cr_provider_goods_id'],
+                    'crd_date'              => $lastInsertDate,
+                    'crd_num'               => $item['cr_num'],
+                    'crd_unit'              => $item['cr_unit'],
+                ];
+            }
+
+            if ($lastInsertDate == $yesterday) {
+                break;
+            }
+            $lastInsertDate = date('Y-m-d', strtotime($lastInsertDate) + 86400);
         }
 
         $this->db->insert_batch($this->model, $insertDailyData);
