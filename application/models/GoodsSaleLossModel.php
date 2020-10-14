@@ -13,17 +13,25 @@ class GoodsSaleLossModel extends BaseModel
      */
     const LOSS_ORDER = 2;
 
-    public function getList($shopId, $providerGoodsName, $lossType, $page, $rows)
+    public function getList($shopId, $startDate, $endDate, $providerGoodsName, $lossType, $page, $rows)
     {
         $query = $this->db;
         $query->join('provider_goods', 'pg_id = gl_provider_goods_id', 'left');
         $query->join('core_shop', 'gl_shop_id = cs_id', 'left');
         $query->join('user', 'gl_operator = u_id', 'left');
         $query->where('gl_shop_id', intval($shopId));
-        $query->where('gl_type', intval($lossType));
+
+        if (!empty($startDate) && !empty($endDate)) {
+            $query->where('gl_date >=', $startDate);
+            $query->where('gl_date <=', $endDate);
+        }
 
         if (!empty($providerGoodsName)) {
             $query->like('pg_name', $providerGoodsName);
+        }
+
+        if (!empty($lossType)) {
+            $query->where('gl_type', $lossType);
         }
 
         $queryTotal = clone $query;
@@ -32,7 +40,7 @@ class GoodsSaleLossModel extends BaseModel
         // 获取总数
             $queryTotal->select('count(1) as total');
             $total = $queryTotal->get('goods_loss')->first_row();
-            if (empty($total->total)) {
+        if (empty($total->total)) {
                 return array(
                     'total' => 0,
                     'rows'  => []
@@ -41,17 +49,20 @@ class GoodsSaleLossModel extends BaseModel
 
         // 获取分页数据
         $queryList->select(
-            'gl_id, gl_provider_goods_id, cs_name, cs_city,
-            pg_name, gl_date, gl_type, gl_num, gl_unit, gl_operator, u_name, gl_order, 
+            'gl_id, gl_provider_goods_id, cs_name, cs_city, 
+            pg_name, gl_date, gl_type, gl_num, gl_unit, gl_operator, u_name, gl_order, gl_remark, gl_type
             gl_create_time, gl_update_time'
         );
+        $queryList->order_by('gl_id desc');
 
         $offset = ($page - 1) * $rows;
         $queryList->limit($rows, $offset);
 
         $rows = $queryList->get('goods_loss')->result_array();
-
         foreach ($rows as &$row) {
+            $row['type'] = $row['gl_type'] == self::LOSS_SHOP ? '店内损耗' : '退单损耗';
+            $row['order'] = empty($row['gl_order']) ? '--' : $row['gl_order'];
+            $row['remark'] = empty($row['gl_remark']) ? '--' : $row['gl_remark'];
             $row['num_unit'] = $row['gl_num'].'('. self::unitMap($row['gl_unit']) .')';
         }
 
@@ -66,7 +77,7 @@ class GoodsSaleLossModel extends BaseModel
         $this->db->select(
             'gl_id, gl_provider_goods_id as goods_id, gl_num as num,
              gl_unit as unit,
-             gl_date as date, gl_order as order, gl_type'
+             gl_date as date, gl_order as order, gl_type as type, gl_remark as remark'
         );
 
         $this->db->where('gl_id', $id);
@@ -78,7 +89,7 @@ class GoodsSaleLossModel extends BaseModel
         return array();
     }
 
-    public function addGoodsLossInfo($shopId, $userId, $type, $goodsId, $date, $num, $unit, $order)
+    public function addGoodsLossInfo($shopId, $userId, $type, $goodsId, $date, $num, $unit, $order, $remark)
     {
         $this->db->trans_begin();
 
@@ -90,7 +101,8 @@ class GoodsSaleLossModel extends BaseModel
             'gl_num'               => $num,
             'gl_unit'              => $unit,
             'gl_order'             => $order,
-            'gl_operator'          => $userId
+            'gl_operator'          => $userId,
+            'gl_remark'            => $remark
         ];
 
         $this->db->insert('goods_loss', $insertData);
@@ -131,7 +143,7 @@ class GoodsSaleLossModel extends BaseModel
         );
     }
 
-    public function editGoodsLossInfo($shopId, $id, $userId, $date, $num, $unit, $type, $order)
+    public function editGoodsLossInfo($shopId, $id, $userId, $date, $num, $unit, $type, $order, $remark)
     {
         $o_result = array(
             'state' => false,
@@ -162,11 +174,12 @@ class GoodsSaleLossModel extends BaseModel
         }
 
         $updateData = [
-            'gl_operator'          => $userId,
-            'gl_date'              => $date,
-            'gl_num'               => $num,
-            'gl_unit'              => $unit,
-            'gl_order'             => $order
+            'gl_operator' => $userId,
+            'gl_date'     => $date,
+            'gl_num'      => $num,
+            'gl_unit'     => $unit,
+            'gl_order'    => $order,
+            'gl_remark'   => $remark
         ];
         $this->db->where('gl_id', $id);
 

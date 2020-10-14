@@ -55,15 +55,7 @@
                                     <span><a id='goods_sale_offline' href="#">线下销售</a></span>
                                 </li>
                                 <li>
-                                    <span>损耗</span>
-                                    <ul>
-                                        <li>
-                                            <span><a id='goods_loss_shop' href="#">店内破损</a></span>
-                                        </li>
-                                        <li>
-                                            <span><a id='goods_loss_order' href="#">退单</a></span>
-                                        </li>
-                                    </ul>
+                                    <span><a id='goods_loss' href="#">损耗</a></span>
                                 </li>
                                 <li>
                                     <span><a id='goods_stock' href="#">进货</a></span>

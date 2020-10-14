@@ -1,39 +1,30 @@
 function showAddWin() {
-
-    if (__s_type == 1) {
-        $('#d_add_goods_loss1').window('open');
-    } else {
-        $('#d_add_goods_loss2').window('open');
-    }
+    $('#d_add_goods_loss').window('open');
+    $("#add_goods_loss_date").datebox().datebox('calendar').calendar({
+        validator : function(date){
+            var now = new Date();
+            var d1 = new Date(now.getFullYear(),now.getMonth(),now.getDate());
+            return d1 >= date;
+        }
+    });
 }
 
 // 新增
-function saveAddForm1() {
-    $('#f_add_goods_loss1').form('submit');
-}
-function saveAddForm2() {
-    $('#f_add_goods_loss2').form('submit');
+function saveAddForm() {
+    console.log(222);
+    $('#f_add_goods_loss').form('submit');
 }
 
-function closeAddWin1() {
-    $('#d_add_goods_loss1').window('close');
-}
-function closeAddWin2() {
-    $('#d_add_goods_loss2').window('close');
+function closeAddWin() {
+    $('#d_add_goods_loss').window('close');
 }
 
-function saveEditForm1() {
-    $('#f_edit_goods_loss1').form('submit');
-}
-function saveEditForm2() {
-    $('#f_edit_goods_loss2').form('submit');
+function saveEditForm() {
+    $('#f_edit_goods_loss').form('submit');
 }
 
-function closeEditWin1() {
-    $('#d_edit_goods_loss1').window('close');
-}
-function closeEditWin2() {
-    $('#d_edit_goods_loss2').window('close');
+function closeEditWin() {
+    $('#d_edit_goods_loss').window('close');
 }
 
 // 编辑
@@ -43,14 +34,15 @@ function showEditWin() {
         $.messager.alert('错误', '请选择一条记录后，在进行此操作', 'error');
         return;
     }
-
-    if (__s_type == 1) {
-        $('#d_edit_goods_loss1').window('open');
-        $('#f_edit_goods_loss1').form('load', '../' + __s_c_name + '/getGoodsLossInfo?id=' + o_row.gl_id);
-    } else {
-        $('#d_edit_goods_loss2').window('open');
-        $('#f_edit_goods_loss2').form('load', '../' + __s_c_name + '/getGoodsLossInfo?id=' + o_row.gl_id);
-    }
+    $('#d_edit_goods_loss').window('open');
+    $("#edit_goods_loss_date").datebox().datebox('calendar').calendar({
+        validator : function(date){
+            var now = new Date();
+            var d1 = new Date(now.getFullYear(),now.getMonth(),now.getDate());
+            return d1 >= date;
+        }
+    });
+    $('#f_edit_goods_loss').form('load', '../' + __s_c_name + '/getGoodsLossInfo?id=' + o_row.gl_id);
 
 }
 
@@ -85,8 +77,14 @@ function showRemoveWin() {
 
 // 查询
 function doSearch() {
+    var start_date = $("#start_date").val();
+    var end_date = $("#end_date").val();
+    var type = $('#type').val();
     var provider_goods_name = $("#provider_goods_name").val();
     $('#dg').datagrid('load', {
+        start_date: start_date,
+        end_date: end_date,
+        type: type,
         provider_goods_name: provider_goods_name
     });
 }
@@ -121,41 +119,24 @@ $(function () {
     //     }
     // });
 
-    $('#f_add_goods_loss1').form({
+    $('#f_add_goods_loss').form({
         url: '../' + __s_c_name + '/addGoodsLossInfo',
         type: "POST",
-        queryParams: {type: __s_type},
         success: function (data) {
+            console.log(222333332);
             var o_response = $.parseJSON(data);
             if (o_response.state) {
                 $.messager.alert('信息-更新成功', o_response.msg, 'info');
             } else {
                 $.messager.alert('错误-更新失败', o_response.msg, 'error');
             }
-            $('#d_add_goods_loss1').window('close');
+            $('#d_add_goods_loss').window('close');
             //$('#f_add_goods_loss').form('clear');
             $('#dg').datagrid('reload');
         }
     });
 
-    $('#f_add_goods_loss2').form({
-        url: '../' + __s_c_name + '/addGoodsLossInfo',
-        type: "POST",
-        queryParams: {type: __s_type},
-        success: function (data) {
-            var o_response = $.parseJSON(data);
-            if (o_response.state) {
-                $.messager.alert('信息-更新成功', o_response.msg, 'info');
-            } else {
-                $.messager.alert('错误-更新失败', o_response.msg, 'error');
-            }
-            $('#d_add_goods_loss2').window('close');
-            //$('#f_add_goods_loss').form('clear');
-            $('#dg').datagrid('reload');
-        }
-    });
-
-    $('#f_edit_goods_loss1').form({
+    $('#f_edit_goods_loss').form({
         url: '../' + __s_c_name + '/editGoodsLossInfo',
         type: "POST",
         success: function (data) {
@@ -165,23 +146,7 @@ $(function () {
             } else {
                 $.messager.alert('错误-更新失败', o_response.msg, 'error');
             }
-            $('#d_edit_goods_loss1').window('close');
-            //$('#f_edit_goods_loss').form('clear');
-            $('#dg').datagrid('reload');
-        }
-    });
-
-    $('#f_edit_goods_loss2').form({
-        url: '../' + __s_c_name + '/editGoodsLossInfo',
-        type: "POST",
-        success: function (data) {
-            var o_response = $.parseJSON(data);
-            if (o_response.state) {
-                $.messager.alert('信息-更新成功', o_response.msg, 'info');
-            } else {
-                $.messager.alert('错误-更新失败', o_response.msg, 'error');
-            }
-            $('#d_edit_goods_loss2').window('close');
+            $('#d_edit_goods_loss').window('close');
             //$('#f_edit_goods_loss').form('clear');
             $('#dg').datagrid('reload');
         }

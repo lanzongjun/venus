@@ -32,6 +32,10 @@ $(function () {
         doGoodsLossOrder();
     });
 
+    $('#goods_loss').bind('click', function () {
+        doGoodsLoss();
+    });
+
     $('#goods_stock').bind('click', function () {
         doGoodsStock();
     });
@@ -123,22 +127,11 @@ function doGoodsSaleOffline(){
     });
 }
 
-function doGoodsLossShop(){
+function doGoodsLoss(){
     $('#layout_center').panel({
         href: '../sale/GoodsLossController',
-        method: 'get',
-        queryParams: {'type':1},
-        onLoad: function () {
-
-        }
-    });
-}
-
-function doGoodsLossOrder(){
-    $('#layout_center').panel({
-        href: '../sale/GoodsLossController',
-        method: 'get',
-        queryParams: {'type':2},
+        // method: 'get',
+        // queryParams: {'type':2},
         onLoad: function () {
 
         }

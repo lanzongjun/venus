@@ -7,25 +7,11 @@ class GoodsLossController extends BaseController
     public $_s_view  = 'GoodsSaleLossView';
     public $_s_model = 'GoodsSaleLossModel';
 
-    const SHOP_TYPE = 1;
-    const ORDER_TYPE = 2;
-
     /**
      * 显示信息
      */
     public function index()
     {
-        $getData = $this->getGetData();
-
-        $type = $getData['type'];
-
-        if ($type == self::SHOP_TYPE) {
-            $data['title'] = '店内破损详情';
-            $data['type']  = self::SHOP_TYPE;
-        } else {
-            $data['title'] = '退单详情';
-            $data['type']  = self::ORDER_TYPE;
-        }
         $data['c_name'] = 'sale/GoodsLossController';
         $this->load->helper('url');
         $this->load->view("admin/sale/$this->_s_view", $data);
@@ -39,13 +25,20 @@ class GoodsLossController extends BaseController
     {
         $getData = $this->input->get();
 
+        $startDate = isset($getData['start_date']) ? $getData['start_date'] : '';
+        $endDate   = isset($getData['end_date']) ? $getData['end_date'] : '';
         $goodsName = isset($getData['provider_goods_name']) ? $getData['provider_goods_name'] : '';
-        $lossType  = isset($getData['type']) ? $getData['type'] : self::SHOP_TYPE;
+        $lossType  = isset($getData['type']) ? $getData['type'] : '';
         $page      = isset($getData['page']) ? $getData['page'] : 1;
         $rows      = isset($getData['rows']) ? $getData['rows'] : 50;
 
         $this->load->model($this->_s_model);
-        $o_result = $this->{$this->_s_model}->getList($this->shop_id, $goodsName, $lossType, $page, $rows);
+        $o_result = $this->{$this->_s_model}->getList(
+            $this->shop_id,
+            $startDate, $endDate,
+            $goodsName,
+            $lossType, $page, $rows
+        );
         echo json_encode($o_result);
     }
 
@@ -73,6 +66,7 @@ class GoodsLossController extends BaseController
         $unit    = isset($postData['unit']) ? $postData['unit'] : '';
         $order   = isset($postData['order']) ? $postData['order'] : '';
         $type    = isset($postData['type']) ? $postData['type'] : '';
+        $remark  = isset($postData['remark']) ? $postData['remark'] : '';
 
         if (empty($goodsId) || empty($date) || empty($num) || empty($type) || empty($unit)) {
             echo array(
@@ -91,7 +85,8 @@ class GoodsLossController extends BaseController
             $date,
             $num,
             $unit,
-            $order
+            $order,
+            $remark
         );
 
         echo json_encode($o_result);
@@ -101,12 +96,13 @@ class GoodsLossController extends BaseController
     {
         $postData = $this->getPostData();
 
-        $date    = isset($postData['date']) ? $postData['date'] : '';
-        $num     = isset($postData['num']) ? $postData['num'] : '';
-        $unit     = isset($postData['unit']) ? $postData['unit'] : '';
-        $order   = isset($postData['order']) ? $postData['order'] : '';
-        $type   = isset($postData['gl_type']) ? $postData['gl_type'] : '';
-        $id      = isset($postData['gl_id']) ? $postData['gl_id'] : '';
+        $date   = isset($postData['date']) ? $postData['date'] : '';
+        $num    = isset($postData['num']) ? $postData['num'] : '';
+        $unit   = isset($postData['unit']) ? $postData['unit'] : '';
+        $order  = isset($postData['order']) ? $postData['order'] : '';
+        $type   = isset($postData['type']) ? $postData['type'] : '';
+        $remark = isset($postData['remark']) ? $postData['remark'] : '';
+        $id     = isset($postData['gl_id']) ? $postData['gl_id'] : '';
 
         if (empty($date) || empty($num) || empty($unit) || empty($id)) {
             echo json_encode(array(
@@ -125,7 +121,9 @@ class GoodsLossController extends BaseController
             $num,
             $unit,
             $type,
-            $order);
+            $order,
+            $remark
+        );
 
         echo json_encode($result);
     }
