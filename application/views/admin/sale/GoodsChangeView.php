@@ -177,7 +177,7 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input id='add_select_date' class="easyui-datebox" name="date" data-options="labelWidth:'110',label:'调度日期:',width:'240'">
+                        <input id='add_goods_change_date' class="easyui-datebox" name="date" data-options="labelWidth:'110',label:'调度日期:',width:'240'">
                     </div>
                 </td>
             </tr>

@@ -24,6 +24,7 @@ class GoodsStockController extends BaseController
         $startDate = isset($getData['start_date']) ? $getData['start_date'] : '';
         $endDate   = isset($getData['end_date']) ? $getData['end_date'] : '';
         $goodsName = isset($getData['provider_goods_name']) ? $getData['provider_goods_name'] : '';
+        $provider  = isset($getData['provider_name']) ? $getData['provider_name'] : '';
         $page      = isset($getData['page']) ? $getData['page'] : 1;
         $rows      = isset($getData['rows']) ? $getData['rows'] : 50;
         $rowsOnly  = isset($getData['rows_only']) ? $getData['rows_only'] : false;
@@ -34,6 +35,7 @@ class GoodsStockController extends BaseController
             $this->shop_id,
             $startDate, $endDate,
             $goodsName,
+            $provider,
             $page,
             $rows,
             $rowsOnly

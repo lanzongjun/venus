@@ -14,6 +14,7 @@
     <tr>
         <th data-options="width:80,align:'center',field:'gs_id'">商品进货ID</th>
         <th data-options="width:120,align:'center',field:'cs_name'">店铺名称</th>
+        <th data-options="width:180,align:'center',field:'p_name'">供应商</th>
         <th data-options="width:180,align:'center',field:'pg_name'">供应商商品</th>
         <th data-options="width:130,align:'center',field:'gs_date'">进货日期</th>
         <th data-options="width:100,align:'center',field:'num_unit'">数量(单位)</th>
@@ -30,7 +31,18 @@
         <input id="start_date" class="easyui-datebox" labelWidth="70" style="width:180px;" label="开始时间:" labelPosition="left" data-options="formatter:myformatter,parser:myparser"/>
         <input id="end_date" class="easyui-datebox" labelWidth="70" style="width:180px;" label="结束时间:" labelPosition="left" data-options="formatter:myformatter,parser:myparser"/>
         <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
-        <input id="provider_goods_name" class="easyui-textbox" labelWidth="90" style="width:220px;" label="供应商商品:" labelPosition="left"/>
+        <input id="provider_goods_name" class="easyui-textbox" labelWidth="90" style="width:200px;" label="供应商商品:" labelPosition="left"/>
+        <input id="provider_name" class="easyui-combobox" data-options="
+                        url:'../ProviderController/getList?rows_only=true',
+                        method:'get',
+                        valueField:'p_id',
+                        textField:'p_name',
+                        label: '供应商:',
+                        labelPosition: 'left',
+                        labelWidth:'60',
+                        width:'200',
+                        panelHeight:'auto'
+                        ">
         <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
         <a id="btn_search" data-options="iconCls:'icon-search'" href="#" class="easyui-linkbutton">查询</a>
         <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
@@ -64,7 +76,7 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input id="edit_select_date" class="easyui-datebox" name="date" data-options="labelWidth:'110',label:'进货日期:',width:'300px'">
+                        <input id="edit_goods_stock_date" class="easyui-datebox" name="date" data-options="labelWidth:'110',label:'进货日期:',width:'300px'">
                     </div>
                 </td>
             </tr>
@@ -133,7 +145,7 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input id='add_select_date' class="easyui-datebox" name="date" data-options="labelWidth:'110',label:'进货日期:',width:'300px'">
+                        <input id='add_goods_stock_date' class="easyui-datebox" name="date" data-options="labelWidth:'110',label:'进货日期:',width:'300px'">
                     </div>
                 </td>
             </tr>

@@ -17,7 +17,7 @@
         <th data-options="width:200,align:'center',field:'unit'">单位</th>
         <th data-options="width:200,align:'center',field:'stock', formatter:transfer1000 ">入库数量</th>
         <th data-options="width:200,align:'center',field:'sale_offline_shihua', formatter:transfer2000 ">线下销售-石化结算</th>
-        <th data-options="width:200,align:'center',field:'sale_offline_locate', formatter:transfer2001 ">线下销售-石化结算</th>
+        <th data-options="width:200,align:'center',field:'sale_offline_locate', formatter:transfer2001 ">线下销售-现场结算</th>
         <th data-options="width:200,align:'center',field:'sale_online', formatter:transfer6000 ">线上销售</th>
         <th data-options="width:200,align:'center',field:'exception', formatter:transfer7000 ">异常情况</th>
         <th data-options="width:200,align:'center',field:'staff_meal', formatter:transfer5000 ">员工餐</th>

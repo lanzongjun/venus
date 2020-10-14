@@ -4,11 +4,12 @@ include_once 'BaseModel.php';
 
 class GoodsStockModel extends BaseModel
 {
-    public function getList($shopId, $startDate, $endDate, $goodsName, $page, $rows, $rowsOnly)
+    public function getList($shopId, $startDate, $endDate, $goodsName, $provider, $page, $rows, $rowsOnly)
     {
 
         $query = $this->db;
         $query->join('provider_goods', 'gs_provider_goods_id = pg_id', 'left');
+        $query->join('provider', 'pg_provider_id = p_id', 'left');
         $query->join('core_shop', 'cs_id = gs_shop_id', 'left');
         $query->join('user', 'u_id = gs_operator_id', 'left');
         $query->where('gs_shop_id', intval($shopId));
@@ -20,6 +21,10 @@ class GoodsStockModel extends BaseModel
 
         if (!empty($goodsName)) {
             $query->like('pg_name', $goodsName);
+        }
+
+        if (!empty($provider)) {
+            $query->where('p_id', $provider);
         }
 
         $queryTotal = clone $query;
@@ -39,7 +44,7 @@ class GoodsStockModel extends BaseModel
 
         // 获取分页数据
         $queryList->select('gs_id, cs_name, pg_name, gs_date, gs_num, gs_unit,
-         u_name, gs_remark, gs_create_time, gs_update_time');
+         u_name, gs_remark, p_name, gs_create_time, gs_update_time');
 
         if (!$rowsOnly) {
             $offset = ($page - 1) * $rows;

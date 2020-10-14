@@ -1,6 +1,6 @@
 function showAddWin() {
     $('#d_add_goods_stock').window('open');
-    $("#add_select_date").datebox().datebox('calendar').calendar({
+    $("#add_goods_stock_date").datebox().datebox('calendar').calendar({
         validator : function(date){
             var now = new Date();
             var d1 = new Date(now.getFullYear(),now.getMonth(),now.getDate());
@@ -34,7 +34,7 @@ function showEditWin() {
         return;
     }
     $('#d_edit_goods_stock').window('open');
-    $("#edit_select_date").datebox().datebox('calendar').calendar({
+    $("#edit_goods_stock_date").datebox().datebox('calendar').calendar({
         validator : function(date){
             var now = new Date();
             var d1 = new Date(now.getFullYear(),now.getMonth(),now.getDate());
@@ -78,10 +78,12 @@ function doSearch() {
     var start_date = $("#start_date").val();
     var end_date = $("#end_date").val();
     var provider_goods_name = $("#provider_goods_name").val();
+    var provider_name = $("#provider_name").val();
     $('#dg').datagrid('load', {
         start_date: start_date,
         end_date: end_date,
-        provider_goods_name: provider_goods_name
+        provider_goods_name: provider_goods_name,
+        provider_name: provider_name
     });
 }
 

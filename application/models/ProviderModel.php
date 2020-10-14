@@ -69,14 +69,14 @@ class ProviderModel extends BaseModel
     public function addProviderInfo($params)
     {
         $insertData = [
-            'p_name' => $params['name']
+            'p_name' => $params['p_name']
         ];
 
         $this->db->insert('provider', $insertData);
 
         return array(
             'state' => true,
-            'msg' => "【{$params['name']}】添加成功"
+            'msg' => "【{$params['p_name']}】添加成功"
         );
     }
 

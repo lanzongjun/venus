@@ -100,6 +100,10 @@ class FinanceAccountModel extends BaseModel
                 'title' => '损耗-退单',
                 'num'   => 0,
             ],
+            REPERTORY_TYPE_GOODS_CHANGE => [
+                'title' => '调度',
+                'num'   => 0,
+            ],
             '999' => [
                 'title' => '盘点',
                 'num'   => 0

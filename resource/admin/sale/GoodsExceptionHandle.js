@@ -1,6 +1,6 @@
 function showAddWin() {
     $('#d_add_exception_handle').window('open');
-    $("#add_select_date").datebox().datebox('calendar').calendar({
+    $("#add_exception_handle_date").datebox().datebox('calendar').calendar({
         validator : function(date){
             var now = new Date();
             var d1 = new Date(now.getFullYear(),now.getMonth(),now.getDate());
@@ -63,7 +63,7 @@ function showEditWin() {
         return;
     }
     $('#d_edit_exception_handle').window('open');
-    $("#edit_select_date").datebox().datebox('calendar').calendar({
+    $("#edit_exception_handle_date").datebox().datebox('calendar').calendar({
         validator : function(date){
             var now = new Date();
             var d1 = new Date(now.getFullYear(),now.getMonth(),now.getDate());

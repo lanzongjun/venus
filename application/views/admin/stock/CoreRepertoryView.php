@@ -34,7 +34,7 @@
                         label: '店铺:',
                         labelPosition: 'left',
                         labelWidth:'40',
-                        width:'270',
+                        width:'240',
                         panelHeight:'auto'
                         ">
     <input id="provider_id" class="easyui-combobox" data-options="

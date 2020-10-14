@@ -1,6 +1,6 @@
 function showAddWin() {
     $('#d_add_goods_change').window('open');
-    $("#add_select_date").datebox().datebox('calendar').calendar({
+    $("#add_goods_change_date").datebox().datebox('calendar').calendar({
         validator : function(date){
             var now = new Date();
             var d1 = new Date(now.getFullYear(),now.getMonth(),now.getDate());

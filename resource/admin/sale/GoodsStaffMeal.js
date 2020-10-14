@@ -1,6 +1,6 @@
 function showAddWin() {
     $('#d_add_staff_meal').window('open');
-    $("#add_select_date").datebox().datebox('calendar').calendar({
+    $("#add_staff_meal_date").datebox().datebox('calendar').calendar({
         validator : function(date){
             var now = new Date();
             var d1 = new Date(now.getFullYear(),now.getMonth(),now.getDate());
@@ -63,7 +63,7 @@ function showEditWin() {
         return;
     }
     $('#d_edit_staff_meal').window('open');
-    $("#edit_select_date").datebox().datebox('calendar').calendar({
+    $("#edit_staff_meal_date").datebox().datebox('calendar').calendar({
         validator : function(date){
             var now = new Date();
             var d1 = new Date(now.getFullYear(),now.getMonth(),now.getDate());
