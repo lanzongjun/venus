@@ -60,6 +60,10 @@ $(function () {
         doGoodsException();
     });
 
+    $('#base_stock').bind('click', function () {
+        doShowBaseStock();
+    });
+
     $('#sku_list').bind('click', function () {
         doShowSkuList();
     });
@@ -186,6 +190,15 @@ function doGoodsSaleOnlineSummary(){
 function doGoodsException(){
     $('#layout_center').panel({
         href: '../sale/GoodsExceptionHandleController',
+        onLoad: function () {
+
+        }
+    });
+}
+
+function doShowBaseStock(){
+    $('#layout_center').panel({
+        href: '../SaleForecastBaseStockController',
         onLoad: function () {
 
         }

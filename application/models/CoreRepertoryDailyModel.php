@@ -70,4 +70,73 @@ class CoreRepertoryDailyModel extends BaseModel
         log_message('debug', '该店铺昨日库存数据添加成功-'.date('Y-m-d H:i:s'));
         return true;
     }
+
+    public function getLastThreeDayRepertory($shopId, $goodsName, $page, $rows)
+    {
+        $lastThreeDate = date('Y-m-d', strtotime('-3 day'));
+
+        $query = $this->db;
+
+        $queryTotal = clone $query;
+        $queryList  = clone $query;
+
+        $queryList->join('provider_goods', 'pg_id = crd_provider_goods_id', 'left')
+            ->where('crd_shop_id', $shopId)
+            ->where('crd_date >=', $lastThreeDate)
+            ->group_by('crd_provider_goods_id');
+
+        if (!empty($goodsName)) {
+            $query->like('pg_name', $goodsName);
+        }
+        
+        $queryTotal->select('count(1) as total');
+        $total = $queryTotal->get($this->model)->first_row();
+        if (empty($total->total)) {
+            return array(
+                'total' => 0,
+                'rows'  => []
+            );
+        }
+
+        $queryList->select('pg_name as goods_name, crd_provider_goods_id as goods_id, sum(crd_num) as num, crd_unit as unit, count(1) as total');
+
+        $offset = ($page - 1) * $rows;
+        $queryList->limit($rows, $offset);
+
+        $lastThreeData = $queryList->get($this->model)->result_array();
+        $goodsIds = array_column($lastThreeData, 'goods_id');
+        // 库存
+        $repertory = $this->db
+            ->where('cr_shop_id', $shopId)
+            ->where_in('cr_provider_goods_id', $goodsIds)
+            ->select('cr_provider_goods_id as goods_id, cr_num as num, cr_unit as unit')
+            ->get('core_repertory')
+            ->result_array();
+
+        $repertory = array_column($repertory, NULL, 'goods_id');
+
+        $returnData = [];
+        foreach ($lastThreeData as $item) {
+            // 平均销量
+            if ($item['unit'] == 1) {
+                $avgSale = empty($item['total']) ? 0 : round($item['num'] / $item['total'], 2);
+            } else {
+                $avgSale = empty($item['total']) ? 0 : round($item['num'] / $item['total'] / 500, 2);
+            }
+            // 库存
+            $stock = isset($repertory[$item['goods_id']]['num']) ? $repertory[$item['goods_id']]['num'] : 0;
+            $returnData[] = [
+                'goods_name' => $item['goods_name'],
+                'unit' => self::unitMap($item['unit']),
+                'avg_sale' => $avgSale,
+                'stock' => $stock,
+                'is_add' => $stock >= $avgSale ? '否' : '是'
+            ];
+        }
+
+        return array(
+            'total' => $total->total,
+            'rows' => $returnData
+        );
+    }
 }
