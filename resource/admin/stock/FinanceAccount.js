@@ -2,14 +2,26 @@
 
 // 查询
 function doSearch() {
-    var type = $('#type').val();
     var start_date = $("#start_date").val();
     var end_date = $("#end_date").val();
     $('#dg').datagrid('load', {
-        type: type,
         start_date: start_date,
         end_date: end_date
     });
+}
+
+// 导出
+function doPrint() {
+    var start_date = $("#start_date").val();
+    var end_date = $("#end_date").val();
+
+    var a = document.createElement('a');
+    a.href = '../' + __s_c_name + '/getList?is_download=1&page=1&rows=1000' +
+        '&start_date=' + start_date +
+        '&end_date=' + end_date;
+    $("body").append(a);  // 修复firefox中无法触发click
+    a.click();
+    $(a).remove();
 }
 
 $(function () {
@@ -25,6 +37,9 @@ $(function () {
         doSearch();
     });
 
+    $('#btn_print').bind('click', function () {
+        doPrint();
+    });
 
     $('#dg').datagrid({
         url:'../' + __s_c_name + '/getList',

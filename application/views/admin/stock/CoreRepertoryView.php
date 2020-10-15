@@ -52,6 +52,8 @@
     <input id="goods_name" class="easyui-textbox" labelWidth="85" style="width:220px;" label="商品名称:" labelPosition="left"/>
     <a id="btn_search" href="#" data-options="iconCls:'icon-search'" class="easyui-linkbutton">查询</a>
     <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
+    <a id="btn_print" href="#" data-options="iconCls:'icon-print'" class="easyui-linkbutton">导出</a>
+    <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
 </div>
 
 <style type="text/css">

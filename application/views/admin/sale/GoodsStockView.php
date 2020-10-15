@@ -15,7 +15,7 @@
         <th data-options="width:80,align:'center',field:'gs_id'">商品进货ID</th>
         <th data-options="width:120,align:'center',field:'cs_name'">店铺名称</th>
         <th data-options="width:180,align:'center',field:'p_name'">供应商</th>
-        <th data-options="width:180,align:'center',field:'pg_name'">供应商商品</th>
+        <th data-options="width:180,align:'center',field:'pg_name'">商品名称</th>
         <th data-options="width:130,align:'center',field:'gs_date'">进货日期</th>
         <th data-options="width:100,align:'center',field:'num_unit'">数量(单位)</th>
         <th data-options="width:300,align:'center',field:'remark'">备注</th>
@@ -47,9 +47,12 @@
         <a id="btn_search" data-options="iconCls:'icon-search'" href="#" class="easyui-linkbutton">查询</a>
         <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
         <a id="btn_add" href="#" data-options="iconCls:'icon-add'" class="easyui-linkbutton">新增</a>
+        <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
         <a id="btn_edit" href="#" data-options="iconCls:'icon-edit'" class="easyui-linkbutton">编辑</a>
+        <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
         <a id="btn_remove" href="#" data-options="iconCls:'icon-remove'" class="easyui-linkbutton">删除</a>
-
+        <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
+        <a id="btn_print" href="#" data-options="iconCls:'icon-print'" class="easyui-linkbutton">导出</a>
         <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
     </div>
 </div>

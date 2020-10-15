@@ -87,6 +87,23 @@ function doSearch() {
     });
 }
 
+// 导出
+function doPrint() {
+    var start_date = $("#start_date").val();
+    var end_date = $("#end_date").val();
+    var provider_goods_name = $("#provider_goods_name").val();
+    var provider_name = $("#provider_name").val();
+    var a = document.createElement('a');
+    a.href = '../' + __s_c_name + '/getList?is_download=1&page=1&rows=1000' +
+        '&start_date=' + start_date +
+        '&end_date=' + end_date +
+        '&provider_goods_name=' + provider_goods_name +
+        '&provider_name=' + provider_name;
+    $("body").append(a);  // 修复firefox中无法触发click
+    a.click();
+    $(a).remove();
+}
+
 $(function () {
     $('#btn_add').bind('click', function () {
         showAddWin();
@@ -99,6 +116,9 @@ $(function () {
     });
     $('#btn_search').bind('click', function () {
         doSearch();
+    });
+    $('#btn_print').bind('click', function () {
+        doPrint();
     });
 
     $('#f_add_goods_stock').form({

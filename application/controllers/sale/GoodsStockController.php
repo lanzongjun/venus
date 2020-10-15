@@ -28,10 +28,11 @@ class GoodsStockController extends BaseController
         $page      = isset($getData['page']) ? $getData['page'] : 1;
         $rows      = isset($getData['rows']) ? $getData['rows'] : 50;
         $rowsOnly  = isset($getData['rows_only']) ? $getData['rows_only'] : false;
+        $isDownload = isset($getData['is_download']) ? $getData['is_download'] : 0;
 
         $this->load->model($this->_s_model);
 
-        $result = $this->{$this->_s_model}->getList(
+        $o_result = $this->{$this->_s_model}->getList(
             $this->shop_id,
             $startDate, $endDate,
             $goodsName,
@@ -41,7 +42,35 @@ class GoodsStockController extends BaseController
             $rowsOnly
         );
 
-        echo json_encode($result);
+        if ($isDownload) {
+            $intersectKeys = [
+                'gs_id'          => true,
+                'cs_name'        => true,
+                'p_name'         => true,
+                'pg_name'        => true,
+                'gs_date'        => true,
+                'num_unit'       => true,
+                'remark'         => true,
+                'u_name'         => true,
+                'gs_create_time' => true,
+                'gs_update_time' => true
+            ];
+
+            $intersectData = array_map(function ($item) use ($intersectKeys) {
+                return array_intersect_key(array_merge($intersectKeys, $item), $intersectKeys);
+            } ,$o_result['rows']);
+
+            $this->output(
+                '销售管理-进货列表',
+                [
+                    '商品进货ID','店铺名称','供应商','商品名称','进货日期','数量(单位)','备注','操作人','创建时间','更新时间'
+                ],
+                $intersectData
+            );
+            exit();
+        }
+
+        echo json_encode($o_result);
     }
 
     public function addGoodsStock()

@@ -89,4 +89,73 @@ class BaseController extends CI_Controller
 
         return $sheetData;
     }
+
+    /**
+     * @param $title string 标题
+     * @param $column array 列名
+     * @param $data array   数据
+     * @author zongjun.lan
+     */
+    public function output($title, $column, $data)
+    {
+        $this->load->library("PHPExcel");
+
+        // Create new PHPExcel object
+        $objPHPExcel = new PHPExcel();
+
+        // Set document properties
+        $objPHPExcel->getProperties()->setCreator("Maarten Balliauw")
+            ->setLastModifiedBy("Maarten Balliauw")
+            ->setTitle("Office 2007 XLSX Test Document")
+            ->setSubject("Office 2007 XLSX Test Document")
+            ->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.")
+            ->setKeywords("office 2007 openxml php")
+            ->setCategory("Test result file");
+
+        // Add column
+        $col = 0;
+        $row = 1;
+        foreach ($column as $colItem) {
+            $objPHPExcel->setActiveSheetIndex(0)
+                ->setCellValueByColumnAndRow($col, $row, $colItem);
+            $col++;
+        }
+
+        // Add data
+        $row = 2;
+        foreach ($data as $dItem) {
+            $col = 0;
+            foreach ($dItem as $value) {
+                $objPHPExcel->setActiveSheetIndex(0)
+                    ->setCellValueByColumnAndRow($col, $row, $value);
+                $col++;
+            }
+            $row++;
+        }
+
+        // Rename worksheet
+        $objPHPExcel->getActiveSheet()->setTitle($title);
+
+
+        // Set active sheet index to the first sheet, so Excel opens this as the first sheet
+        //$objPHPExcel->setActiveSheetIndex(0);
+
+        $fileName = $title.'_'.strtotime('now');
+        // Redirect output to a client’s web browser (Excel5)
+        header('Content-Type: application/vnd.ms-excel');
+        header("Content-Disposition: attachment;filename={$fileName}.xls");
+        header('Cache-Control: max-age=0');
+        // If you're serving to IE 9, then the following may be needed
+        header('Cache-Control: max-age=1');
+
+        // If you're serving to IE over SSL, then the following may be needed
+        header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+        header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
+        header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+        header ('Pragma: public'); // HTTP/1.0
+
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        $objWriter->save('php://output');
+        exit();
+    }
 }
