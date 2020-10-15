@@ -15,9 +15,10 @@
 <table id="dg" title="销售管理-损耗" class="easyui-datagrid" toolbar="#dom_toolbar1" data-options="border:false,fit:true,rownumbers:true,singleSelect:true,method:'get',url:'../<?php echo $c_name; ?>/getList',pagination:true,pageSize:50,pageList: [50, 100, 200, 300]">
     <thead>
     <tr>
-        <th data-options="width:300,align:'center',field:'cs_name'">店铺名称</th>
+        <th data-options="width:200,align:'center',field:'cs_name'">店铺名称</th>
         <th data-options="width:100,align:'center',field:'cs_city'">店铺所在城市</th>
-        <th data-options="width:300,align:'center',field:'pg_name'">供应商商品名称</th>
+        <th data-options="width:200,align:'center',field:'gl_date'">损耗日期</th>
+        <th data-options="width:300,align:'center',field:'pg_name'">商品名称</th>
         <th data-options="width:150,align:'center',field:'type'">类型</th>
         <th data-options="width:150,align:'center',field:'num_unit'">数量(单位)</th>
         <th data-options="width:200,align:'center',field:'order'">订单</th>
@@ -48,8 +49,12 @@
         <a id="btn_search" href="#" data-options="iconCls:'icon-search'" class="easyui-linkbutton">查询</a>
         <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
         <a id="btn_add" href="#" data-options="iconCls:'icon-add'" class="easyui-linkbutton">新增</a>
+        <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
         <a id="btn_edit" href="#" data-options="iconCls:'icon-edit'" class="easyui-linkbutton">编辑</a>
+        <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
         <a id="btn_remove" href="#" data-options="iconCls:'icon-remove'" class="easyui-linkbutton">删除</a>
+        <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
+        <a id="btn_print" href="#" data-options="iconCls:'icon-print'" class="easyui-linkbutton">导出</a>
         <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
     </div>
 </div>

@@ -9,13 +9,13 @@
     <script type="text/javascript" src="<?php echo base_url("/resource/admin/jquery.easyui.min.js") ?>"></script>
 </head>
 <body>
-<table id="dg" title="销售-线下销售" class="easyui-datagrid" toolbar="#dom_toolbar1" data-options="border:false,fit:true,rownumbers:true,singleSelect:true,method:'get',url:'../<?php echo $c_name; ?>/getList/',pagination:true,pageSize:50,pageList: [50, 100, 200, 300]">
+<table id="dg" title="销售-线下销售" class="easyui-datagrid" toolbar="#dom_toolbar" data-options="border:false,fit:true,rownumbers:true,singleSelect:true,method:'get',url:'../<?php echo $c_name; ?>/getList/',pagination:true,pageSize:50,pageList: [50, 100, 200, 300]">
     <thead>
     <tr>
         <th data-options="width:200,align:'center',field:'shop_name'">店铺</th>
-        <th data-options="width:100,align:'center',field:'cs_city'">门店所在城市</th>
-        <th data-options="width:300,align:'center',field:'goods_name'">商品</th>
+        <th data-options="width:100,align:'center',field:'cs_city'">店铺所在城市</th>
         <th data-options="width:150,align:'center',field:'gso_date'">销售日期</th>
+        <th data-options="width:300,align:'center',field:'goods_name'">商品名称</th>
         <th data-options="width:150,align:'center',field:'gso_type_text'">销售类型</th>
         <th data-options="width:200,align:'center',field:'num_unit'">数量(单位)</th>
         <th data-options="width:400,align:'center',field:'remark'">备注</th>
@@ -25,7 +25,7 @@
     </thead>
 </table>
 
-<div id="dom_toolbar1">
+<div id="dom_toolbar">
     <div>
         <select id="type" class="easyui-combobox" data-options="
                         panelHeight:'auto',
@@ -45,9 +45,12 @@
         <a id="btn_search" data-options="iconCls:'icon-search'" href="#" class="easyui-linkbutton">查询</a>
         <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
         <a id="btn_add" href="#" data-options="iconCls:'icon-add'" class="easyui-linkbutton">新增</a>
+        <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
         <a id="btn_edit" href="#" data-options="iconCls:'icon-edit'" class="easyui-linkbutton">编辑</a>
+        <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
         <a id="btn_remove" href="#" data-options="iconCls:'icon-remove'" class="easyui-linkbutton">删除</a>
-
+        <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
+        <a id="btn_print" href="#" data-options="iconCls:'icon-print'" class="easyui-linkbutton">导出</a>
         <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
     </div>
 </div>

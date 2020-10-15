@@ -34,17 +34,45 @@ class GoodsSaleOfflineController extends BaseController
         $page      = isset($getData['page']) ? $getData['page'] : 1;
         $rows      = isset($getData['rows']) ? $getData['rows'] : 50;
         $rowsOnly  = isset($getData['rows_only']) ? $getData['rows_only'] : false;
+        $isDownload = isset($getData['is_download']) ? $getData['is_download'] : 0;
 
         $this->load->model($this->_s_model);
 
-        $result = $this->{$this->_s_model}->getList(
+        $o_result = $this->{$this->_s_model}->getList(
             $this->shop_id,
             $type,
             $startDate,
             $endDate,
             $page, $rows, $rowsOnly);
 
-        echo json_encode($result);
+        if ($isDownload) {
+            $intersectKeys = [
+                'shop_name' => true,
+                'cs_city' => true,
+                'gso_date' => true,
+                'goods_name' => true,
+                'gso_type_text' => true,
+                'num_unit' => true,
+                'remark' => true,
+                'gso_create_time' => true,
+                'gso_update_time' => true
+            ];
+
+            $intersectData = array_map(function ($item) use ($intersectKeys) {
+                return array_intersect_key(array_merge($intersectKeys, $item), $intersectKeys);
+            } ,$o_result['rows']);
+
+            $this->output(
+                '销售管理-线下销售',
+                [
+                    '店铺','门店所在城市','销售日期','商品名称','销售类型','数量(单位)','备注','创建时间','更新时间'
+                ],
+                $intersectData
+            );
+            exit();
+        }
+
+        echo json_encode($o_result);
     }
 
     public function getSaleOfflineInfo()

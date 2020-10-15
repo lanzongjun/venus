@@ -50,7 +50,7 @@ class GoodsSaleLossModel extends BaseModel
         // 获取分页数据
         $queryList->select(
             'gl_id, gl_provider_goods_id, cs_name, cs_city, 
-            pg_name, gl_date, gl_type, gl_num, gl_unit, gl_operator, u_name, gl_order, gl_remark, gl_type
+            pg_name, gl_date, gl_type, gl_num, gl_unit, gl_operator, u_name, gl_order, gl_remark, gl_type,
             gl_create_time, gl_update_time'
         );
         $queryList->order_by('gl_id desc');

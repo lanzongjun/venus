@@ -26,8 +26,8 @@ class CoreSkuModel extends BaseModel
         if (!$rowsOnly) {
             // 获取总数
             $queryTotal->select('count(1) as total');
-            $total = $queryTotal->get('core_sku')->result();
-            if (empty($total['0']) || empty($total['0']->total)) {
+            $total = $queryTotal->get('core_sku')->first_row();
+            if (empty($total->total)) {
                 return array(
                     'total' => 0,
                     'rows'  => []
@@ -43,17 +43,17 @@ class CoreSkuModel extends BaseModel
             $queryList->limit($rows, $offset);
         }
 
-        $rows = $queryList->get('core_sku')->result();
+        $rows = $queryList->get('core_sku')->result_array();
 
         foreach ($rows as &$row) {
-            $row->show_name = $row->cs_name.'-'.$row->cs_description.'('.$row->cs_code.')';
+            $row['show_name'] = $row['cs_name'].'-'.$row['cs_description'].'('.$row['cs_code'].')';
         }
 
         if ($rowsOnly) {
             return $rows;
         } else {
             return array(
-                'total' => $total['0']->total,
+                'total' => $total->total,
                 'rows' => $rows
             );
         }

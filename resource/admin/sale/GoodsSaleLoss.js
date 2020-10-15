@@ -89,6 +89,23 @@ function doSearch() {
     });
 }
 
+// 导出
+function doPrint() {
+    var start_date = $("#start_date").val();
+    var end_date = $("#end_date").val();
+    var type = $('#type').val();
+    var provider_goods_name = $("#provider_goods_name").val();
+    var a = document.createElement('a');
+    a.href = '../' + __s_c_name + '/getList?is_download=1&page=1&rows=1000' +
+        '&start_date=' + start_date +
+        '&end_date=' + end_date +
+        '&provider_goods_name=' + provider_goods_name +
+        '&type=' + type;
+    $("body").append(a);  // 修复firefox中无法触发click
+    a.click();
+    $(a).remove();
+}
+
 $(function () {
     $('#btn_add').bind('click', function () {
         showAddWin();
@@ -102,28 +119,14 @@ $(function () {
     $('#btn_search').bind('click', function () {
         doSearch();
     });
-
-    // $('#d_add_goods_loss').window({
-    //     onBeforeClose:function(){
-    //         $('#d_add_goods_loss').window('destroy');
-    //         //location.reload();
-    //
-    //     }
-    // });
-    //
-    // $('#d_edit_goods_loss').window({
-    //     onBeforeClose:function(){
-    //         $('#d_edit_goods_loss').window('destroy');
-    //         //location.reload();
-    //
-    //     }
-    // });
+    $('#btn_print').bind('click', function () {
+        doPrint();
+    });
 
     $('#f_add_goods_loss').form({
         url: '../' + __s_c_name + '/addGoodsLossInfo',
         type: "POST",
         success: function (data) {
-            console.log(222333332);
             var o_response = $.parseJSON(data);
             if (o_response.state) {
                 $.messager.alert('信息-更新成功', o_response.msg, 'info');

@@ -31,14 +31,46 @@ class GoodsLossController extends BaseController
         $lossType  = isset($getData['type']) ? $getData['type'] : '';
         $page      = isset($getData['page']) ? $getData['page'] : 1;
         $rows      = isset($getData['rows']) ? $getData['rows'] : 50;
+        $isDownload = isset($getData['is_download']) ? $getData['is_download'] : 0;
 
         $this->load->model($this->_s_model);
+
         $o_result = $this->{$this->_s_model}->getList(
             $this->shop_id,
             $startDate, $endDate,
             $goodsName,
             $lossType, $page, $rows
         );
+
+        if ($isDownload) {
+            $intersectKeys = [
+                'cs_name' => true,
+                'cs_city' => true,
+                'gl_date' => true,
+                'pg_name' => true,
+                'type' => true,
+                'num_unit' => true,
+                'order' => true,
+                'remark' => true,
+                'u_name' => true,
+                'gl_create_time' => true,
+                'gl_update_time' => true
+            ];
+
+            $intersectData = array_map(function ($item) use ($intersectKeys) {
+                return array_intersect_key(array_merge($intersectKeys, $item), $intersectKeys);
+            } ,$o_result['rows']);
+
+            $this->output(
+                '销售管理-损耗',
+                [
+                    '店铺名称','店铺所在城市','损耗日期','商品名称','类型','数量(单位)','订单','备注','操作员','创建时间','更新时间'
+                ],
+                $intersectData
+            );
+            exit();
+        }
+
         echo json_encode($o_result);
     }
 

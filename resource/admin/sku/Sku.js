@@ -42,6 +42,21 @@ function doSearch() {
     });
 }
 
+// 导出
+function doPrint() {
+    var cs_code = $("#cs_code").val();
+    var cs_name = $("#cs_name").val();
+    var cs_description = $("#cs_description").val();
+    var a = document.createElement('a');
+    a.href = '../' + __s_c_name + '/getList?is_download=1&page=1&rows=1000' +
+        '&cs_code=' + cs_code +
+        '&cs_name=' + cs_name +
+        '&cs_description=' + cs_description;
+    $("body").append(a);  // 修复firefox中无法触发click
+    a.click();
+    $(a).remove();
+}
+
 $(function () {
     $('#btn_add').bind('click', function () {
         showAddWin();
@@ -51,6 +66,9 @@ $(function () {
     });
     $('#btn_search').bind('click', function () {
         doSearch();
+    });
+    $('#btn_print').bind('click', function () {
+        doPrint();
     });
 
     $('#f_add_sku').form({
