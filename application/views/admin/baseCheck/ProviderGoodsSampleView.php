@@ -10,7 +10,7 @@
 </head>
 <body>
 <div id="layout_room" class="easyui-layout" data-options="fit:true">
-    <div data-options="region:'center',title:'商品取样信息'">
+    <div data-options="region:'center',title:'商品管理-商品取样'">
         <table id="dg" title="" class="easyui-datagrid" toolbar="#dom_toolbar1" data-options="border:false,fit:true,rownumbers:true,singleSelect:true,method:'get',pagination:true,pageSize:50,pageList: [50, 100, 200, 300]">
             <thead>
             <tr>

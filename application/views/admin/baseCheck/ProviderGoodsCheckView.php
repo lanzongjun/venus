@@ -14,8 +14,8 @@
         <table id="dg" toolbar="#d_mtoi_toolbar" class="easyui-datagrid" data-options="fit:true,rownumbers:true,singleSelect:true,method:'get',pagination:true,pageSize:50,pageList: [50, 100, 200, 300]">
             <thead>
             <tr>
-                <th data-options="width:120,align:'center',field:'shop_name'">店铺名称</th>
-                <th data-options="width:120,align:'center',field:'pgc_date'">盘点日期</th>
+                <th data-options="width:200,align:'center',field:'shop_name'">店铺名称</th>
+                <th data-options="width:200,align:'center',field:'pgc_date'">盘点日期</th>
                 <th data-options="width:120,align:'center',field:'operator_name'">操作员</th>
                 <th data-options="width:200,align:'center',field:'pgc_create_time'">创建时间</th>
                 <th data-options="width:200,align:'center',field:'pgc_update_time'">更新时间</th>

@@ -9,7 +9,7 @@
     <script type="text/javascript" src="<?php echo base_url("/resource/admin/jquery.easyui.min.js") ?>"></script>
 </head>
 <body>
-<table id="dg" title="库存管理-库存列表" class="easyui-datagrid" toolbar="#dom_toolbar1" data-options="border:false,fit:true,rownumbers:true,singleSelect:true,pagination:true,pageSize:50,pageList: [50, 100, 200, 300]">
+<table id="dg" title="库存管理-财务结算列表" class="easyui-datagrid" toolbar="#dom_toolbar1" data-options="border:false,fit:true,rownumbers:true,singleSelect:true,pagination:true,pageSize:50,pageList: [50, 100, 200, 300]">
     <thead>
     <tr>
         <th data-options="width:100,align:'center',field:'goods_id'">商品ID</th>
