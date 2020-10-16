@@ -23,8 +23,8 @@ class ProviderGoodsModel extends BaseModel
         if (!$rowsOnly) {
             // 获取总数
             $queryTotal->select('count(1) as total');
-            $total = $queryTotal->get('provider_goods')->result();
-            if (empty($total['0']) || empty($total['0']->total)) {
+            $total = $queryTotal->get('provider_goods')->first_row();
+            if (empty($total->total)) {
                 return array(
                     'total' => 0,
                     'rows'  => []
@@ -33,24 +33,25 @@ class ProviderGoodsModel extends BaseModel
         }
 
         // 获取分页数据
-        $queryList->select('pg_id, pg_provider_id, p_name, pg_name, pg_create_time, pg_update_time');
+        $queryList->select('pg_id, pg_provider_id, p_name, pg_name, pg_is_dumplings, pg_create_time, pg_update_time');
 
         if (!$rowsOnly) {
             $offset = ($page - 1) * $rows;
             $queryList->limit($rows, $offset);
         }
 
-        $rows = $queryList->get('provider_goods')->result();
+        $rows = $queryList->get('provider_goods')->result_array();
 
         foreach ($rows as &$row) {
-            $row->provider_goods_format = "{$row->pg_name}({$row->p_name})";
+            $row['is_dumplings'] = $row['pg_is_dumplings'] == 1 ? '是' : '否';
+            $row['provider_goods_format'] = "{$row['pg_name']}({$row['p_name']})";
         }
 
         if ($rowsOnly) {
             return $rows;
         } else {
             return array(
-                'total' => $total['0']->total,
+                'total' => $total->total,
                 'rows' => $rows
             );
         }
@@ -58,7 +59,8 @@ class ProviderGoodsModel extends BaseModel
 
     public function getProviderGoodsInfo($id)
     {
-        $this->db->select('pg_id, p_id, p_name, pg_name, pg_create_time, pg_update_time');
+        $this->db->select('pg_id, p_id, p_name, pg_name, pg_is_dumplings as is_dumplings, 
+        pg_create_time, pg_update_time');
         $this->db->join('provider', 'p_id = pg_provider_id', 'left');
         $this->db->where('pg_id', $id);
         $this->db->limit(1);

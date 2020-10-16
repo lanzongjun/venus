@@ -87,14 +87,14 @@ class ProviderModel extends BaseModel
             'msg' => ''
         );
 
-        $updateData = ['p_name' => $params['name']];
-        $this->db->where('p_id', $params['id']);
+        $updateData = ['p_name' => $params['p_name']];
+        $this->db->where('p_id', $params['p_id']);
 
         try {
             $this->db->update('provider',$updateData);
             $i_rows = $this->db->affected_rows();
         } catch (Exception $ex) {
-            log_message('error', '编辑商铺信息-异常中断！\r\n' . $ex->getMessage());
+            log_message('error', "编辑商铺信息-异常中断！\r\n" . $ex->getMessage());
             $o_result['state'] = false;
             $o_result['msg'] = "编辑商铺信息-异常中断！\r\n" . $ex->getMessage();
             return $o_result;

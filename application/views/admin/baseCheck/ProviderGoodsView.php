@@ -15,6 +15,7 @@
         <th data-options="width:100,align:'center',field:'pg_id'">商品ID</th>
         <th data-options="width:150,align:'center',field:'p_name'">供应商名称</th>
         <th data-options="width:150,align:'center',field:'pg_name'">商品名称</th>
+        <th data-options="width:150,align:'center',field:'is_dumplings'">是否是饺子</th>
         <th data-options="width:200,align:'center',field:'pg_create_time'">创建时间</th>
         <th data-options="width:200,align:'center',field:'pg_update_time'">更新时间</th>
     </tr>

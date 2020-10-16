@@ -12,11 +12,9 @@
 <table id="dg" title="SKU信息" class="easyui-datagrid" toolbar="#dom_toolbar1" data-options="border:false,fit:true,rownumbers:true,singleSelect:true,method:'get',url:'../<?php echo $c_name; ?>/getList/',pagination:true,pageSize:50,pageList: [50, 100, 200, 300]">
     <thead>
     <tr>
-        <th data-options="width:120,align:'center',field:'cs_code'">SKU</th>
+        <th data-options="width:150,align:'center',field:'cs_code'">SKU</th>
         <th data-options="width:400,align:'center',field:'cs_name'">名称</th>
-        <th data-options="width:350,align:'center',field:'cs_description'">描述</th>
-        <th data-options="width:350,align:'center',field:'cs_create_time'">创建时间</th>
-        <th data-options="width:200,align:'center',field:'cs_update_time'">更新时间</th>
+        <th data-options="width:900,align:'center',field:'cs_description'">描述</th>
     </tr>
     </thead>
 </table>

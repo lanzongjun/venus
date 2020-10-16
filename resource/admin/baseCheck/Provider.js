@@ -79,4 +79,4 @@ $(function () {
             $('#dg').datagrid('reload');
         }
     });
-})
+});
