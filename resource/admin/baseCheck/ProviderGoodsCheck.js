@@ -1,5 +1,16 @@
 function showAddWin() {
     $('#d_add_provider_goods_check').window('open');
+    $('#add_provider_goods_check_gid').combobox({
+        url:'../ProviderGoodsController/getList?rows_only=true',
+        method:'get',
+        valueField:'pg_id',
+        textField:'provider_goods_format',
+        panelHeight:'auto',
+        label: '商品名称:',
+        labelPosition: 'left',
+        labelWidth:'90',
+        width:'300'
+    });
 }
 
 // 新增
@@ -27,6 +38,17 @@ function showEditWin() {
         return;
     }
     $('#d_edit_provider_goods_check').window('open');
+    $('#edit_provider_goods_check_gid').combobox({
+        url:'../ProviderGoodsController/getList?rows_only=true',
+        method:'get',
+        valueField:'pg_id',
+        textField:'provider_goods_format',
+        panelHeight:'auto',
+        label: '商品名称:',
+        labelPosition: 'left',
+        labelWidth:'90',
+        width:'300'
+    });
     $('#f_edit_provider_goods_check').form('load', '../' + __s_c_name + '/getProviderGoodsCheckDetailInfo?id=' + o_row.pgcd_id);
 }
 
@@ -89,11 +111,35 @@ function showRemoveWin() {
     });
 }
 
+// 查询
+function doSearch(){
+    var s_db = $('#q_date_begin').val();
+    var s_de = $('#q_date_end').val();
+    // var s_sid = $('#q_shop').combobox('getValue');
+
+    $('#dg').datagrid('load', {
+        s_db: s_db,
+        s_de: s_de
+    });
+}
+
 $(function () {
     init();
 });
 
 function init() {
+
+    $("#dg").datagrid({
+        url: '../' + __s_c_name + '/getList',
+        onClickRow: function (index, row) { //easyui封装好的时间（被单机行的索引，被单击行的值）
+            var p = $("#layout_room").layout("panel", "east")[0].clientWidth;
+            if (p <= 0) {
+                $('#layout_room').layout('expand', 'east');
+            }
+            loadDetailData(row.pgc_id);
+        }
+    });
+
     $('#btn_add').bind('click', function () {
         showAddWin();
     });
@@ -108,16 +154,6 @@ function init() {
     });
     $('#btn_search').bind('click',function (){
         doSearch();
-    });
-
-    $("#dg").datagrid({
-        onClickRow: function (index, row) { //easyui封装好的时间（被单机行的索引，被单击行的值）
-            var p = $("#layout_room").layout("panel", "east")[0].clientWidth;
-            if (p <= 0) {
-                $('#layout_room').layout('expand', 'east');
-            }
-            loadDetailData(row.pgc_id);
-        }
     });
 
     $('#f_add_provider_goods_check').form({
@@ -150,18 +186,6 @@ function init() {
             $('#dg').datagrid('reload');
             $('#dg2').datagrid('reload');
         }
-    });
-}
-
-function doSearch(){
-    var s_db = $('#q_date_begin').val();
-    var s_de = $('#q_date_end').val();
-    var s_sid = $('#q_shop').combobox('getValue');
-
-    $('#dg').datagrid('load', {
-        s_db: s_db,
-        s_de: s_de,
-        s_sid: s_sid
     });
 }
 

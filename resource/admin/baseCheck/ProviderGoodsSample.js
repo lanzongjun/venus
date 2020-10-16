@@ -1,5 +1,16 @@
 function showAddWin() {
     $('#d_add_provider_goods_sample').window('open');
+    $('#add_provider_goods_sample_pgid').combobox({
+        url:'../ProviderGoodsController/getList?rows_only=true',
+        method:'get',
+        valueField:'pg_id',
+        textField:'provider_goods_format',
+        panelHeight:'auto',
+        label: '商品信息:',
+        labelPosition: 'left',
+        labelWidth:'80',
+        width:'400'
+    });
 }
 
 // 新增
@@ -27,6 +38,17 @@ function showEditWin() {
         return;
     }
     $('#d_edit_provider_goods_sample').window('open');
+    $('#edit_provider_goods_sample_pgid').combobox({
+        url:'../ProviderGoodsController/getList?rows_only=true',
+        method:'get',
+        valueField:'pg_id',
+        textField:'provider_goods_format',
+        panelHeight:'auto',
+        label: '商品信息:',
+        labelPosition: 'left',
+        labelWidth:'80',
+        width:'400'
+    });
     $('#f_edit_provider_goods_sample').form('load', '../' + __s_c_name + '/getProviderGoodsSampleInfo?id=' + o_row.pgs_id);
 }
 
@@ -46,17 +68,8 @@ function loadDetailData(goods_id) {
 }
 
 $(function () {
-    $('#btn_add').bind('click', function () {
-        showAddWin();
-    });
-    $('#btn_edit').bind('click', function () {
-        showEditWin();
-    });
-    $('#btn_search').bind('click', function () {
-        doSearch();
-    });
-
     $("#dg").datagrid({
+        url: '../' + __s_c_name + '/getList',
         onClickRow: function (index, row) { //easyui封装好的时间（被单机行的索引，被单击行的值）
             // var p = $('#layout_room').layout("panel", "east")[0].clientWidth;
             // if (p <= 0) {
@@ -65,6 +78,16 @@ $(function () {
             $('#layout_room').layout('expand', 'east');
             loadDetailData(row.pgs_provider_goods_id);
         }
+    });
+
+    $('#btn_add').bind('click', function () {
+        showAddWin();
+    });
+    $('#btn_edit').bind('click', function () {
+        showEditWin();
+    });
+    $('#btn_search').bind('click', function () {
+        doSearch();
     });
 
     $('#f_add_provider_goods_sample').form({

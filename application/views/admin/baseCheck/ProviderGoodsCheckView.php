@@ -10,8 +10,8 @@
 </head>
 <body>
 <div id="layout_room" class="easyui-layout" data-options="fit:true">
-    <div data-options="region:'center',title:'商品盘点信息'">
-        <table id="dg" toolbar="#d_mtoi_toolbar" class="easyui-datagrid" data-options="fit:true,rownumbers:true,singleSelect:true,method:'get',url:'../<?php echo $c_name; ?>/getList/',pagination:true,pageSize:50,pageList: [50, 100, 200, 300]">
+    <div data-options="region:'center',title:'商品管理-商品盘点'">
+        <table id="dg" toolbar="#d_mtoi_toolbar" class="easyui-datagrid" data-options="fit:true,rownumbers:true,singleSelect:true,method:'get',pagination:true,pageSize:50,pageList: [50, 100, 200, 300]">
             <thead>
             <tr>
                 <th data-options="width:120,align:'center',field:'shop_name'">店铺名称</th>
@@ -31,8 +31,11 @@
             <a id="btn_search" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
             <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
             <a id="btn_add" href="#" data-options="iconCls:'icon-add'" class="easyui-linkbutton">新增</a>
+            <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
             <a id="btn_edit" href="#" data-options="iconCls:'icon-edit'" class="easyui-linkbutton">编辑</a>
+            <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
             <a id="btn_remove" href="#" data-options="iconCls:'icon-remove'" class="easyui-linkbutton">删除</a>
+            <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
             <a id="btn_reload" href="#" data-options="iconCls:'icon-reload'" class="easyui-linkbutton">校验库存</a>
             <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
         </div>
@@ -57,17 +60,7 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-combobox" name="goods_id" readonly disabled data-options="
-                        url:'../ProviderGoodsController/getList?rows_only=true',
-                        method:'get',
-                        valueField:'pg_id',
-                        textField:'provider_goods_format',
-                        panelHeight:'auto',
-                        label: '商品名称:',
-                        labelPosition: 'left',
-                        labelWidth:'90',
-                        width:'300'
-                        ">
+                        <input id="edit_provider_goods_check_gid" name="goods_id">
                     </div>
                 </td>
             </tr>
@@ -102,17 +95,7 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-combobox" name="goods_id" data-options="
-                        url:'../ProviderGoodsController/getList?rows_only=true',
-                        method:'get',
-                        valueField:'pg_id',
-                        textField:'provider_goods_format',
-                        panelHeight:'auto',
-                        label: '商品名称:',
-                        labelPosition: 'left',
-                        labelWidth:'90',
-                        width:'300'
-                        ">
+                        <input id="add_provider_goods_check_gid" name="goods_id">
                     </div>
                 </td>
             </tr>

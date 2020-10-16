@@ -15,11 +15,10 @@
                 fit:true,
                 rownumbers: true,
                 singleSelect: true,
-                url:'../ProviderGoodsSkuController/getList/',
                 method: 'get',
                 pagination:true,
                 pageSize:50,
-                pageList: [50, 100, 200, 300],
+                pageList: [50, 100, 200, 300]
             ">
     <thead frozen="true">
     <tr>
@@ -43,40 +42,20 @@
         <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
     </div>
 </div>
-<div id="d_edit_provider_goods_sku" class="easyui-window" title="编辑商品关联信息" data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:600px;height:220px;padding:5px;">
+<div id="d_edit_provider_goods_sku" class="easyui-window" title="编辑商品关联信息" data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:450px;height:210px;padding:5px;">
     <form id="f_edit_provider_goods_sku" method="post">
         <table>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-combobox" name="cs_code" data-options="
-                        url:'../CoreSkuController/getList?rows_only=true',
-                        method:'get',
-                        valueField:'cs_code',
-                        textField:'show_name',
-                        label: 'SKU编码:',
-                        labelPosition: 'left',
-                        labelWidth:'70',
-                        width:'500',
-                        fitColumns: true,
-                        ">
+                        <input id="edit_provider_goods_sku_cscode" name="cs_code">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-combobox" name="pg_id" data-options="
-                        url:'../ProviderGoodsController/getList?rows_only=true',
-                        method:'get',
-                        valueField:'pg_id',
-                        textField:'provider_goods_format',
-                        label: '商品名称:',
-                        labelPosition: 'left',
-                        labelWidth:'70',
-                        width:'300',
-                        fitColumns: true,
-                        ">
+                        <input id="edit_provider_goods_sku_pgid" name="pg_id">
                     </div>
                 </td>
             </tr>
@@ -95,47 +74,27 @@
         </div>
     </form>
 </div>
-<div id="d_add_provider_goods_sku" class="easyui-window" title="新增商品关联信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:600px;height:220px;padding:5px;">
+<div id="d_add_provider_goods_sku" class="easyui-window" title="新增商品关联信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:450px;height:210px;padding:5px;">
     <form id="f_add_provider_goods_sku" method="post">
         <table>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-combobox" name="cs_code" data-options="
-                        url:'../CoreSkuController/getList?rows_only=true',
-                        method:'get',
-                        valueField:'cs_code',
-                        textField:'show_name',
-                        label: 'SKU编码:',
-                        labelPosition: 'left',
-                        labelWidth:'70',
-                        width:'500',
-                        fitColumns: true,
-                        ">
+                        <input id="add_provider_goods_sku_cscode" name="cs_code">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-combobox" name="pg_id" data-options="
-                        url:'../ProviderGoodsController/getList?rows_only=true',
-                        method:'get',
-                        valueField:'pg_id',
-                        textField:'provider_goods_format',
-                        label: '商品名称:',
-                        labelPosition: 'left',
-                        labelWidth:'70',
-                        width:'300',
-                        fitColumns: true,
-                        ">
+                        <input id="add_provider_goods_sku_pgid" name="pg_id">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="pgs_num" data-options="labelWidth:'70',label:'数量:',width:'200'">
+                        <input class="easyui-numberbox" name="pgs_num" data-options="labelWidth:'70',label:'数量:',width:'150'">
                     </div>
                 </td>
             </tr>

@@ -46,7 +46,7 @@ class CoreSkuModel extends BaseModel
         $rows = $queryList->get('core_sku')->result_array();
 
         foreach ($rows as &$row) {
-            $row['show_name'] = $row['cs_name'].'-'.$row['cs_description'].'('.$row['cs_code'].')';
+            $row['show_name'] = $row['cs_name'].'-'.'('.$row['cs_code'].')';
         }
 
         if ($rowsOnly) {

@@ -13,7 +13,7 @@
     <thead>
     <tr>
         <th data-options="width:80,align:'center',field:'gs_id'">商品进货ID</th>
-        <th data-options="width:120,align:'center',field:'cs_name'">店铺名称</th>
+        <th data-options="width:200,align:'center',field:'cs_name'">店铺名称</th>
         <th data-options="width:180,align:'center',field:'p_name'">供应商</th>
         <th data-options="width:180,align:'center',field:'pg_name'">商品名称</th>
         <th data-options="width:130,align:'center',field:'gs_date'">进货日期</th>
@@ -63,30 +63,22 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-combobox" name="goods_id" readonly disabled data-options="
-                        url:'../ProviderGoodsController/getList?rows_only=true',
-                        method:'get',
-                        valueField:'pg_id',
-                        textField:'provider_goods_format',
-                        label: '供应商商品信息:',
-                        labelPosition: 'left',
-                        labelWidth:'110',
-                        width:'400'
-                        ">
+                        <input id="edit_goods_stock_gid" name="goods_id" readonly disabled>
+
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input id="edit_goods_stock_date" class="easyui-datebox" name="date" data-options="labelWidth:'110',label:'进货日期:',width:'300px'">
+                        <input id="edit_goods_stock_date" class="easyui-datebox" name="date" data-options="labelWidth:'70',label:'进货日期:',width:'300px'">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'110',label:'数量:',width:'300', min:0, precision:2">
+                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',width:'300', min:0, precision:2">
                     </div>
 
                 </td>
@@ -94,7 +86,7 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'110',label:'单位:',width:'200',panelHeight:'auto'">
+                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'70',label:'单位:',width:'200',panelHeight:'auto'">
                             <option value="1" selected="true">个</option>
                             <option value="2">斤</option>
                         </select>
@@ -112,7 +104,7 @@
                         panelHeight:'auto',
                         multiline: 'true',
                         labelPosition: 'left',
-                        labelWidth:'110'
+                        labelWidth:'70'
                     ">
                     </div>
                 </td>
@@ -132,30 +124,22 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-combobox" name="goods_id" data-options="
-                        url:'../ProviderGoodsController/getList?rows_only=true',
-                        method:'get',
-                        valueField:'pg_id',
-                        textField:'provider_goods_format',
-                        label: '供应商商品信息:',
-                        labelPosition: 'left',
-                        labelWidth:'110',
-                        width:'400'
-                        ">
+                        <input id="add_goods_stock_gid" name="goods_id">
+
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input id='add_goods_stock_date' class="easyui-datebox" name="date" data-options="labelWidth:'110',label:'进货日期:',width:'300px'">
+                        <input id='add_goods_stock_date' class="easyui-datebox" name="date" data-options="labelWidth:'70',label:'进货日期:',width:'300px'">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'110',label:'数量:',width:'300', min:0, precision:2">
+                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',width:'300', min:0, precision:2">
                     </div>
 
                 </td>
@@ -163,7 +147,7 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'110',label:'单位:',width:'200',panelHeight:'auto'">
+                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'70',label:'单位:',width:'200',panelHeight:'auto'">
                             <option value="1" selected="true">个</option>
                             <option value="2">斤</option>
                         </select>
@@ -180,7 +164,7 @@
                         panelHeight:'auto',
                         multiline: 'true',
                         labelPosition: 'left',
-                        labelWidth:'110'
+                        labelWidth:'70'
                     ">
                     </div>
                 </td>

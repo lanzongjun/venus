@@ -7,6 +7,17 @@ function showAddWin() {
             return d1 >= date;
         }
     });
+    $('#add_goods_stock_gid').combobox({
+        url:'../ProviderGoodsController/getList?rows_only=true',
+        method:'get',
+        valueField:'pg_id',
+        textField:'provider_goods_format',
+        label: '商品信息:',
+        labelPosition: 'left',
+        labelWidth:'70',
+        width:'400',
+        required:true
+    });
 }
 
 // 新增
@@ -40,6 +51,17 @@ function showEditWin() {
             var d1 = new Date(now.getFullYear(),now.getMonth(),now.getDate());
             return d1 >= date;
         }
+    });
+    $('#edit_goods_stock_gid').combobox({
+        url:'../ProviderGoodsController/getList?rows_only=true',
+        method:'get',
+        valueField:'pg_id',
+        textField:'provider_goods_format',
+        label: '商品信息:',
+        labelPosition: 'left',
+        labelWidth:'70',
+        width:'400',
+        required:true
     });
     $('#f_edit_goods_stock').form('load', '../' + __s_c_name + '/getGoodsStockInfo?id=' + o_row.gs_id);
 }

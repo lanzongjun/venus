@@ -7,6 +7,17 @@ function showAddWin() {
             return d1 >= date;
         }
     });
+    $('#add_sale_offline_gid').combobox({
+        url:'../ProviderGoodsController/getList?rows_only=true',
+        method:'get',
+        valueField:'pg_id',
+        textField:'provider_goods_format',
+        label: '商品信息:',
+        labelPosition: 'left',
+        labelWidth:'70',
+        width:'400',
+        required:true
+    });
 }
 
 // 新增
@@ -40,6 +51,17 @@ function showEditWin() {
             var d1 = new Date(now.getFullYear(),now.getMonth(),now.getDate());
             return d1 >= date;
         }
+    });
+    $('#edit_sale_offline_gid').combobox({
+        url:'../ProviderGoodsController/getList?rows_only=true',
+        method:'get',
+        valueField:'pg_id',
+        textField:'provider_goods_format',
+        label: '商品信息:',
+        labelPosition: 'left',
+        labelWidth:'70',
+        width:'400',
+        required:true
     });
     $('#f_edit_sale_offline').form('load', '../' + __s_c_name + '/getSaleOfflineInfo?id=' + o_row.gso_id);
 }

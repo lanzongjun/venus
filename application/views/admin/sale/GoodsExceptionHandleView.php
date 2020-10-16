@@ -64,30 +64,21 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-combobox" name="goods_id" readonly disabled data-options="
-                        url:'../ProviderGoodsController/getList?rows_only=true',
-                        method:'get',
-                        valueField:'pg_id',
-                        textField:'provider_goods_format',
-                        label: '商品信息:',
-                        labelPosition: 'left',
-                        labelWidth:'90',
-                        width:'400'
-                        ">
+                        <input id="edit_exception_handle_gid" name="goods_id" readonly disabled>
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input id="edit_exception_handle_date" class="easyui-datebox" name="date" data-options="labelWidth:'90',label:'上报日期:',width:'200'">
+                        <input id="edit_exception_handle_date" class="easyui-datebox" name="date" data-options="labelWidth:'70',label:'上报日期:',width:'200'">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <select class="easyui-combobox" name="type" readonly disabled data-options="labelWidth:'90',label:'类型:',width:'200',panelHeight:'auto'">
+                        <select class="easyui-combobox" name="type" readonly disabled data-options="labelWidth:'70',label:'类型:',width:'200',panelHeight:'auto'">
                             <option value="1" selected="true">索赔单</option>
                         </select>
                     </div>
@@ -97,7 +88,7 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'90',label:'数量:',width:'200', min:0, precision:2">
+                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',width:'200', min:0, precision:2">
                     </div>
 
                 </td>
@@ -105,7 +96,7 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'90',label:'单位:',width:'200',panelHeight:'auto'">
+                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'70',label:'单位:',width:'200',panelHeight:'auto'">
                             <option value="1" selected="true">个</option>
                             <option value="2">斤</option>
                         </select>
@@ -115,7 +106,7 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <select class="easyui-combobox" name="is_reduce_stock" readonly data-options="labelWidth:'90',label:'是否减库存:',width:'200',panelHeight:'auto'">
+                        <select class="easyui-combobox" name="is_reduce_stock" readonly data-options="labelWidth:'70',label:'是否减库存:',width:'200',panelHeight:'auto'">
                             <option value="0" selected="true">否</option>
                             <option value="1">是</option>
                         </select>
@@ -125,7 +116,7 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-textbox" name="order" data-options="labelWidth:'90',label:'订单号:',width:'200'">
+                        <input class="easyui-textbox" name="order" data-options="labelWidth:'70',label:'订单号:',width:'200'">
                     </div>
                 </td>
             </tr>
@@ -139,7 +130,7 @@
                         panelHeight:'auto',
                         multiline: 'true',
                         labelPosition: 'left',
-                        labelWidth:'90'
+                        labelWidth:'70'
                     ">
                     </div>
                 </td>
@@ -159,30 +150,21 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-combobox" name="goods_id" data-options="
-                        url:'../ProviderGoodsController/getList?rows_only=true',
-                        method:'get',
-                        valueField:'pg_id',
-                        textField:'provider_goods_format',
-                        label: '商品信息:',
-                        labelPosition: 'left',
-                        labelWidth:'90',
-                        width:'400'
-                        ">
+                        <input id="add_exception_handle_gid" name="goods_id" readonly disabled>
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input id="add_exception_handle_date" class="easyui-datebox" name="date" data-options="labelWidth:'90',label:'上报日期:',width:'200'">
+                        <input id="add_exception_handle_date" class="easyui-datebox" name="date" data-options="labelWidth:'70',label:'上报日期:',width:'200'">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <select class="easyui-combobox" name="type" data-options="labelWidth:'90',label:'类型:',width:'200',panelHeight:'auto'">
+                        <select class="easyui-combobox" name="type" data-options="labelWidth:'70',label:'类型:',width:'200',panelHeight:'auto'">
                             <option value="1" selected="true">索赔单</option>
                         </select>
                     </div>
@@ -192,14 +174,14 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'90',label:'数量:',width:'200', min:0, precision:2">
+                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',width:'200', min:0, precision:2">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'90',label:'单位:',width:'200',panelHeight:'auto'">
+                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'70',label:'单位:',width:'200',panelHeight:'auto'">
                             <option value="1" selected="true">个</option>
                             <option value="2">斤</option>
                         </select>
@@ -209,7 +191,7 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <select class="easyui-combobox" name="is_reduce_stock" data-options="labelWidth:'90',label:'是否减库存:',width:'200',panelHeight:'auto'">
+                        <select class="easyui-combobox" name="is_reduce_stock" data-options="labelWidth:'70',label:'是否减库存:',width:'200',panelHeight:'auto'">
                             <option value="0" selected="true">否</option>
                             <option value="1">是</option>
                         </select>
@@ -219,7 +201,7 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-textbox" name="order" data-options="labelWidth:'90',label:'订单号:',width:'200'">
+                        <input class="easyui-textbox" name="order" data-options="labelWidth:'70',label:'订单号:',width:'200'">
                     </div>
 
                 </td>
@@ -234,7 +216,7 @@
                         panelHeight:'auto',
                         multiline: 'true',
                         labelPosition: 'left',
-                        labelWidth:'90'
+                        labelWidth:'70'
                     ">
                     </div>
                 </td>

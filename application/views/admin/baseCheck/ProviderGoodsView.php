@@ -9,7 +9,7 @@
     <script type="text/javascript" src="<?php echo base_url("/resource/admin/jquery.easyui.min.js") ?>"></script>
 </head>
 <body>
-<table id="dg" title="商品信息" class="easyui-datagrid" toolbar="#dom_toolbar1" data-options="border:false,fit:true,rownumbers:true,singleSelect:true,method:'get',url:'../<?php echo $c_name; ?>/getList/',pagination:true,pageSize:50,pageList: [50, 100, 200, 300]">
+<table id="dg" title="商品管理-添加商品" class="easyui-datagrid" toolbar="#dom_toolbar1" data-options="border:false,fit:true,rownumbers:true,singleSelect:true,method:'get',url:'../<?php echo $c_name; ?>/getList/',pagination:true,pageSize:50,pageList: [50, 100, 200, 300]">
     <thead>
     <tr>
         <th data-options="width:100,align:'center',field:'pg_id'">商品ID</th>
@@ -38,17 +38,7 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-combobox" name="p_id" data-options="
-                        url:'../ProviderController/getList?rows_only=true',
-                        method:'get',
-                        valueField:'p_id',
-                        textField:'p_name',
-                        panelHeight:'auto',
-                        label: '供应商名称:',
-                        labelPosition: 'left',
-                        labelWidth:'90',
-                        width:'300'
-                        ">
+                        <input id="edit_provider_goods_pid" name="p_id">
                     </div>
                 </td>
             </tr>
@@ -83,17 +73,7 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-combobox" name="p_id" data-options="
-                        url:'../ProviderController/getList?rows_only=true',
-                        method:'get',
-                        valueField:'p_id',
-                        textField:'p_name',
-                        panelHeight:'auto',
-                        label: '供应商名称:',
-                        labelPosition: 'left',
-                        labelWidth:'90',
-                        width:'300'
-                        ">
+                        <input id="add_provider_goods_pid" name="p_id">
                     </div>
                 </td>
             </tr>

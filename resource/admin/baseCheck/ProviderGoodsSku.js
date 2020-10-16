@@ -1,5 +1,27 @@
 function showAddWin() {
     $('#d_add_provider_goods_sku').window('open');
+    $('#add_provider_goods_sku_cscode').combobox({
+        url:'../CoreSkuController/getList?rows_only=true',
+        method:'get',
+        valueField:'cs_code',
+        textField:'show_name',
+        label: 'SKU编码:',
+        labelPosition: 'left',
+        labelWidth:'70',
+        width:'400',
+        fitColumns: true
+    });
+    $('#add_provider_goods_sku_pgid').combobox({
+        url:'../ProviderGoodsController/getList?rows_only=true',
+        method:'get',
+        valueField:'pg_id',
+        textField:'provider_goods_format',
+        label: '商品名称:',
+        labelPosition: 'left',
+        labelWidth:'70',
+        width:'400',
+        fitColumns: true
+    });
 }
 
 // 新增
@@ -28,6 +50,28 @@ function showEditWin() {
         return;
     }
     $('#d_edit_provider_goods_sku').window('open');
+    $('#edit_provider_goods_sku_cscode').combobox({
+        url:'../CoreSkuController/getList?rows_only=true',
+        method:'get',
+        valueField:'cs_code',
+        textField:'show_name',
+        label: 'SKU编码:',
+        labelPosition: 'left',
+        labelWidth:'70',
+        width:'400',
+        fitColumns: true
+    });
+    $('#edit_provider_goods_sku_pgid').combobox({
+        url:'../ProviderGoodsController/getList?rows_only=true',
+        method:'get',
+        valueField:'pg_id',
+        textField:'provider_goods_format',
+        label: '商品名称:',
+        labelPosition: 'left',
+        labelWidth:'70',
+        width:'400',
+        fitColumns: true
+    });
     $('#f_edit_provider_goods_sku').form('load', '../' + __s_c_name + '/getProviderGoodsSkuInfo?id=' + o_row.pgs_id);
 }
 
@@ -95,6 +139,7 @@ function mergeCellsByField(tableID, colList) {
 
 $(function () {
     $('#dg').datagrid({
+        url: '../' + __s_c_name + '/getList',
         onLoadSuccess: function (data) {
             if (data.rows.length > 0) {
                 //调用mergeCellsByField()合并单元格

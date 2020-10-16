@@ -11,7 +11,7 @@
 <body>
 <div id="layout_room" class="easyui-layout" data-options="fit:true">
     <div data-options="region:'center',title:'商品取样信息'">
-        <table id="dg" title="" class="easyui-datagrid" toolbar="#dom_toolbar1" data-options="border:false,fit:true,rownumbers:true,singleSelect:true,method:'get',url:'../<?php echo $c_name; ?>/getList/',pagination:true,pageSize:50,pageList: [50, 100, 200, 300]">
+        <table id="dg" title="" class="easyui-datagrid" toolbar="#dom_toolbar1" data-options="border:false,fit:true,rownumbers:true,singleSelect:true,method:'get',pagination:true,pageSize:50,pageList: [50, 100, 200, 300]">
             <thead>
             <tr>
                 <th data-options="width:100,align:'center',field:'pgs_id'">商品采样ID</th>
@@ -52,31 +52,29 @@
 
 
 
-<div id="d_edit_provider_goods_sample" class="easyui-window" title="编辑商品取样信息" data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:440px;height:170px;padding:5px;">
+<div id="d_edit_provider_goods_sample" class="easyui-window" title="编辑商品取样信息" data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:440px;height:210px;padding:5px;">
     <form id="f_edit_provider_goods_sample" method="post">
         <table>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-combobox" name="pg_id" data-options="
-                        url:'../ProviderGoodsController/getList?rows_only=true',
-                        method:'get',
-                        valueField:'pg_id',
-                        textField:'provider_goods_format',
-                        label: '供应商商品信息:',
-                        labelPosition: 'left',
-                        labelWidth:'110',
-                        width:'400'
-                        ">
+                        <input id="edit_provider_goods_sample_pgid" name="pg_id">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="pgs_weight" data-options="labelWidth:'110',label:'重量/个（克）:',width:'300', min:0, precision:3">
+                        <input class="easyui-numberbox" name="pgs_weight" data-options="labelWidth:'80',label:'重量/个（克）:',width:'300', min:0, precision:3">
                     </div>
 
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'80',label:'数量（个）:',width:'300', min:0">
+                    </div>
                 </td>
             </tr>
         </table>
@@ -87,29 +85,20 @@
         </div>
     </form>
 </div>
-<div id="d_add_provider_goods_sample" class="easyui-window" title="新增商品取样信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:220px;padding:5px;">
+<div id="d_add_provider_goods_sample" class="easyui-window" title="新增商品取样信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:210px;padding:5px;">
     <form id="f_add_provider_goods_sample" method="post">
         <table>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-combobox" name="pg_id" data-options="
-                        url:'../ProviderGoodsController/getList?rows_only=true',
-                        method:'get',
-                        valueField:'pg_id',
-                        textField:'provider_goods_format',
-                        label: '供应商商品信息:',
-                        labelPosition: 'left',
-                        labelWidth:'110',
-                        width:'400'
-                        ">
+                        <input id="add_provider_goods_sample_pgid" name="pg_id">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="weight" data-options="labelWidth:'110',label:'重量(KG):',width:'300', min:0, precision:3">
+                        <input class="easyui-numberbox" name="weight" data-options="labelWidth:'80',label:'重量(KG):',width:'300', min:0, precision:3">
                     </div>
 
                 </td>
@@ -117,9 +106,8 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'110',label:'数量（个）:',width:'300', min:0">
+                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'80',label:'数量(个):',width:'300', min:0">
                     </div>
-
                 </td>
             </tr>
         </table>

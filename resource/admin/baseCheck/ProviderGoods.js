@@ -1,5 +1,16 @@
 function showAddWin() {
     $('#d_add_provider_goods').window('open');
+    $('#add_provider_goods_pid').combobox({
+        url:'../ProviderController/getList?rows_only=true',
+        method:'get',
+        valueField:'p_id',
+        textField:'p_name',
+        panelHeight:'auto',
+        label: '供应商名称:',
+        labelPosition: 'left',
+        labelWidth:'90',
+        width:'300'
+    });
 }
 
 // 新增
@@ -27,6 +38,17 @@ function showEditWin() {
         return;
     }
     $('#d_edit_provider_goods').window('open');
+    $('#edit_provider_goods_pid').combobox({
+        url:'../ProviderController/getList?rows_only=true',
+        method:'get',
+        valueField:'p_id',
+        textField:'p_name',
+        panelHeight:'auto',
+        label: '供应商名称:',
+        labelPosition: 'left',
+        labelWidth:'90',
+        width:'300'
+    });
     $('#f_edit_provider_goods').form('load', '../' + __s_c_name + '/getProviderGoodsInfo?id=' + o_row.pg_id);
 }
 

@@ -9,7 +9,7 @@
     <script type="text/javascript" src="<?php echo base_url("/resource/admin/jquery.easyui.min.js") ?>"></script>
 </head>
 <body>
-<table id="dg" title="销售-线下销售" class="easyui-datagrid" toolbar="#dom_toolbar" data-options="border:false,fit:true,rownumbers:true,singleSelect:true,method:'get',url:'../<?php echo $c_name; ?>/getList/',pagination:true,pageSize:50,pageList: [50, 100, 200, 300]">
+<table id="dg" title="销售管理-线下销售" class="easyui-datagrid" toolbar="#dom_toolbar" data-options="border:false,fit:true,rownumbers:true,singleSelect:true,method:'get',url:'../<?php echo $c_name; ?>/getList/',pagination:true,pageSize:50,pageList: [50, 100, 200, 300]">
     <thead>
     <tr>
         <th data-options="width:200,align:'center',field:'shop_name'">店铺</th>
@@ -61,17 +61,8 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-combobox" name="goods_id" readonly disabled data-options="
-                        url:'../ProviderGoodsController/getList?rows_only=true',
-                        method:'get',
-                        valueField:'pg_id',
-                        textField:'provider_goods_format',
-                        label: '商品信息:',
-                        labelPosition: 'left',
-                        labelWidth:'70',
-                        width:'400',
-                        required:true
-                        ">
+                        <input id="edit_sale_offline_gid" name="goods_id" disabled readonly>
+
                     </div>
                 </td>
             </tr>
@@ -140,17 +131,7 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-combobox" name="goods_id" data-options="
-                        url:'../ProviderGoodsController/getList?rows_only=true',
-                        method:'get',
-                        valueField:'pg_id',
-                        textField:'provider_goods_format',
-                        label: '商品信息:',
-                        labelPosition: 'left',
-                        labelWidth:'70',
-                        width:'400',
-                        required:true
-                        ">
+                        <input id="add_sale_offline_gid" name="goods_id">
                     </div>
                 </td>
             </tr>

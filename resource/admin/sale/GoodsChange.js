@@ -7,6 +7,27 @@ function showAddWin() {
             return d1 >= date;
         }
     });
+    $('#add_goods_change_gid').combobox({
+        url:'../ProviderGoodsController/getList?rows_only=true',
+        method:'get',
+        valueField:'pg_id',
+        textField:'provider_goods_format',
+        label: '商品信息:',
+        labelPosition: 'left',
+        labelWidth:'70',
+        width:'400'
+    });
+    $('#add_goods_change_shopid').combobox({
+        url:'../CoreShopController/getList?rows_only=true',
+        method:'get',
+        valueField:'cs_id',
+        textField:'cs_name',
+        label: '调度店铺:',
+        labelPosition: 'left',
+        labelWidth:'70',
+        width:'400',
+        panelHeight:'auto'
+    });
 }
 
 // 新增

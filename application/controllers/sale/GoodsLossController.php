@@ -92,7 +92,7 @@ class GoodsLossController extends BaseController
     {
         $postData = $this->getPostData();
 
-        $goodsId = isset($postData['pg_id']) ? $postData['pg_id'] : '';
+        $goodsId = isset($postData['goods_id']) ? $postData['goods_id'] : '';
         $date    = isset($postData['date']) ? $postData['date'] : '';
         $num     = isset($postData['num']) ? $postData['num'] : '';
         $unit    = isset($postData['unit']) ? $postData['unit'] : '';

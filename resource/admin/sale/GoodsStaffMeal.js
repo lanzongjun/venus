@@ -7,6 +7,16 @@ function showAddWin() {
             return d1 >= date;
         }
     });
+    $('#add_staff_meal_gid').combobox({
+        url:'../ProviderGoodsController/getList?rows_only=true',
+        method:'get',
+        valueField:'pg_id',
+        textField:'provider_goods_format',
+        label: '商品信息:',
+        labelPosition: 'left',
+        labelWidth:'70',
+        width:'400'
+    });
 }
 
 // 新增
@@ -69,6 +79,16 @@ function showEditWin() {
             var d1 = new Date(now.getFullYear(),now.getMonth(),now.getDate());
             return d1 >= date;
         }
+    });
+    $('#edit_staff_meal_gid').combobox({
+        url:'../ProviderGoodsController/getList?rows_only=true',
+        method:'get',
+        valueField:'pg_id',
+        textField:'provider_goods_format',
+        label: '商品信息:',
+        labelPosition: 'left',
+        labelWidth:'70',
+        width:'400'
     });
     $('#f_edit_staff_meal').form('load', '../' + __s_c_name + '/getStaffMealInfo?id=' + o_row.gsm_id);
 }

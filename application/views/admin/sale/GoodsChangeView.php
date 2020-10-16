@@ -43,100 +43,100 @@
     </div>
 </div>
 
-<div id="d_edit_goods_change" class="easyui-window" title="编辑商品调度信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:390px;padding:5px;">
-    <form id="f_edit_goods_change" method="post">
-        <table>
-            <tr>
-                <td>
-                    <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-combobox" name="goods_id" readonly disabled data-options="
-                        url:'../ProviderGoodsController/getList?rows_only=true',
-                        method:'get',
-                        valueField:'pg_id',
-                        textField:'provider_goods_format',
-                        label: '供应商商品信息:',
-                        labelPosition: 'left',
-                        labelWidth:'110',
-                        width:'400'
-                        ">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-combobox" name="change_shop" readonly disabled data-options="
-                        url:'../CoreShopController/getList?rows_only=true',
-                        method:'get',
-                        valueField:'cs_id',
-                        textField:'cs_name',
-                        label: '调度店铺:',
-                        labelPosition: 'left',
-                        labelWidth:'110',
-                        width:'400',
-                        panelHeight:'auto'
-                        ">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-datebox" name="date" data-options="labelWidth:'110',label:'调度日期:',width:'240'">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div style="margin-left:5px;margin-bottom:5px">
-                        <select class="easyui-combobox" name="change_type" readonly disabled
-                                data-options="labelWidth:'110',label:'入/出:',width:'200',panelHeight:'auto'">
-                            <option value="1" selected="true">转入</option>
-                            <option value="2">转出</option>
-                        </select>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'110',label:'数量:',width:'200', min:0, precision:2">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div style="margin-left:5px;margin-bottom:5px">
-                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'110',label:'单位:',width:'200',panelHeight:'auto'">
-                            <option value="1" selected="true">个</option>
-                            <option value="2">斤</option>
-                        </select>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-textbox" name="remark" data-options="
-                        label:'备注:',
-                        width:'400px',
-                        height:'60px',
-                        panelHeight:'auto',
-                        multiline: 'true',
-                        labelPosition: 'left',
-                        labelWidth:'110'
-                    ">
-                    </div>
-                </td>
-            </tr>
-        </table>
-        <input name="gc_id" type="hidden"/>
-        <div style="text-align:center;padding:5px 0">
-            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="saveEditForm()" style="width:80px">保存</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="closeEditWin()" style="width:80px">取消</a>
-        </div>
-    </form>
-</div>
+<!--<div id="d_edit_goods_change" class="easyui-window" title="编辑商品调度信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:390px;padding:5px;">-->
+<!--    <form id="f_edit_goods_change" method="post">-->
+<!--        <table>-->
+<!--            <tr>-->
+<!--                <td>-->
+<!--                    <div style="margin-left:5px;margin-bottom:5px">-->
+<!--                        <input class="easyui-combobox" name="goods_id" readonly disabled data-options="-->
+<!--                        url:'../ProviderGoodsController/getList?rows_only=true',-->
+<!--                        method:'get',-->
+<!--                        valueField:'pg_id',-->
+<!--                        textField:'provider_goods_format',-->
+<!--                        label: '商品信息:',-->
+<!--                        labelPosition: 'left',-->
+<!--                        labelWidth:'110',-->
+<!--                        width:'400'-->
+<!--                        ">-->
+<!--                    </div>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td>-->
+<!--                    <div style="margin-left:5px;margin-bottom:5px">-->
+<!--                        <input class="easyui-combobox" name="change_shop" readonly disabled data-options="-->
+<!--                        url:'../CoreShopController/getList?rows_only=true',-->
+<!--                        method:'get',-->
+<!--                        valueField:'cs_id',-->
+<!--                        textField:'cs_name',-->
+<!--                        label: '调度店铺:',-->
+<!--                        labelPosition: 'left',-->
+<!--                        labelWidth:'110',-->
+<!--                        width:'400',-->
+<!--                        panelHeight:'auto'-->
+<!--                        ">-->
+<!--                    </div>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td>-->
+<!--                    <div style="margin-left:5px;margin-bottom:5px">-->
+<!--                        <input class="easyui-datebox" name="date" data-options="labelWidth:'110',label:'调度日期:',width:'240'">-->
+<!--                    </div>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td>-->
+<!--                    <div style="margin-left:5px;margin-bottom:5px">-->
+<!--                        <select class="easyui-combobox" name="change_type" readonly disabled-->
+<!--                                data-options="labelWidth:'110',label:'入/出:',width:'200',panelHeight:'auto'">-->
+<!--                            <option value="1" selected="true">转入</option>-->
+<!--                            <option value="2">转出</option>-->
+<!--                        </select>-->
+<!--                    </div>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td>-->
+<!--                    <div style="margin-left:5px;margin-bottom:5px">-->
+<!--                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'110',label:'数量:',width:'200', min:0, precision:2">-->
+<!--                    </div>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td>-->
+<!--                    <div style="margin-left:5px;margin-bottom:5px">-->
+<!--                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'110',label:'单位:',width:'200',panelHeight:'auto'">-->
+<!--                            <option value="1" selected="true">个</option>-->
+<!--                            <option value="2">斤</option>-->
+<!--                        </select>-->
+<!--                    </div>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td>-->
+<!--                    <div style="margin-left:5px;margin-bottom:5px">-->
+<!--                        <input class="easyui-textbox" name="remark" data-options="-->
+<!--                        label:'备注:',-->
+<!--                        width:'400px',-->
+<!--                        height:'60px',-->
+<!--                        panelHeight:'auto',-->
+<!--                        multiline: 'true',-->
+<!--                        labelPosition: 'left',-->
+<!--                        labelWidth:'110'-->
+<!--                    ">-->
+<!--                    </div>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--        </table>-->
+<!--        <input name="gc_id" type="hidden"/>-->
+<!--        <div style="text-align:center;padding:5px 0">-->
+<!--            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="saveEditForm()" style="width:80px">保存</a>-->
+<!--            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="closeEditWin()" style="width:80px">取消</a>-->
+<!--        </div>-->
+<!--    </form>-->
+<!--</div>-->
 
 <div id="d_add_goods_change" class="easyui-window" title="新增商品调度信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:390px;padding:5px;">
     <form id="f_add_goods_change" method="post">
@@ -144,47 +144,28 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-combobox" name="goods_id" data-options="
-                        url:'../ProviderGoodsController/getList?rows_only=true',
-                        method:'get',
-                        valueField:'pg_id',
-                        textField:'provider_goods_format',
-                        label: '商品信息:',
-                        labelPosition: 'left',
-                        labelWidth:'110',
-                        width:'400'
-                        ">
+                        <input id="add_goods_change_gid" name="goods_id">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-combobox" name="change_shop" data-options="
-                        url:'../CoreShopController/getList?rows_only=true',
-                        method:'get',
-                        valueField:'cs_id',
-                        textField:'cs_name',
-                        label: '调度店铺:',
-                        labelPosition: 'left',
-                        labelWidth:'110',
-                        width:'400',
-                        panelHeight:'auto'
-                        ">
+                        <input id="add_goods_change_shopid" name="change_shop">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input id='add_goods_change_date' class="easyui-datebox" name="date" data-options="labelWidth:'110',label:'调度日期:',width:'240'">
+                        <input id='add_goods_change_date' class="easyui-datebox" name="date" data-options="labelWidth:'70',label:'调度日期:',width:'240'">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <select class="easyui-combobox" name="change_type" data-options="labelWidth:'110',label:'入/出:',width:'200',panelHeight:'auto'">
+                        <select class="easyui-combobox" name="change_type" data-options="labelWidth:'70',label:'入/出:',width:'200',panelHeight:'auto'">
                             <option value="1" selected="true">转入</option>
                             <option value="2">转出</option>
                         </select>
@@ -194,14 +175,14 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'110',label:'数量:',width:'200', min:0, precision:2">
+                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',width:'200', min:0, precision:2">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'110',label:'单位:',width:'200',panelHeight:'auto'">
+                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'70',label:'单位:',width:'200',panelHeight:'auto'">
                             <option value="1" selected="true">个</option>
                             <option value="2">斤</option>
                         </select>
@@ -218,7 +199,7 @@
                         panelHeight:'auto',
                         multiline: 'true',
                         labelPosition: 'left',
-                        labelWidth:'110'
+                        labelWidth:'70'
                     ">
                     </div>
                 </td>
