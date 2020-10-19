@@ -4,21 +4,27 @@ include_once 'BaseModel.php';
 
 class ProviderGoodsCheckModel extends BaseModel
 {
-    public function getList($page, $rows, $rowsOnly)
+    public function getList($shopId, $startDate, $endDate, $page, $rows, $rowsOnly)
     {
         $query = $this->db;
 
         $query->join('core_shop', 'pgc_shop_id = cs_id', 'left');
         $query->join('user', 'pgc_operator = u_id', 'left');
+        $query->where('pgc_shop_id', intval($shopId));
+
+        if (!empty($startDate) && !empty($endDate)) {
+            $query->where('pgc_date >=', $startDate);
+            $query->where('pgc_date <=', $endDate);
+        }
 
         $queryTotal = clone $query;
-        $queryList = clone  $query;
+        $queryList  = clone $query;
 
         if (!$rowsOnly) {
             // 获取总数
             $queryTotal->select('count(1) as total');
-            $total = $queryTotal->get('provider_goods_check')->result();
-            if (empty($total['0']) || empty($total['0']->total)) {
+            $total = $queryTotal->get('provider_goods_check')->first_row();
+            if (empty($total->total)) {
                 return array(
                     'total' => 0,
                     'rows'  => []
@@ -41,7 +47,7 @@ class ProviderGoodsCheckModel extends BaseModel
             return $rows;
         } else {
             return array(
-                'total' => $total['0']->total,
+                'total' => intval($total->total),
                 'rows' => $rows
             );
         }

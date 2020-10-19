@@ -61,7 +61,7 @@ function doSearch() {
 }
 
 function loadDetailData(goods_id) {
-    $("#dg2").datagrid("options").url = '../'+__s_c_name+'/loadDetailData/';
+    $("#dg2").datagrid("options").url = '../'+__s_c_name+'/loadDetailData';
     $('#dg2').datagrid('load', {
         goods_id: goods_id
     });

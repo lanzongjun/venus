@@ -19,8 +19,7 @@ class GoodsSaleOfflineModel extends BaseModel
 
         $query->join('core_shop', 'cs_id = gso_shop_id', 'left');
         $query->join('provider_goods', 'pg_id = gso_provider_goods_id', 'left');
-
-        $query->where('gso_shop_id', $shopId);
+        $query->where('gso_shop_id', intval($shopId));
 
         if (!empty($type)) {
             $query->where('gso_type', $type);
@@ -32,7 +31,7 @@ class GoodsSaleOfflineModel extends BaseModel
         }
 
         $queryTotal = clone $query;
-        $queryList = clone  $query;
+        $queryList  = clone  $query;
 
         // 获取总数
         $queryTotal->select('count(1) as total');
@@ -61,10 +60,9 @@ class GoodsSaleOfflineModel extends BaseModel
             $row['remark'] = empty($row['gso_remark']) ? '--' : $row['gso_remark'];
         }
 
-
         return array(
-            'total' => $total->total,
-            'rows' => $rows
+            'total' => intval($total->total),
+            'rows'  => $rows
         );
     }
 

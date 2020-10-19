@@ -16,7 +16,7 @@ class GoodsExceptionHandleModel extends BaseModel
         $query->join('provider_goods', 'geh_provider_goods_id = pg_id', 'left');
         $query->join('user', 'u_id = geh_operator', 'left');
         $query->join('core_shop', 'cs_id = geh_shop_id', 'left');
-        $query->where('geh_shop_id', $shopId);
+        $query->where('geh_shop_id', intval($shopId));
 
         if (!empty($type)) {
             $query->where('geh_type', $type);
@@ -64,7 +64,7 @@ class GoodsExceptionHandleModel extends BaseModel
         }
 
         return array(
-            'total' => $total->total,
+            'total' => intval($total->total),
             'rows' => $rows
         );
     }

@@ -39,7 +39,14 @@ class ProviderGoodsController extends BaseController
 
         $this->load->model($this->_s_model);
 
-        $o_result = $this->{$this->_s_model}->getList($providerName, $providerGoodsName, $page, $rows, $rowsOnly);
+        $o_result = $this->{$this->_s_model}->getList(
+            $providerName,
+            $providerGoodsName,
+            $page,
+            $rows,
+            $rowsOnly
+        );
+
         echo json_encode($o_result);
     }
 

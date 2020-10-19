@@ -6,7 +6,6 @@ class ProviderGoodsSkuModel extends BaseModel
 {
     public function getList($skuCode, $providerGoodsName, $page, $rows)
     {
-
         $query = $this->db->join('provider_goods', 'pgs_provider_goods_id = pg_id', 'left');
         $query->join('core_sku', 'cs_code = pgs_sku_code', 'left');
 
@@ -23,8 +22,8 @@ class ProviderGoodsSkuModel extends BaseModel
 
         // 获取总数
         $queryTotal->select('count(1) as total');
-        $total = $queryTotal->get('provider_goods_sku')->result();
-        if (empty($total['0']) || empty($total['0']->total)) {
+        $total = $queryTotal->get('provider_goods_sku')->first_row();
+        if (empty($total->total)) {
             return array(
                 'total' => 0,
                 'rows'  => []
@@ -38,10 +37,11 @@ class ProviderGoodsSkuModel extends BaseModel
         $offset    = ($page - 1) * $rows;
         $queryList = $queryList->limit($rows, $offset);
 
-        $list = $queryList->get('provider_goods_sku');
+        $list = $queryList->get('provider_goods_sku')->result_array();
+
         return array(
-            'total' => $total['0']->total,
-            'rows'  => $list->result()
+            'total' => intval($total->total),
+            'rows'  => $list
         );
     }
 

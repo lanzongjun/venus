@@ -16,7 +16,7 @@ class GoodsChangeModel extends BaseModel
 
         $query->join('provider_goods', 'gc_provider_goods_id = pg_id', 'left');
         $query->join('user', 'u_id = gc_operator', 'left');
-        $query->where('gc_shop_id', $shopId);
+        $query->where('gc_shop_id', intval($shopId));
 
         if (!empty($startDate) && !empty($endDate)) {
             $query->where('gc_date >=', $startDate);
@@ -59,8 +59,8 @@ class GoodsChangeModel extends BaseModel
         }
 
         return array(
-            'total' => $total->total,
-            'rows' => $rows
+            'total' => intval($total->total),
+            'rows'  => $rows
         );
     }
 

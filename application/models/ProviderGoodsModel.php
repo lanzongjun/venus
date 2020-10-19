@@ -4,7 +4,7 @@ include_once 'BaseModel.php';
 
 class ProviderGoodsModel extends BaseModel
 {
-    public function getList($providerName, $providerGoodsName, $page, $rows, $rowsOnly)
+    public function getList($providerName, $goodsName, $page, $rows, $rowsOnly)
     {
 
         $query = $this->db->join('provider', 'p_id = pg_provider_id', 'left');
@@ -13,12 +13,12 @@ class ProviderGoodsModel extends BaseModel
             $query = $this->db->like('p_name', $providerName);
         }
 
-        if (!empty($providerGoodsName)) {
-            $query = $this->db->like('pg_name', $providerGoodsName);
+        if (!empty($goodsName)) {
+            $query = $this->db->like('pg_name', $goodsName);
         }
 
         $queryTotal = clone $query;
-        $queryList = clone  $query;
+        $queryList  = clone $query;
 
         if (!$rowsOnly) {
             // 获取总数

@@ -118,8 +118,8 @@ function doSearch(){
     // var s_sid = $('#q_shop').combobox('getValue');
 
     $('#dg').datagrid('load', {
-        s_db: s_db,
-        s_de: s_de
+        start_date: s_db,
+        end_date: s_de
     });
 }
 
@@ -190,7 +190,7 @@ function init() {
 }
 
 function loadDetailData(pgc_id) {
-    $("#dg2").datagrid("options").url = '../'+__s_c_name+'/loadDetailData/';
+    $("#dg2").datagrid("options").url = '../'+__s_c_name+'/loadDetailData';
     $('#dg2').datagrid('load', {
         pgc_id: pgc_id
     });

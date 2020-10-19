@@ -28,7 +28,14 @@ class ProviderGoodsCheckController extends BaseController
         $rowsOnly = isset($getData['rows_only']) ? $getData['rows_only'] : false;
 
         $this->load->model($this->_s_model);
-        $result = $this->{$this->_s_model}->getList($page, $rows, $rowsOnly);
+        $result = $this->{$this->_s_model}->getList(
+            $this->shop_id,
+            $startDate,
+            $endDate,
+            $page,
+            $rows,
+            $rowsOnly
+        );
 
         echo json_encode($result);
     }

@@ -10,7 +10,7 @@ class GoodsStaffMealModel extends BaseModel
         $query->join('provider_goods', 'gsm_provider_goods_id = pg_id', 'left');
         $query->join('user', 'u_id = gsm_operator', 'left');
         $query->join('core_shop', 'cs_id = gsm_shop_id', 'left');
-        $query->where('gsm_shop_id', $shopId);
+        $query->where('gsm_shop_id', intval($shopId));
 
         if (!empty($startDate) && !empty($endDate)) {
             $query->where('gsm_date >=', $startDate);
@@ -49,7 +49,7 @@ class GoodsStaffMealModel extends BaseModel
         }
 
         return array(
-            'total' => $total->total,
+            'total' => intval($total->total),
             'rows' => $rows
         );
     }

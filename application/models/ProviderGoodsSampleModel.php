@@ -18,8 +18,8 @@ class ProviderGoodsSampleModel extends BaseModel
         if (!$rowsOnly) {
             // 获取总数
             $queryTotal->select('count(1) as total');
-            $total = $queryTotal->get('provider_goods_sample')->result();
-            if (empty($total['0']) || empty($total['0']->total)) {
+            $total = $queryTotal->get('provider_goods_sample')->first_row();
+            if (empty($total->total)) {
                 return array(
                     'total' => 0,
                     'rows'  => []
@@ -39,13 +39,13 @@ class ProviderGoodsSampleModel extends BaseModel
             $queryList->limit($rows, $offset);
         }
 
-        $rows = $queryList->get('provider_goods_sample')->result();
+        $rows = $queryList->get('provider_goods_sample')->result_array();
 
         if ($rowsOnly) {
             return $rows;
         } else {
             return array(
-                'total' => $total['0']->total,
+                'total' => intval($total->total),
                 'rows' => $rows
             );
         }

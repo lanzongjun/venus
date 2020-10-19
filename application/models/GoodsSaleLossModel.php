@@ -35,7 +35,7 @@ class GoodsSaleLossModel extends BaseModel
         }
 
         $queryTotal = clone $query;
-        $queryList  = clone  $query;
+        $queryList  = clone $query;
 
         // 获取总数
             $queryTotal->select('count(1) as total');
@@ -59,6 +59,7 @@ class GoodsSaleLossModel extends BaseModel
         $queryList->limit($rows, $offset);
 
         $rows = $queryList->get('goods_loss')->result_array();
+
         foreach ($rows as &$row) {
             $row['type'] = $row['gl_type'] == self::LOSS_SHOP ? '店内损耗' : '退单损耗';
             $row['order'] = empty($row['gl_order']) ? '--' : $row['gl_order'];
@@ -67,7 +68,7 @@ class GoodsSaleLossModel extends BaseModel
         }
 
         return array(
-            'total' => $total->total,
+            'total' => intval($total->total),
             'rows' => $rows
         );
     }

@@ -24,8 +24,8 @@ class ProviderModel extends BaseModel
         if (!$rowsOnly) {
             // 获取总数
             $queryTotal->select('count(1) as total');
-            $total = $queryTotal->get('provider')->result();
-            if (empty($total['0']) || empty($total['0']->total)) {
+            $total = $queryTotal->get('provider')->first_row();
+            if (empty($total->total)) {
                 return array(
                     'total' => 0,
                     'rows'  => []
@@ -41,13 +41,13 @@ class ProviderModel extends BaseModel
             $queryList->limit($rows, $offset);
         }
 
-        $rows = $queryList->get('provider')->result();
+        $rows = $queryList->get('provider')->result_array();
 
         if ($rowsOnly) {
             return $rows;
         } else {
             return array(
-                'total' => $total['0']->total,
+                'total' => $total->total,
                 'rows' => $rows
             );
         }
