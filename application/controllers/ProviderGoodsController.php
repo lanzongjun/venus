@@ -36,6 +36,7 @@ class ProviderGoodsController extends BaseController
         $providerName = isset($getData['provider_name']) ? $getData['provider_name'] : '';
         $providerGoodsName = isset($getData['provider_goods_name']) ? $getData['provider_goods_name'] : '';
         $rowsOnly = isset($getData['rows_only']) ? $getData['rows_only'] : false;
+        $dumplingsOnly = isset($getData['dumplings_only']) ? $getData['dumplings_only'] : false;
 
         $this->load->model($this->_s_model);
 
@@ -44,7 +45,8 @@ class ProviderGoodsController extends BaseController
             $providerGoodsName,
             $page,
             $rows,
-            $rowsOnly
+            $rowsOnly,
+            $dumplingsOnly
         );
 
         echo json_encode($o_result);

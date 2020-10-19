@@ -9,11 +9,11 @@ class ProviderGoodsSampleModel extends BaseModel
         $query = $this->db->join('provider_goods', 'pg_id = pgs_provider_goods_id', 'left');
 
         if (!empty($providerGoodsName)) {
-            $query = $this->db->like('pg_name', $providerGoodsName);
+            $query->like('pg_name', $providerGoodsName);
         }
 
         $queryTotal = clone $query;
-        $queryList = clone  $query;
+        $queryList  = clone $query;
 
         if (!$rowsOnly) {
             // 获取总数

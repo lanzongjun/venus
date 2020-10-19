@@ -1,7 +1,7 @@
 function showAddWin() {
     $('#d_add_provider_goods_sample').window('open');
     $('#add_provider_goods_sample_pgid').combobox({
-        url:'../ProviderGoodsController/getList?rows_only=true',
+        url:'../ProviderGoodsController/getList?rows_only=true&dumplings_only=true',
         method:'get',
         valueField:'pg_id',
         textField:'provider_goods_format',
@@ -39,7 +39,7 @@ function showEditWin() {
     }
     $('#d_edit_provider_goods_sample').window('open');
     $('#edit_provider_goods_sample_pgid').combobox({
-        url:'../ProviderGoodsController/getList?rows_only=true',
+        url:'../ProviderGoodsController/getList?rows_only=true&dumplings_only=true',
         method:'get',
         valueField:'pg_id',
         textField:'provider_goods_format',

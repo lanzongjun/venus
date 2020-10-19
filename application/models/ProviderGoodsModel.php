@@ -4,17 +4,21 @@ include_once 'BaseModel.php';
 
 class ProviderGoodsModel extends BaseModel
 {
-    public function getList($providerName, $goodsName, $page, $rows, $rowsOnly)
+    public function getList($providerName, $goodsName, $page, $rows, $rowsOnly, $dumplingsOnly)
     {
 
         $query = $this->db->join('provider', 'p_id = pg_provider_id', 'left');
 
         if (!empty($providerName)) {
-            $query = $this->db->like('p_name', $providerName);
+            $query->like('p_name', $providerName);
         }
 
         if (!empty($goodsName)) {
-            $query = $this->db->like('pg_name', $goodsName);
+            $query->like('pg_name', $goodsName);
+        }
+
+        if ($dumplingsOnly) {
+            $query->where('pg_is_dumplings', 1);
         }
 
         $queryTotal = clone $query;
