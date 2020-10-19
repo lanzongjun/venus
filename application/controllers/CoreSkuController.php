@@ -22,9 +22,9 @@ class CoreSkuController extends BaseController
 
         $page = isset($getData['page']) ? $getData['page'] : 1;
         $rows = isset($getData['rows']) ? $getData['rows'] : 50;
-        $code = isset($getData['code']) ? $getData['code'] : '';
-        $name = isset($getData['name']) ? $getData['name'] : '';
-        $desc = isset($getData['description']) ? $getData['description'] : '';
+        $code = isset($getData['cs_code']) ? $getData['cs_code'] : '';
+        $name = isset($getData['cs_name']) ? $getData['cs_name'] : '';
+        $desc = isset($getData['cs_description']) ? $getData['cs_description'] : '';
         $rowOnly = isset($getData['rows_only']) ? $getData['rows_only'] : false;
         $isDownload = isset($getData['is_download']) ? $getData['is_download'] : 0;
 
@@ -103,5 +103,23 @@ class CoreSkuController extends BaseController
     public function editSkuInfo()
     {
         $postData = $this->input->post();
+
+        $id = isset($postData['cs_id']) ? $postData['cs_id'] : '';
+        $code = isset($postData['cs_code']) ? $postData['cs_code'] : '';
+        $name = isset($postData['cs_name']) ? $postData['cs_name'] : '';
+        $description = isset($postData['cs_description']) ? $postData['cs_description'] : '';
+
+        if (empty($id) || empty($code) || empty($name) || empty($description)) {
+            echo json_encode(array(
+                'state' => false,
+                'msg' => '参数错误'
+            ));
+            exit();
+        }
+
+        $this->load->model($this->_s_model);
+        $result = $this->{$this->_s_model}->editSkuInfo($id, $code, $name, $description);
+
+        echo json_encode($result);
     }
 }

@@ -65,11 +65,11 @@ class CoreSkuModel extends BaseModel
         $this->db->where('cs_id', $id);
         $this->db->limit(1);
         $query = $this->db->get('core_sku');
-        $result = $query->result_array();
-        if ($result && count($result) == 1) {
-            return $result[0];
+        $result = $query->first_row();
+        if (empty($result)) {
+            return array();
         }
-        return array();
+        return $result;
     }
 
 
@@ -101,7 +101,7 @@ class CoreSkuModel extends BaseModel
         );
     }
 
-    public function editSkuInfo($params)
+    public function editSkuInfo($id, $code, $name, $description)
     {
         $o_result = array(
             'state' => false,
@@ -109,17 +109,17 @@ class CoreSkuModel extends BaseModel
         );
 
         $updateData = [
-            'cs_code' => $params['cs_code'],
-            'cs_name' => $params['cs_name'],
-            'cs_description' => $params['cs_description']
+            'cs_code' => $code,
+            'cs_name' => $name,
+            'cs_description' => $description
         ];
-        $this->db->where('cs_id', $params['cs_id']);
+        $this->db->where('cs_id', $id);
 
         try {
             $this->db->update('core_sku',$updateData);
             $i_rows = $this->db->affected_rows();
         } catch (Exception $ex) {
-            log_message('error', '编辑SKU信息-异常中断！\r\n' . $ex->getMessage());
+            log_message('error', "编辑SKU信息-异常中断！\r\n" . $ex->getMessage());
             $o_result['state'] = false;
             $o_result['msg'] = "编辑SKU信息-异常中断！\r\n" . $ex->getMessage();
             return $o_result;

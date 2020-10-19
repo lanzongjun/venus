@@ -39,7 +39,7 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-textbox" readonly disabled name="cs_code" data-options="labelWidth:'100',label:'SKU:',width:'300px'">
+                        <input class="easyui-textbox" name="cs_code" data-options="labelWidth:'100',label:'SKU:',width:'300px'">
                     </div>
                 </td>
             </tr>
@@ -58,7 +58,7 @@
                 </td>
             </tr>
         </table>
-        <input name="id" type="hidden"/>
+        <input name="cs_id" type="hidden"/>
         <div style="text-align:center;padding:5px 0">
             <a href="javascript:void(0)" class="easyui-linkbutton" onclick="saveEditForm()" style="width:80px">保存</a>
             <a href="javascript:void(0)" class="easyui-linkbutton" onclick="closeEditWin()" style="width:80px">取消</a>
