@@ -107,13 +107,14 @@ class GoodsSaleOnlineModel extends BaseModel
         }
     }
 
-    public function getList($page, $rows, $rowsOnly)
+    public function getList($shopId, $page, $rows, $rowsOnly)
     {
         $query = $this->db->join('core_shop', 'cs_id = gso_shop_id', 'left');
         $query->join('core_sku', 'core_sku.cs_code = gso_sku_code', 'left');
+        $query->where('gso_shop_id', $shopId);
 
         $queryTotal = clone $query;
-        $queryList = clone  $query;
+        $queryList  = clone $query;
 
         // 获取总数
         $queryTotal->select('count(1) as total');
@@ -136,20 +137,20 @@ class GoodsSaleOnlineModel extends BaseModel
 
         $rows = $queryList->get('goods_sale_online')->result_array();
 
-
         return array(
-            'total' => $total->total,
+            'total' => intval($total->total),
             'rows' => $rows
         );
 
     }
 
-    public function getSummaryList($startDate, $endDate, $goodsName, $page, $rows)
+    public function getSummaryList($shopId, $startDate, $endDate, $goodsName, $page, $rows)
     {
         $query = $this->db;
         $query->join('provider_goods_sku as b', 'gso_sku_code = pgs_sku_code', 'left');
         $query->join('provider_goods', 'b.pgs_provider_goods_id = pg_id', 'left');
         $query->join('provider_goods_sample as a', 'a.pgs_provider_goods_id = pg_id', 'left');
+        $query->where('gso_shop_id', $shopId);
         $query->group_by('b.pgs_provider_goods_id, gso_date');
         $query->select('b.pgs_provider_goods_id,pg_name,sum(pgs_num) as total, pg_is_dumplings, pgs_weight, gso_date');
 
@@ -163,7 +164,7 @@ class GoodsSaleOnlineModel extends BaseModel
         }
 
         $queryTotal = clone $query;
-        $queryList  = clone  $query;
+        $queryList  = clone $query;
 
         // 获取总数
         $queryTotal->get('goods_sale_online')->first_row();
@@ -189,8 +190,8 @@ class GoodsSaleOnlineModel extends BaseModel
         }
 
         return array(
-            'total' => $total->total,
-            'rows' => $rows
+            'total' => intval($total->total),
+            'rows'  => $rows
         );
     }
 }

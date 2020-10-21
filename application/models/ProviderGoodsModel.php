@@ -67,11 +67,9 @@ class ProviderGoodsModel extends BaseModel
         pg_create_time, pg_update_time');
         $this->db->join('provider', 'p_id = pg_provider_id', 'left');
         $this->db->where('pg_id', $id);
-        $this->db->limit(1);
-        $query = $this->db->get('provider_goods');
-        $result = $query->result_array();
-        if ($result && count($result) == 1) {
-            return $result[0];
+        $result = $this->db->get('provider_goods')->first_row();
+        if (!empty($result)) {
+            return $result;
         }
         return array();
     }
@@ -79,9 +77,9 @@ class ProviderGoodsModel extends BaseModel
     public function addProviderGoods($providerId, $providerGoodsName, $isDumplings)
     {
         $insertData = [
-            'pg_provider_id' => $providerId,
-            'pg_name'        => $providerGoodsName,
-            'pg_is_dumplings'   => $isDumplings
+            'pg_provider_id'  => $providerId,
+            'pg_name'         => $providerGoodsName,
+            'pg_is_dumplings' => $isDumplings
         ];
 
         $this->db->insert('provider_goods', $insertData);
@@ -100,8 +98,8 @@ class ProviderGoodsModel extends BaseModel
         );
 
         $updateData = [
-            'pg_provider_id' => $params['p_id'],
-            'pg_name' => $params['pg_name'],
+            'pg_provider_id'  => $params['p_id'],
+            'pg_name'         => $params['pg_name'],
             'pg_is_dumplings' => $params['is_dumplings']
         ];
         $this->db->where('pg_id', $params['pg_id']);

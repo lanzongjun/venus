@@ -28,7 +28,14 @@ class GoodsSaleOnlineSummaryController extends BaseController
         $rows = isset($getData['rows']) ? $getData['rows'] : 50;
 
         $this->load->model($this->_s_model);
-        $o_result = $this->{$this->_s_model}->getSummaryList($startDate, $endDate, $goodsName, $page, $rows);
+        $o_result = $this->{$this->_s_model}->getSummaryList(
+            $this->shop_id,
+            $startDate,
+            $endDate,
+            $goodsName,
+            $page,
+            $rows
+        );
 
         echo json_encode($o_result);
     }

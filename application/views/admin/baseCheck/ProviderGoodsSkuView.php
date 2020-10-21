@@ -42,7 +42,7 @@
         <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
     </div>
 </div>
-<div id="d_edit_provider_goods_sku" class="easyui-window" title="编辑商品关联信息" data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:450px;height:210px;padding:5px;">
+<div id="d_edit_provider_goods_sku" class="easyui-window" title="编辑商品关联信息" data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:460px;height:210px;padding:5px;">
     <form id="f_edit_provider_goods_sku" method="post">
         <table>
             <tr>
@@ -74,7 +74,7 @@
         </div>
     </form>
 </div>
-<div id="d_add_provider_goods_sku" class="easyui-window" title="新增商品关联信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:450px;height:210px;padding:5px;">
+<div id="d_add_provider_goods_sku" class="easyui-window" title="新增商品关联信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:460px;height:210px;padding:5px;">
     <form id="f_add_provider_goods_sku" method="post">
         <table>
             <tr>

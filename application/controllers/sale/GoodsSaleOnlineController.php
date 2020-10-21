@@ -29,7 +29,7 @@ class GoodsSaleOnlineController extends BaseController
 
         $this->load->model($this->_s_model);
 
-        $result = $this->{$this->_s_model}->getList($page, $rows, $rowsOnly);
+        $result = $this->{$this->_s_model}->getList($this->shop_id, $page, $rows, $rowsOnly);
 
         echo json_encode($result);
     }

@@ -21,7 +21,7 @@ class CoreSkuModel extends BaseModel
         }
 
         $queryTotal = clone $query;
-        $queryList = clone $query;
+        $queryList  = clone $query;
 
         if (!$rowsOnly) {
             // 获取总数
@@ -53,7 +53,7 @@ class CoreSkuModel extends BaseModel
             return $rows;
         } else {
             return array(
-                'total' => $total->total,
+                'total' => intval($total->total),
                 'rows' => $rows
             );
         }
@@ -63,9 +63,7 @@ class CoreSkuModel extends BaseModel
     {
         $this->db->select('*');
         $this->db->where('cs_id', $id);
-        $this->db->limit(1);
-        $query = $this->db->get('core_sku');
-        $result = $query->first_row();
+        $result = $this->db->get('core_sku')->first_row();
         if (empty($result)) {
             return array();
         }
@@ -77,10 +75,9 @@ class CoreSkuModel extends BaseModel
     {
         // 校验唯一SKU
         $this->db->where('cs_code', $params['cs_code']);
-        $this->db->select('cs_id');
         $query = $this->db->get('core_sku');
-        $row = $query->result();
-        if (!empty($row['0']->cs_id)) {
+        $row = $query->first_row();
+        if (!empty($row)) {
             return array(
                 'state' => false,
                 'msg'   => "sku:【{$params['cs_code']}】已存在，请重新添加"
