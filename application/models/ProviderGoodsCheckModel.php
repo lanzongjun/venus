@@ -202,9 +202,9 @@ class ProviderGoodsCheckModel extends BaseModel
                 if ($datum['cr_unit'] == 1 && empty($datum['pgs_weight'])) {
                     continue;
                 } elseif ($datum['cr_unit'] == 1 && !empty($datum['pgs_weight'])) {
-                    $weight = round($datum['pgcd_num'] * $datum['pgs_weight'], 2);
+                    $weight = round($datum['pgcd_num'] * $datum['pgs_weight'], 4);
                 } else {
-                    $weight = round($datum['pgcd_num'] * 500, 2);
+                    $weight = round($datum['pgcd_num'] * 500, 4);
                 }
 
                 $updateData[] = [

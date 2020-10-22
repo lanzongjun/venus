@@ -144,23 +144,27 @@ class GoodsSaleLossModel extends BaseModel
         );
     }
 
-    public function editGoodsLossInfo($shopId, $id, $userId, $date, $num, $unit, $type, $order, $remark)
+    public function editGoodsLossInfo($shopId, $id, $userId, $num, $unit, $type, $order, $remark)
     {
         $o_result = array(
             'state' => false,
             'msg' => ''
         );
 
-        $this->db->trans_begin();
+        $newType = $type == self::LOSS_SHOP ? REPERTORY_TYPE_GOODS_SHOP_LOSS : REPERTORY_TYPE_GOODS_ORDER_LOSS;
 
-        $constType = $type == self::LOSS_SHOP ? REPERTORY_TYPE_GOODS_SHOP_LOSS : REPERTORY_TYPE_GOODS_ORDER_LOSS;
+        // 查询原始记录的type
+        $originType = $this->db->where('gl_id', $id)->select('gl_type')->get('goods_loss')->row()->gl_type;
+        $originType = $originType == self::LOSS_SHOP ? REPERTORY_TYPE_GOODS_SHOP_LOSS : REPERTORY_TYPE_GOODS_ORDER_LOSS;
+
+        $this->db->trans_begin();
 
         // 修改库存
         $editRes = $this->editRepertory(
             $shopId,
-            $constType,
+            $originType,
+            $newType,
             $id,
-            $date,
             -$num,
             $unit
         );
@@ -176,9 +180,9 @@ class GoodsSaleLossModel extends BaseModel
 
         $updateData = [
             'gl_operator' => $userId,
-            'gl_date'     => $date,
             'gl_num'      => $num,
             'gl_unit'     => $unit,
+            'gl_type'     => $type,
             'gl_order'    => $order,
             'gl_remark'   => $remark
         ];

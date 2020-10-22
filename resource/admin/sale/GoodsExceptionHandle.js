@@ -14,7 +14,7 @@ function showAddWin() {
         textField:'provider_goods_format',
         label: '商品信息:',
         labelPosition: 'left',
-        labelWidth:'70',
+        labelWidth:'90',
         width:'400'
     });
 }
@@ -87,7 +87,7 @@ function showEditWin() {
         textField:'provider_goods_format',
         label: '商品信息:',
         labelPosition: 'left',
-        labelWidth:'70',
+        labelWidth:'90',
         width:'400'
     });
     $('#f_edit_exception_handle').form('load', {

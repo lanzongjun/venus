@@ -128,7 +128,6 @@ class GoodsLossController extends BaseController
     {
         $postData = $this->getPostData();
 
-        $date   = isset($postData['date']) ? $postData['date'] : '';
         $num    = isset($postData['num']) ? $postData['num'] : '';
         $unit   = isset($postData['unit']) ? $postData['unit'] : '';
         $order  = isset($postData['order']) ? $postData['order'] : '';
@@ -136,7 +135,7 @@ class GoodsLossController extends BaseController
         $remark = isset($postData['remark']) ? $postData['remark'] : '';
         $id     = isset($postData['gl_id']) ? $postData['gl_id'] : '';
 
-        if (empty($date) || empty($num) || empty($unit) || empty($id)) {
+        if (empty($num) || empty($unit) || empty($id)) {
             echo json_encode(array(
                 'state' => false,
                 'msg'   => '请填写正确的参数'
@@ -149,7 +148,6 @@ class GoodsLossController extends BaseController
             $this->shop_id,
             $id,
             $this->user_id,
-            $date,
             $num,
             $unit,
             $type,

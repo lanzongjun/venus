@@ -29,7 +29,7 @@
         <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
     </div>
 </div>
-<div id="d_edit_provider" class="easyui-window" title="编辑供应商信息" data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:440px;height:170px;padding:5px;">
+<div id="d_edit_provider" class="easyui-window" title="编辑供应商信息" data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:460px;height:170px;padding:5px;">
     <form id="f_edit_provider" method="post">
         <table>
             <tr>
@@ -54,7 +54,7 @@
         </div>
     </form>
 </div>
-<div id="d_add_provider" class="easyui-window" title="新增供应商信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:150px;padding:5px;">
+<div id="d_add_provider" class="easyui-window" title="新增供应商信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:460px;height:150px;padding:5px;">
     <form id="f_add_provider" method="post">
         <table>
             <tr>

@@ -133,23 +133,27 @@ class GoodsSaleOfflineModel extends BaseModel
         );
     }
 
-    public function editGoodsSaleOffline($shopId, $id, $userId, $date, $type, $num, $unit, $remark)
+    public function editGoodsSaleOffline($shopId, $id, $userId, $type, $num, $unit, $remark)
     {
         $o_result = array(
             'state' => false,
             'msg' => ''
         );
 
-        $constType = $type == self::TYPE_SHIHUA ? REPERTORY_TYPE_GOODS_SALE_OFFLINE_SHIHUA : REPERTORY_TYPE_GOODS_SALE_OFFLINE_LOCATE;
+        $newType = $type == self::TYPE_SHIHUA ? REPERTORY_TYPE_GOODS_SALE_OFFLINE_SHIHUA : REPERTORY_TYPE_GOODS_SALE_OFFLINE_LOCATE;
+
+        // 查询原始记录的type
+        $originType = $this->db->where('gso_id', $id)->select('gso_type')->get('goods_sale_offline')->row()->gso_type;
+        $originType = $originType == self::TYPE_SHIHUA ? REPERTORY_TYPE_GOODS_SALE_OFFLINE_SHIHUA : REPERTORY_TYPE_GOODS_SALE_OFFLINE_LOCATE;
 
         $this->db->trans_begin();
 
         // 修改库存
         $editRes = $this->editRepertory(
             $shopId,
-            $constType,
+            $originType,
+            $newType,
             $id,
-            $date,
             -$num,
             $unit
         );
@@ -164,9 +168,9 @@ class GoodsSaleOfflineModel extends BaseModel
         }
 
         $updateData = [
-            'gso_date'     => $date,
             'gso_num'      => $num,
             'gso_unit'     => $unit,
+            'gso_type'     => $type,
             'gso_remark'   => $remark,
             'gso_operator' => $userId
         ];

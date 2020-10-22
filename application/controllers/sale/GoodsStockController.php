@@ -143,13 +143,12 @@ class GoodsStockController extends BaseController
     {
         $postData = $this->getPostData();
 
-        $date   = isset($postData['date']) ? $postData['date'] : '';
         $num    = isset($postData['num']) ? $postData['num'] : '';
         $unit   = isset($postData['unit']) ? $postData['unit'] : '';
         $remark = isset($postData['remark']) ? $postData['remark'] : '';
         $id     = isset($postData['gs_id']) ? $postData['gs_id'] : '';
 
-        if (empty($date) || empty($num) || empty($id) || empty($unit)) {
+        if (empty($num) || empty($id) || empty($unit)) {
             echo json_encode(
                 array(
                     'state' => false,
@@ -164,7 +163,6 @@ class GoodsStockController extends BaseController
             $this->shop_id,
             $id,
             $this->user_id,
-            $date,
             $num,
             $unit,
             $remark

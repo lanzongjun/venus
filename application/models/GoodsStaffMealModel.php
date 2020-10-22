@@ -126,7 +126,7 @@ class GoodsStaffMealModel extends BaseModel
         return $result;
     }
 
-    public function editStaffMeal($shopId, $id, $userId, $date, $unit, $num, $remark)
+    public function editStaffMeal($shopId, $id, $userId, $unit, $num, $remark)
     {
         $o_result = array(
             'state' => false,
@@ -139,8 +139,8 @@ class GoodsStaffMealModel extends BaseModel
         $editRes = $this->editRepertory(
             $shopId,
             REPERTORY_TYPE_STAFF_MEAL,
+            REPERTORY_TYPE_STAFF_MEAL,
             $id,
-            $date,
             -$num,
             $unit
         );

@@ -12,7 +12,7 @@
 <table id="dg" title="销售管理-线下销售" class="easyui-datagrid" toolbar="#dom_toolbar" data-options="border:false,fit:true,rownumbers:true,singleSelect:true,method:'get',url:'../<?php echo $c_name; ?>/getList/',pagination:true,pageSize:50,pageList: [50, 100, 200, 300]">
     <thead>
     <tr>
-        <th data-options="width:200,align:'center',field:'shop_name'">店铺</th>
+        <th data-options="width:350,align:'center',field:'shop_name'">店铺</th>
         <th data-options="width:100,align:'center',field:'cs_city'">店铺所在城市</th>
         <th data-options="width:150,align:'center',field:'gso_date'">销售日期</th>
         <th data-options="width:300,align:'center',field:'goods_name'">商品名称</th>
@@ -37,7 +37,7 @@
                         ">
             <option value="0">全部</option>
             <option value="1">石化结算</option>
-            <option value="2">线下销售</option>
+            <option value="2">收款结算</option>
         </select>
         <input id="start_date" class="easyui-datebox" labelWidth="70" style="width:200px;" label="开始时间:" labelPosition="left" data-options="formatter:myformatter,parser:myparser"/>
         <input id="end_date" class="easyui-datebox" labelWidth="70" style="width:200px;" label="结束时间:" labelPosition="left" data-options="formatter:myformatter,parser:myparser"/>
@@ -55,13 +55,13 @@
     </div>
 </div>
 
-<div id="d_edit_sale_offline" class="easyui-window" title="编辑线下销售信息" data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:440px;height:350px;padding:5px;">
+<div id="d_edit_sale_offline" class="easyui-window" title="编辑线下销售信息" data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:460px;height:350px;padding:5px;">
     <form id="f_edit_sale_offline" method="post">
         <table>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input id="edit_sale_offline_gid" name="goods_id" disabled readonly>
+                        <input id="edit_sale_offline_gid" name="goods_id" disabled>
 
                     </div>
                 </td>
@@ -69,7 +69,13 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input id="edit_sale_offline_date" class="easyui-datebox" name="date" data-options="labelWidth:'70',label:'销售日期:',width:'300px'">
+                        <input id="edit_sale_offline_date" name="date" disabled
+                               class="easyui-datebox"
+                               data-options="
+                               labelWidth:'70',
+                               label:'销售日期:',
+                               width:'300px'
+                        ">
                     </div>
                 </td>
             </tr>
@@ -86,7 +92,8 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',width:'300', min:0, precision:2">
+                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',
+                        width:'300', min:0, precision:4">
                     </div>
 
                 </td>
@@ -125,7 +132,7 @@
     </form>
 </div>
 
-<div id="d_add_sale_offline" class="easyui-window" title="新增线下销售信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:350px;padding:5px;">
+<div id="d_add_sale_offline" class="easyui-window" title="新增线下销售信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:460px;height:350px;padding:5px;">
     <form id="f_add_sale_offline" method="post">
         <table>
             <tr>
@@ -155,7 +162,8 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',width:'300', min:0, precision:2">
+                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',
+                        width:'300', min:0, precision:4">
                     </div>
 
                 </td>

@@ -210,23 +210,23 @@ class BaseModel extends CI_Model
     /**
      * 修改库存
      * @param $shopId int 店铺
-     * @param $type   int 类型
+     * @param $originType   int 原始类型
+     * @param $newType int 新类型
      * @param $insertId int 插入关联ID
-     * @param $date string 日期
      * @param $num float 数量
      * @param $unit   int 单位
      * @return array
      * @author zongjun.lan
      */
-    public function editRepertory($shopId, $type, $insertId, $date, $num, $unit)
+    public function editRepertory($shopId, $originType, $newType, $insertId, $num, $unit)
     {
         // 查出之前的数据
         $row = $this->db
             ->join('provider_goods', 'pg_id = crr_provider_goods_id', 'left')
-            ->where('crr_type', $type)
+            ->where('crr_type', $originType)
             ->where('crr_ref_id', $insertId)
             ->where('crr_shop_id', $shopId)
-            ->select('crr_num, crr_unit, crr_shop_id, crr_provider_goods_id, pg_is_dumplings')
+            ->select('crr_id, crr_num, crr_unit, crr_shop_id, crr_provider_goods_id, pg_is_dumplings')
             ->get('core_repertory_record')
             ->first_row();
 
@@ -241,14 +241,12 @@ class BaseModel extends CI_Model
 
         // 修改记录
         $updateRecordData = [
-            'crr_date' => $date,
             'crr_num'  => $num,
             'crr_unit' => $unit,
+            'crr_type' => $newType,
         ];
         $updateRecordWhere = [
-            'crr_type'    => $type,
-            'crr_ref_id'  => $insertId,
-            'crr_shop_id' => $shopId
+            'crr_id' => $row->crr_id
         ];
 
         $this->db->update('core_repertory_record', $updateRecordData, $updateRecordWhere);
@@ -260,43 +258,36 @@ class BaseModel extends CI_Model
         $originWeight = $this->transferToGram($originNum, $originUnit, $goodsId, $isDumplings);
         $nowWeight    = $this->transferToGram($num, $unit, $goodsId, $isDumplings);
 
-        $diffWeight   = round($nowWeight-$originWeight, 2);
+        $diffWeight   = round($nowWeight-$originWeight, 4);
 
         //$diffWeight   = $isAdd ? $diffWeight : -$diffWeight;
 
 
-        // 没有差值 直接退出
-        if (empty($diffWeight)) {
-            return array(
-                'state' => true
-            );
+        // 判断是否有差值 直接退出
+        if (!empty($diffWeight)) {
+            // 修改库存
+            $existsRep = $this->db
+                ->where('cr_shop_id', $shopId)
+                ->where('cr_provider_goods_id', $goodsId)
+                ->get('core_repertory')
+                ->first_row();
+
+            $updateData = [
+                'cr_num' => $existsRep->cr_num + $diffWeight
+            ];
+
+            if ($existsRep->cr_num + $diffWeight < 0) {
+                return array(
+                    'state' => false,
+                    'msg'   => '商品库存不足，请检查库存'
+                );
+            }
+
+            $this->db
+                ->where('cr_shop_id', $shopId)
+                ->where('cr_provider_goods_id', $goodsId)
+                ->update('core_repertory', $updateData);
         }
-
-        // 修改库存
-        $existsRep = $this->db
-            ->where('cr_shop_id', $shopId)
-            ->where('cr_provider_goods_id', $goodsId)
-            ->get('core_repertory')
-            ->first_row();
-
-        $updateData = [
-            'cr_num' => $existsRep->cr_num + $diffWeight
-        ];
-
-        if ($existsRep->cr_num + $diffWeight < 0) {
-            return array(
-                'state' => false,
-                'msg'   => '商品库存不足，请检查库存'
-            );
-        }
-
-        $this->db
-            ->where('cr_shop_id', $shopId)
-            ->where('cr_provider_goods_id', $goodsId)
-            ->update('core_repertory', $updateData);
-
-        // 判断日期，不是今天的修改库存每日表
-        $this->modifyRepertoryDaily($shopId, $goodsId, $date, $diffWeight);
 
         return array(
             'state' => true
@@ -327,9 +318,9 @@ class BaseModel extends CI_Model
 
             $num = intval($num);
 
-            $allTotal = round($num * $perWeight, 2);
+            $allTotal = round($num * $perWeight, 4);
         } elseif ($isDumplings && $unit == 2) {
-            $allTotal = round($num * 500, 2);
+            $allTotal = round($num * 500, 4);
         } else {
             $allTotal = intval($num);
         }

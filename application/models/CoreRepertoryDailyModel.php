@@ -46,7 +46,7 @@ class CoreRepertoryDailyModel extends BaseModel
             $lastInsertDate = date('Y-m-d', strtotime($lastDailyRepertory->crd_date) + 86400);
         }
 
-
+//TODO 逻辑有问题
         $insertDailyData = [];
         while (true) {
             foreach ($coreRepertory as $item) {
@@ -119,9 +119,9 @@ class CoreRepertoryDailyModel extends BaseModel
         foreach ($lastThreeData as $item) {
             // 平均销量
             if ($item['unit'] == 1) {
-                $avgSale = empty($item['total']) ? 0 : round($item['num'] / $item['total'], 2);
+                $avgSale = empty($item['total']) ? 0 : round($item['num'] / $item['total'], 4);
             } else {
-                $avgSale = empty($item['total']) ? 0 : round($item['num'] / $item['total'] / 500, 2);
+                $avgSale = empty($item['total']) ? 0 : round($item['num'] / $item['total'] / 500, 4);
             }
             // 库存
             $stock = isset($repertory[$item['goods_id']]['num']) ? $repertory[$item['goods_id']]['num'] : 0;

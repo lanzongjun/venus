@@ -181,7 +181,7 @@ class GoodsStockModel extends BaseModel
         return $result;
     }
 
-    public function editGoodsStock($shopId, $id, $userId, $date, $num, $unit, $remark)
+    public function editGoodsStock($shopId, $id, $userId, $num, $unit, $remark)
     {
         $o_result = array(
             'state' => false,
@@ -194,8 +194,8 @@ class GoodsStockModel extends BaseModel
         $editRes = $this->editRepertory(
             $shopId,
             REPERTORY_TYPE_GOODS_STOCK,
+            REPERTORY_TYPE_GOODS_STOCK,
             $id,
-            $date,
             $num,
             $unit
         );
@@ -210,7 +210,6 @@ class GoodsStockModel extends BaseModel
         }
 
         $updateData = [
-            'gs_date'        => $date,
             'gs_num'         => $num,
             'gs_unit'        => $unit,
             'gs_remark'      => $remark,

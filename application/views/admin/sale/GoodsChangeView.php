@@ -13,7 +13,7 @@
     <thead>
     <tr>
         <th data-options="width:80, align:'center',field:'gc_id'">商品调货ID</th>
-        <th data-options="width:200,align:'center',field:'shop_name'">店铺名称</th>
+        <th data-options="width:350,align:'center',field:'shop_name'">店铺名称</th>
         <th data-options="width:180,align:'center',field:'gc_date'">调度日期</th>
         <th data-options="width:200,align:'center',field:'pg_name'">商品名称</th>
         <th data-options="width:100,align:'center',field:'num_unit'">商品数量</th>
@@ -100,7 +100,8 @@
 <!--            <tr>-->
 <!--                <td>-->
 <!--                    <div style="margin-left:5px;margin-bottom:5px">-->
-<!--                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'110',label:'数量:',width:'200', min:0, precision:2">-->
+<!--                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'110',label:'数量:',
+width:'200', min:0, precision:4">-->
 <!--                    </div>-->
 <!--                </td>-->
 <!--            </tr>-->
@@ -138,7 +139,7 @@
 <!--    </form>-->
 <!--</div>-->
 
-<div id="d_add_goods_change" class="easyui-window" title="新增商品调度信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:390px;padding:5px;">
+<div id="d_add_goods_change" class="easyui-window" title="新增商品调度信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:460px;height:390px;padding:5px;">
     <form id="f_add_goods_change" method="post">
         <table>
             <tr>
@@ -175,7 +176,8 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',width:'200', min:0, precision:2">
+                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',
+                        width:'200', min:0, precision:4">
                     </div>
                 </td>
             </tr>

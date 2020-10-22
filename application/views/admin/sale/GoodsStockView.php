@@ -13,7 +13,7 @@
     <thead>
     <tr>
         <th data-options="width:80,align:'center',field:'gs_id'">商品进货ID</th>
-        <th data-options="width:200,align:'center',field:'cs_name'">店铺名称</th>
+        <th data-options="width:350,align:'center',field:'cs_name'">店铺名称</th>
         <th data-options="width:180,align:'center',field:'p_name'">供应商</th>
         <th data-options="width:180,align:'center',field:'pg_name'">商品名称</th>
         <th data-options="width:130,align:'center',field:'gs_date'">进货日期</th>
@@ -57,28 +57,36 @@
     </div>
 </div>
 
-<div id="d_edit_goods_stock" class="easyui-window" title="编辑商品进货信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:310px;padding:5px;">
+<div id="d_edit_goods_stock" class="easyui-window" title="编辑商品进货信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:460px;height:310px;padding:5px;">
     <form id="f_edit_goods_stock" method="post">
         <table>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input id="edit_goods_stock_gid" name="goods_id" readonly disabled>
+                        <input id="edit_goods_stock_gid" name="goods_id" disabled>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="margin-left:5px;margin-bottom:5px">
+                        <input id="edit_goods_stock_date" name="date" disabled
+                               class="easyui-datebox"
+                               data-options="
+                               labelWidth:'70',
+                               label:'进货日期:',
+                               width:'300px'
+                               ">
+                    </div>
 
-                    </div>
                 </td>
+
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input id="edit_goods_stock_date" class="easyui-datebox" name="date" data-options="labelWidth:'70',label:'进货日期:',width:'300px'">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',width:'300', min:0, precision:2">
+                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',
+                        width:'300', min:0, precision:4">
                     </div>
 
                 </td>
@@ -118,7 +126,7 @@
     </form>
 </div>
 
-<div id="d_add_goods_stock" class="easyui-window" title="新增商品进货信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:310px;padding:5px;">
+<div id="d_add_goods_stock" class="easyui-window" title="新增商品进货信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:460px;height:310px;padding:5px;">
     <form id="f_add_goods_stock" method="post">
         <table>
             <tr>
@@ -139,7 +147,8 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',width:'300', min:0, precision:2">
+                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',
+                        width:'300', min:0, precision:4">
                     </div>
 
                 </td>

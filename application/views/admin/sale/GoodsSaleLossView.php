@@ -13,7 +13,7 @@
 <table id="dg" title="销售管理-损耗" class="easyui-datagrid" toolbar="#dom_toolbar1" data-options="border:false,fit:true,rownumbers:true,singleSelect:true,method:'get',url:'../<?php echo $c_name; ?>/getList',pagination:true,pageSize:50,pageList: [50, 100, 200, 300]">
     <thead>
     <tr>
-        <th data-options="width:200,align:'center',field:'cs_name'">店铺名称</th>
+        <th data-options="width:350,align:'center',field:'cs_name'">店铺名称</th>
         <th data-options="width:100,align:'center',field:'cs_city'">店铺所在城市</th>
         <th data-options="width:200,align:'center',field:'gl_date'">损耗日期</th>
         <th data-options="width:300,align:'center',field:'pg_name'">商品名称</th>
@@ -58,20 +58,26 @@
 </div>
 
 
-<div id="d_edit_goods_loss" class="easyui-window" title="编辑损耗信息" data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:450px;height:390px;padding:5px;">
+<div id="d_edit_goods_loss" class="easyui-window" title="编辑损耗信息" data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:460px;height:390px;padding:5px;">
     <form id="f_edit_goods_loss" method="post">
         <table>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input id="edit_goods_loss_gid" name="goods_id" readonly disabled>
+                        <input id="edit_goods_loss_gid" name="goods_id" disabled>
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input id="edit_goods_loss_date" class="easyui-datebox" name="date" data-options="labelWidth:'70',label:'损耗日期:',width:'200'">
+                        <input id="edit_goods_loss_date" name="date" disabled
+                               class="easyui-datebox"
+                               data-options="
+                               labelWidth:'70',
+                               label:'损耗日期:',
+                               width:'200'
+                        ">
                     </div>
                 </td>
             </tr>
@@ -89,7 +95,8 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',width:'200', min:0, precision:2, required:true">
+                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',
+                        width:'200', min:0, precision:4, required:true">
                     </div>
 
                 </td>
@@ -136,7 +143,7 @@
         </div>
     </form>
 </div>
-<div id="d_add_goods_loss" class="easyui-window" title="新增损耗信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:450px;height:390px;padding:5px;">
+<div id="d_add_goods_loss" class="easyui-window" title="新增损耗信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:460px;height:390px;padding:5px;">
     <form id="f_add_goods_loss" method="post">
         <table>
             <tr>
@@ -167,7 +174,8 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',width:'200', min:0, precision:2, required:true">
+                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',
+                        width:'200', min:0, precision:4, required:true">
                     </div>
 
                 </td>

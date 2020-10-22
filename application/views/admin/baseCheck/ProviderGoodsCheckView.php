@@ -54,7 +54,7 @@
         </table>
     </div>
 </div>
-<div id="d_edit_provider_goods_check" class="easyui-window" title="编辑商品盘点信息" data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:440px;height:210px;padding:5px;">
+<div id="d_edit_provider_goods_check" class="easyui-window" title="编辑商品盘点信息" data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:460px;height:210px;padding:5px;">
     <form id="f_edit_provider_goods_check" method="post">
         <table>
             <tr>
@@ -67,7 +67,8 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'90',label:'数量:',width:'240px', precision:2">
+                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'90',label:'数量:',
+                        width:'240px', precision:4">
                     </div>
                 </td>
             </tr>
@@ -89,7 +90,7 @@
         </div>
     </form>
 </div>
-<div id="d_add_provider_goods_check" class="easyui-window" title="新增商品盘点信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:210px;padding:5px;">
+<div id="d_add_provider_goods_check" class="easyui-window" title="新增商品盘点信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:460px;height:210px;padding:5px;">
     <form id="f_add_provider_goods_check" method="post">
         <table>
             <tr>
@@ -102,7 +103,8 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'90',label:'数量:',width:'240px', precision:2">
+                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'90',label:'数量:',
+                        width:'240px', precision:4">
                     </div>
                 </td>
             </tr>

@@ -86,7 +86,7 @@ class ProviderGoodsSampleModel extends BaseModel
         $statistics = $this->db->get('provider_goods_sample_record')->result_array();
         $statistics = $statistics['0'];
         $weight = $statistics['weight'] * 1000; //转化成g
-        $avgWeight = empty($statistics['num']) ? 0 : round($weight/$statistics['num'], 3);
+        $avgWeight = empty($statistics['num']) ? 0 : round($weight/$statistics['num'], 4);
         // 判断是否有取样记录
         $exists = $this->db->where('pgs_provider_goods_id', $pgId)->get('provider_goods_sample')->first_row();
 

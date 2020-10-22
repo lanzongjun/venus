@@ -150,7 +150,7 @@ class GoodsExceptionHandleModel extends BaseModel
         return $result;
     }
 
-    public function editExceptionHandle($shopId, $id, $userId, $date, $unit, $num, $order, $isReduceStock, $remark)
+    public function editExceptionHandle($shopId, $id, $userId, $unit, $num, $type, $order, $isReduceStock, $remark)
     {
         $o_result = array(
             'state' => false,
@@ -165,8 +165,8 @@ class GoodsExceptionHandleModel extends BaseModel
             $editRes = $this->editRepertory(
                 $shopId,
                 REPERTORY_TYPE_GOODS_EXCEPTION_HANDLE,
+                REPERTORY_TYPE_GOODS_EXCEPTION_HANDLE,
                 $id,
-                $date,
                 -$num,
                 $unit
             );
@@ -183,7 +183,7 @@ class GoodsExceptionHandleModel extends BaseModel
 
         $updateData = [
             'geh_operator' => $userId,
-            'geh_date'     => $date,
+            'geh_type'     => $type,
             'geh_unit'     => $unit,
             'geh_num'      => $num,
             'geh_order'    => $order,

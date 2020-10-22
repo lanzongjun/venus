@@ -13,7 +13,7 @@
     <thead>
     <tr>
         <th data-options="width:80, align:'center',field:'gsm_id'">员工餐ID</th>
-        <th data-options="width:200,align:'center',field:'shop_name'">店铺名称</th>
+        <th data-options="width:350,align:'center',field:'shop_name'">店铺名称</th>
         <th data-options="width:180,align:'center',field:'gsm_date'">就餐日期</th>
         <th data-options="width:200,align:'center',field:'goods_name'">商品名称</th>
         <th data-options="width:100,align:'center',field:'num_unit'">商品数量</th>
@@ -42,27 +42,34 @@
     </div>
 </div>
 
-<div id="d_edit_staff_meal" class="easyui-window" title="编辑员工餐信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:310px;padding:5px;">
+<div id="d_edit_staff_meal" class="easyui-window" title="编辑员工餐信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:460px;height:310px;padding:5px;">
     <form id="f_edit_staff_meal" method="post">
         <table>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input id="edit_staff_meal_gid" name="goods_id" readonly disabled>
+                        <input id="edit_staff_meal_gid" name="goods_id" disabled>
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input id='edit_staff_meal_date' class="easyui-datebox" name="date" data-options="labelWidth:'70',label:'消费日期:',width:'240'">
+                        <input id='edit_staff_meal_date' name="date" disabled
+                               class="easyui-datebox"
+                               data-options="
+                               labelWidth:'70',
+                               label:'消费日期:',
+                               width:'240'
+                            ">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',width:'200', min:0, precision:2">
+                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',
+                        width:'200', min:0, precision:4">
                     </div>
 
                 </td>
@@ -101,7 +108,7 @@
     </form>
 </div>
 
-<div id="d_add_staff_meal" class="easyui-window" title="新增员工餐信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:310px;padding:5px;">
+<div id="d_add_staff_meal" class="easyui-window" title="新增员工餐信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:460px;height:310px;padding:5px;">
     <form id="f_add_staff_meal" method="post">
         <table>
             <tr>
@@ -121,7 +128,8 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',width:'200', min:0, precision:2">
+                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',
+                        width:'200', min:0, precision:4">
                     </div>
                 </td>
             </tr>

@@ -92,7 +92,7 @@ class GoodsSaleOfflineController extends BaseController
     public function addGoodsSaleOffline()
     {
         $postData = $this->getPostData();
-
+;
         $goodsId = isset($postData['goods_id']) ? $postData['goods_id'] : '';
         $date    = isset($postData['date']) ? $postData['date'] : '';
         $type    = isset($postData['type']) ? $postData['type'] : '';
@@ -127,14 +127,13 @@ class GoodsSaleOfflineController extends BaseController
     {
         $postData = $this->getPostData();
 
-        $date   = isset($postData['date']) ? $postData['date'] : '';
         $type   = isset($postData['type']) ? $postData['type'] : '';
         $num    = isset($postData['num']) ? $postData['num'] : '';
         $unit   = isset($postData['unit']) ? $postData['unit'] : '';
         $remark = isset($postData['remark']) ? $postData['remark'] : '';
         $id     = isset($postData['gso_id']) ? $postData['gso_id'] : '';
 
-        if (empty($date) || empty($type) || empty($num) || empty($id) || empty($unit)) {
+        if (empty($type) || empty($num) || empty($id) || empty($unit)) {
             echo json_encode(
                 array(
                     'state' => false,
@@ -149,7 +148,6 @@ class GoodsSaleOfflineController extends BaseController
             $this->shop_id,
             $id,
             $this->user_id,
-            $date,
             $type,
             $num,
             $unit,

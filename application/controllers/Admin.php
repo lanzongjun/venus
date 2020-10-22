@@ -20,8 +20,6 @@ class Admin extends CI_Controller
     public function check()
     {
 
-
-
         $postData = $this->input->post();
         $this->load->model('UserModel');
         $user = $this->UserModel->u_select($postData['u_name']);

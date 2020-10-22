@@ -52,7 +52,7 @@
 
 
 
-<div id="d_edit_provider_goods_sample" class="easyui-window" title="编辑商品取样信息" data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:440px;height:210px;padding:5px;">
+<div id="d_edit_provider_goods_sample" class="easyui-window" title="编辑商品取样信息" data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:460px;height:210px;padding:5px;">
     <form id="f_edit_provider_goods_sample" method="post">
         <table>
             <tr>
@@ -65,7 +65,8 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="pgs_weight" data-options="labelWidth:'80',label:'重量/个（克）:',width:'300', min:0, precision:3">
+                        <input class="easyui-numberbox" name="pgs_weight" data-options="labelWidth:'80',
+                        label:'重量/个（克）:',width:'300', min:0, precision:4">
                     </div>
 
                 </td>
@@ -85,7 +86,7 @@
         </div>
     </form>
 </div>
-<div id="d_add_provider_goods_sample" class="easyui-window" title="新增商品取样信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:440px;height:210px;padding:5px;">
+<div id="d_add_provider_goods_sample" class="easyui-window" title="新增商品取样信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:460px;height:210px;padding:5px;">
     <form id="f_add_provider_goods_sample" method="post">
         <table>
             <tr>
@@ -98,7 +99,8 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="weight" data-options="labelWidth:'80',label:'重量(KG):',width:'300', min:0, precision:3">
+                        <input class="easyui-numberbox" name="weight" data-options="labelWidth:'80',label:'重量(KG):',
+                        width:'300', min:0, precision:4">
                     </div>
 
                 </td>

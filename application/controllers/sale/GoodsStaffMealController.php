@@ -103,14 +103,12 @@ class GoodsStaffMealController extends BaseController
     {
         $postData = $this->getPostData();
 
-        $date   = isset($postData['date']) ? $postData['date'] : '';
         $unit   = isset($postData['unit']) ? $postData['unit'] : '';
         $num    = isset($postData['num']) ? $postData['num'] : '';
         $remark = isset($postData['remark']) ? $postData['remark'] : '';
         $gsmId  = isset($postData['gsm_id']) ? $postData['gsm_id'] : '';
 
-        if (empty($date) || empty($unit) || empty($num)
-            || empty($gsmId)) {
+        if (empty($unit) || empty($num) || empty($gsmId)) {
             echo json_encode(array(
                 'state' => false,
                 'msg'   => '参数不正确'
@@ -123,7 +121,6 @@ class GoodsStaffMealController extends BaseController
             $this->shop_id,
             $gsmId,
             $this->user_id,
-            $date,
             $unit,
             $num,
             $remark

@@ -70,7 +70,7 @@ class GoodsSaleOnlineModel extends BaseModel
                             $formatDataItem['gso_shop_id'],
                             $goodsSkuMapItem['pgs_provider_goods_id'],
                             $formatDataItem['gso_date'],
-                            -round($formatDataItem['gso_num'] * $goodsSkuMapItem['pgs_num'], 2),
+                            -round($formatDataItem['gso_num'] * $goodsSkuMapItem['pgs_num'], 4),
                             1,
                             REPERTORY_TYPE_GOODS_SALE_ONLINE,
                             $firstInsertId
@@ -183,7 +183,7 @@ class GoodsSaleOnlineModel extends BaseModel
 
         foreach ($rows as &$row) {
             if ($row['pg_is_dumplings'] && !empty($row['pgs_weight'])) {
-                $row['num_unit'] = round($row['total'] * $row['pgs_weight'] / 500, 2).'斤';
+                $row['num_unit'] = round($row['total'] * $row['pgs_weight'] / 500, 4).'斤';
             } else {
                 $row['num_unit'] = $row['total'].'个';
             }

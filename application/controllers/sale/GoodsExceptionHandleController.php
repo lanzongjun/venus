@@ -110,15 +110,15 @@ class GoodsExceptionHandleController extends BaseController
     {
         $postData = $this->getPostData();
 
-        $date          = isset($postData['date']) ? $postData['date'] : '';
         $unit          = isset($postData['unit']) ? $postData['unit'] : '';
         $num           = isset($postData['num']) ? $postData['num'] : '';
         $gehId         = isset($postData['geh_id']) ? $postData['geh_id'] : '';
         $order         = isset($postData['order']) ? $postData['order'] : '';
+        $type          = isset($postData['type']) ? $postData['type'] : '';
         $isReduceStock = isset($postData['is_reduce_stock']) ? $postData['is_reduce_stock'] : 0;
         $remark        = isset($postData['remark']) ? $postData['remark'] : '';
 
-        if (empty($date) || empty($unit) || empty($num) || empty($gehId) || empty($order)) {
+        if (empty($unit) || empty($num) || empty($type) || empty($gehId) || empty($order)) {
             echo json_encode(array(
                 'state' => false,
                 'msg'   => '参数不正确'
@@ -131,9 +131,9 @@ class GoodsExceptionHandleController extends BaseController
             $this->shop_id,
             $gehId,
             $this->user_id,
-            $date,
             $unit,
             $num,
+            $type,
             $order,
             $isReduceStock,
             $remark

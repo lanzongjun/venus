@@ -42,7 +42,7 @@
 <!--        <input type="hidden" id="hid_tbn"/>-->
 <!--    </div>-->
 <!--</div>-->
-<div id="sale_online_ele_win_input" class="easyui-window" title="导入数据" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:300px;height:200px;padding:10px;">
+<div id="sale_online_ele_win_input" class="easyui-window" title="导入数据" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:320px;height:200px;padding:10px;">
     <form id="goods_sale_online_form_input" method="post" enctype="multipart/form-data">
         <a id="btn_down_input" href="<?php echo base_url("/input_template/Example_线上销售模板的.xlsx") ?>" class="easyui-linkbutton" style="width:100%">下载模板文件</a>
         <br/><br/>

@@ -10,7 +10,6 @@ class repertoryDaily
 {
     public function run($params)
     {
-
         $shopId = $params['shop_id'];
 
         $CI=&get_instance();

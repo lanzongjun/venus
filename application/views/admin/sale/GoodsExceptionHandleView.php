@@ -13,7 +13,7 @@
     <thead>
     <tr>
         <th data-options="width:80, align:'center',field:'geh_id'">异常订单ID</th>
-        <th data-options="width:200,align:'center',field:'shop_name'">店铺名称</th>
+        <th data-options="width:350,align:'center',field:'shop_name'">店铺名称</th>
         <th data-options="width:100,align:'center',field:'type'">类型</th>
         <th data-options="width:100,align:'center',field:'geh_order'">订单号</th>
         <th data-options="width:200,align:'center',field:'goods_name'">商品名称</th>
@@ -58,27 +58,33 @@
     </div>
 </div>
 
-<div id="d_edit_exception_handle" class="easyui-window" title="编辑异常订单信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:450px;height:430px;padding:5px;">
+<div id="d_edit_exception_handle" class="easyui-window" title="编辑异常订单信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:460px;height:430px;padding:5px;">
     <form id="f_edit_exception_handle" method="post">
         <table>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input id="edit_exception_handle_gid" name="goods_id" readonly disabled>
+                        <input id="edit_exception_handle_gid" name="goods_id" disabled>
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input id="edit_exception_handle_date" class="easyui-datebox" name="date" data-options="labelWidth:'70',label:'上报日期:',width:'200'">
+                        <input id="edit_exception_handle_date" name="date" disabled
+                               class="easyui-datebox"
+                               data-options="
+                               labelWidth:'90',
+                               label:'上报日期:',
+                               width:'200'
+                        ">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <select class="easyui-combobox" name="type" readonly disabled data-options="labelWidth:'70',label:'类型:',width:'200',panelHeight:'auto'">
+                        <select class="easyui-combobox" name="type" data-options="labelWidth:'90',label:'类型:',width:'200',panelHeight:'auto'">
                             <option value="1" selected="true">索赔单</option>
                         </select>
                     </div>
@@ -88,7 +94,8 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',width:'200', min:0, precision:2">
+                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'90',label:'数量:',
+                        width:'200', min:0, precision:4">
                     </div>
 
                 </td>
@@ -96,7 +103,7 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'70',label:'单位:',width:'200',panelHeight:'auto'">
+                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'90',label:'单位:',width:'200',panelHeight:'auto'">
                             <option value="1" selected="true">个</option>
                             <option value="2">斤</option>
                         </select>
@@ -106,7 +113,7 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <select class="easyui-combobox" name="is_reduce_stock" readonly data-options="labelWidth:'70',label:'是否减库存:',width:'200',panelHeight:'auto'">
+                        <select class="easyui-combobox" name="is_reduce_stock" readonly data-options="labelWidth:'90',label:'是否减库存:',width:'200',panelHeight:'auto'">
                             <option value="0" selected="true">否</option>
                             <option value="1">是</option>
                         </select>
@@ -116,7 +123,7 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-textbox" name="order" data-options="labelWidth:'70',label:'订单号:',width:'200'">
+                        <input class="easyui-textbox" name="order" data-options="labelWidth:'90',label:'订单号:',width:'200'">
                     </div>
                 </td>
             </tr>
@@ -130,7 +137,7 @@
                         panelHeight:'auto',
                         multiline: 'true',
                         labelPosition: 'left',
-                        labelWidth:'70'
+                        labelWidth:'90'
                     ">
                     </div>
                 </td>
@@ -144,27 +151,27 @@
     </form>
 </div>
 
-<div id="d_add_exception_handle" class="easyui-window" title="新增异常订单信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:450px;height:430px;padding:5px;">
+<div id="d_add_exception_handle" class="easyui-window" title="新增异常订单信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:460px;height:430px;padding:5px;">
     <form id="f_add_exception_handle" method="post">
         <table>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input id="add_exception_handle_gid" name="goods_id" readonly disabled>
+                        <input id="add_exception_handle_gid" name="goods_id">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input id="add_exception_handle_date" class="easyui-datebox" name="date" data-options="labelWidth:'70',label:'上报日期:',width:'200'">
+                        <input id="add_exception_handle_date" class="easyui-datebox" name="date" data-options="labelWidth:'90',label:'上报日期:',width:'200'">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <select class="easyui-combobox" name="type" data-options="labelWidth:'70',label:'类型:',width:'200',panelHeight:'auto'">
+                        <select class="easyui-combobox" name="type" data-options="labelWidth:'90',label:'类型:',width:'200',panelHeight:'auto'">
                             <option value="1" selected="true">索赔单</option>
                         </select>
                     </div>
@@ -174,14 +181,15 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',width:'200', min:0, precision:2">
+                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'90',label:'数量:',
+                        width:'200', min:0, precision:4">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'70',label:'单位:',width:'200',panelHeight:'auto'">
+                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'90',label:'单位:',width:'200',panelHeight:'auto'">
                             <option value="1" selected="true">个</option>
                             <option value="2">斤</option>
                         </select>
@@ -191,7 +199,7 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <select class="easyui-combobox" name="is_reduce_stock" data-options="labelWidth:'70',label:'是否减库存:',width:'200',panelHeight:'auto'">
+                        <select class="easyui-combobox" name="is_reduce_stock" data-options="labelWidth:'90',label:'是否减库存:',width:'200',panelHeight:'auto'">
                             <option value="0" selected="true">否</option>
                             <option value="1">是</option>
                         </select>
@@ -201,7 +209,7 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-textbox" name="order" data-options="labelWidth:'70',label:'订单号:',width:'200'">
+                        <input class="easyui-textbox" name="order" data-options="labelWidth:'90',label:'订单号:',width:'200'">
                     </div>
 
                 </td>
@@ -216,7 +224,7 @@
                         panelHeight:'auto',
                         multiline: 'true',
                         labelPosition: 'left',
-                        labelWidth:'70'
+                        labelWidth:'90'
                     ">
                     </div>
                 </td>

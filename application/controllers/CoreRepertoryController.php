@@ -23,7 +23,6 @@ class CoreRepertoryController extends BaseController
 
         $startDate = isset($getData['start_date']) ? $getData['start_date'] : '';
         $endDate = isset($getData['end_date']) ? $getData['end_date'] : '';
-        $shopId = isset($getData['shop_id']) ? $getData['shop_id'] : '';
         $providerId = isset($getData['provider_id']) ? $getData['provider_id'] : '';
         $goodsName = isset($getData['goods_name']) ? $getData['goods_name'] : '';
         $page = isset($getData['page']) ? $getData['page'] : 1;
@@ -32,8 +31,15 @@ class CoreRepertoryController extends BaseController
 
         $this->load->model($this->_s_model);
 
-        $o_result = $this->{$this->_s_model}->getList($startDate, $endDate,
-            $shopId, $providerId, $goodsName, $page, $rows);
+        $o_result = $this->{$this->_s_model}->getList(
+            $this->shop_id,
+            $startDate,
+            $endDate,
+            $providerId,
+            $goodsName,
+            $page,
+            $rows
+        );
 
         if ($isDownload) {
             $intersectKeys = [
