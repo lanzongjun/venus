@@ -14,7 +14,7 @@ class FinanceAccountModel extends BaseModel
             $query->where('crr_date >=', $startDate);
             $query->where('crr_date <=', $endDate);
         }
-        $query->select('crr_type, crr_provider_goods_id, pg_name, pg_is_dumplings, crr_num, crr_unit');
+        $query->select('crr_type, crr_provider_goods_id, pg_name, pg_is_dumplings, sum(crr_num) as crr_num, crr_unit');
         $query->group_by('crr_provider_goods_id,crr_type,crr_unit');
         $rows = $query->get('core_repertory_record')->result_array();
 
@@ -35,7 +35,11 @@ class FinanceAccountModel extends BaseModel
                     $row['pg_is_dumplings']
                 );
                 $accountData = $returnData[$row['crr_provider_goods_id']]['data'];
-                $accountData[$row['crr_type']]['num'] += abs($num);
+                if ($returnData[$row['crr_provider_goods_id']]['unit'] == '斤') {
+                    $accountData[$row['crr_type']]['num'] += round(abs($num) / 500, 4) ;
+                } else {
+                    $accountData[$row['crr_type']]['num'] += abs($num);
+                }
                 $returnData[$row['crr_provider_goods_id']]['data'] = $accountData;
 
             } else {
@@ -46,16 +50,21 @@ class FinanceAccountModel extends BaseModel
                     $row['pg_is_dumplings']
                 );
                 $accountData = $this->dataFormat();
-                $accountData[$row['crr_type']]['num'] = abs($num);
+                if ($row['pg_is_dumplings'] == 1) {
+                    $accountData[$row['crr_type']]['num'] = round(abs($num) / 500, 4);
+                } else {
+                    $accountData[$row['crr_type']]['num'] = abs($num);
+
+                }
                 $returnData[$row['crr_provider_goods_id']] = [
                     'goods_id' => $row['crr_provider_goods_id'],
                     'goods_name' => $row['pg_name'],
-                    'unit' => $row['pg_is_dumplings'] == 1 ? '克' : '个',
+                    'unit' => $row['pg_is_dumplings'] == 1 ? '斤' : '个',
                     'data' => $accountData
                 ];
             }
         }
-        //TODO 盘点
+
 
 
         return array(

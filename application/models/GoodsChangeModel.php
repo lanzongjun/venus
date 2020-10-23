@@ -121,23 +121,24 @@ class GoodsChangeModel extends BaseModel
                     'msg'   => $modifyRes['msg']
                 );
             }
-            $modifyRes = $this->addRepertory(
-                $changeShop,
-                $goodsId,
-                $date,
-                -$num,
-                $unit,
-                REPERTORY_TYPE_GOODS_CHANGE,
-                $insertId
-            );
-            if ($modifyRes['state'] === false) {
-                $this->db->trans_rollback();
-
-                return array(
-                    'state' => false,
-                    'msg'   => $modifyRes['msg']
-                );
-            }
+            // TODO 由于其他店铺库存问题， 店铺转入不计算入内
+//            $modifyRes = $this->addRepertory(
+//                $changeShop,
+//                $goodsId,
+//                $date,
+//                -$num,
+//                $unit,
+//                REPERTORY_TYPE_GOODS_CHANGE,
+//                $insertId
+//            );
+//            if ($modifyRes['state'] === false) {
+//                $this->db->trans_rollback();
+//
+//                return array(
+//                    'state' => false,
+//                    'msg'   => $modifyRes['msg']
+//                );
+//            }
         } else {
             // 修改库存
             $modifyRes = $this->addRepertory(
