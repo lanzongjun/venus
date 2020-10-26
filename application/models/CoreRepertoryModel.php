@@ -39,7 +39,7 @@ class CoreRepertoryModel extends BaseModel
         }
 
         // 获取分页数据
-        $queryList->select('crd_id, p_name as provider_name, pg_id as goods_id, cs_name as shop_name, pg_name as goods_name, crd_date, crd_num, crd_unit');
+        $queryList->select('crd_id, p_name as provider_name, pg_id as goods_id, pg_is_dumplings, cs_name as shop_name, pg_name as goods_name, crd_date, crd_num, crd_unit');
 
         $offset = ($page - 1) * $rows;
         $queryList->limit($rows, $offset);
@@ -48,7 +48,11 @@ class CoreRepertoryModel extends BaseModel
         $rows = $queryList->get('core_repertory_daily')->result_array();
 
         foreach ($rows as &$row) {
-            $row['num_unit'] = round($row['crd_num'] / 500, 4).'(斤)';
+            if ($row['pg_is_dumplings']) {
+                $row['num_unit'] = round($row['crd_num'] / 500, 4).'(斤)';
+            } else {
+                $row['num_unit'] = round($row['crd_num']).'(个)';
+            }
         }
 
         return array(

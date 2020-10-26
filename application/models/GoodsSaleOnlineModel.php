@@ -16,6 +16,9 @@ class GoodsSaleOnlineModel extends BaseModel
 
     public function addSaleOnlineExcelData($data)
     {
+        set_time_limit(1800);
+
+
         // shop map
         $shopMap = $this->db->select('cs_id, cs_code')->where('cs_code !=', '')->get('core_shop')->result_array();
         $shopMap = array_column($shopMap, NULL, 'cs_code');
@@ -70,7 +73,7 @@ class GoodsSaleOnlineModel extends BaseModel
                             $formatDataItem['gso_shop_id'],
                             $goodsSkuMapItem['pgs_provider_goods_id'],
                             $formatDataItem['gso_date'],
-                            -round($formatDataItem['gso_num'] * $goodsSkuMapItem['pgs_num'], 4),
+                            -($formatDataItem['gso_num'] * $goodsSkuMapItem['pgs_num']),
                             1,
                             REPERTORY_TYPE_GOODS_SALE_ONLINE,
                             $firstInsertId
@@ -150,9 +153,9 @@ class GoodsSaleOnlineModel extends BaseModel
         $query->join('provider_goods_sku as b', 'gso_sku_code = pgs_sku_code', 'left');
         $query->join('provider_goods', 'b.pgs_provider_goods_id = pg_id', 'left');
         $query->join('provider_goods_sample as a', 'a.pgs_provider_goods_id = pg_id', 'left');
-        $query->where('gso_shop_id', $shopId);
-        $query->group_by('b.pgs_provider_goods_id, gso_date');
-        $query->select('b.pgs_provider_goods_id,pg_name,sum(pgs_num) as total, pg_is_dumplings, pgs_weight, gso_date');
+        $query->where('gso_shop_id', intval($shopId));
+        $query->group_by('pg_id, gso_date');
+        $query->select('pg_id,pg_name, sum(gso_num) as total_num, pgs_num as per_num, pg_is_dumplings, pgs_weight, gso_date');
 
         if (!empty($startDate) && !empty($endDate)) {
             $query->where('gso_date >=', $startDate);
@@ -183,9 +186,9 @@ class GoodsSaleOnlineModel extends BaseModel
 
         foreach ($rows as &$row) {
             if ($row['pg_is_dumplings'] && !empty($row['pgs_weight'])) {
-                $row['num_unit'] = round($row['total'] * $row['pgs_weight'] / 500, 4).'斤';
+                $row['num_unit'] = round($row['total_num'] * $row['per_num'] * $row['pgs_weight'] / 500, 4).'斤';
             } else {
-                $row['num_unit'] = $row['total'].'个';
+                $row['num_unit'] = $row['total_num'] * $row['per_num'].'个';
             }
         }
 

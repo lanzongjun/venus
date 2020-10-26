@@ -13,7 +13,7 @@
 <table id="dg"  title="销售管理-线上销售-销售记录" class="easyui-datagrid" data-options="fit:true,rownumbers:true,singleSelect:true,method:'get',url:'../sale/GoodsSaleOnlineController/getList/',toolbar:toolbar1,pagination:true,pageSize:50,pageList: [50, 100, 200, 300]">
     <thead>
     <tr>
-        <th data-options="width:200,align:'center',field:'shop_name'">店铺</th>
+        <th data-options="width:350,align:'center',field:'shop_name'">店铺</th>
         <th data-options="width:100,align:'center',field:'cs_city'">门店所在城市</th>
         <th data-options="width:150,align:'center',field:'gso_date'">销售日期</th>
         <th data-options="width:150,align:'center',field:'gso_sku_code'">SKU</th>

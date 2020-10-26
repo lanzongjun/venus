@@ -54,10 +54,12 @@ class BaseModel extends CI_Model
         $this->db->insert('core_repertory_record', $insertRecordData);
 
         // 判断是否是饺子
-        $isDumplings = $this->db
+        $row = $this->db
             ->where('pg_id', $goodsId)
             ->get('provider_goods')
-            ->row()->pg_is_dumplings;
+            ->row();
+        $isDumplings = $row->pg_is_dumplings;
+        $goods_name = $row->pg_name;
 
         $transferResult = $this->transferToGram($num, $unit, $goodsId, $isDumplings);
 
@@ -87,9 +89,10 @@ class BaseModel extends CI_Model
             ];
 
             if ($transferResult < 0) {
+                log_message('debug', "add repertory insert data:shop_id:{$shopId},goods_id:{$goodsId},goods_name:{$goods_name},date:{$date},num:{$num},unit:{$unit},type:{$type},transferResult:{$transferResult}");
                 return array(
                     'state' => false,
-                    'msg'   => '商品库存不足，请检查库存'
+                    'msg'   => "添加新增{$date}-{$goods_name}库存不足，请检查库存"
                 );
             }
 
@@ -101,9 +104,10 @@ class BaseModel extends CI_Model
             ];
 
             if ($existsRep->cr_num + $transferResult < 0) {
+                log_message('debug', "add repertory update data:shop_id:{$shopId},goods_id:{$goodsId},goods_name:{$goods_name},date:{$date},num:{$num},unit:{$unit},type:{$type},repertory_num:{$existsRep->cr_num},transferResult:{$transferResult}");
                 return array(
                     'state' => false,
-                    'msg'   => '商品库存不足，请检查库存'
+                    'msg'   => "修改新增{$date}-{$goods_name}库存不足，请检查库存"
                 );
             }
 
