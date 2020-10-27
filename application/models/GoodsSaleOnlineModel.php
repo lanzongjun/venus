@@ -154,8 +154,8 @@ class GoodsSaleOnlineModel extends BaseModel
         $query->join('provider_goods', 'b.pgs_provider_goods_id = pg_id', 'left');
         $query->join('provider_goods_sample as a', 'a.pgs_provider_goods_id = pg_id', 'left');
         $query->where('gso_shop_id', intval($shopId));
-        $query->group_by('pg_id, gso_date');
-        $query->select('pg_id,pg_name, sum(gso_num) as total_num, pgs_num as per_num, pg_is_dumplings, pgs_weight, gso_date');
+        $query->group_by('pgs_sku_code, gso_date');
+        $query->select('pg_id, pg_name, (gso_num*pgs_num) as total, pg_is_dumplings, pgs_weight, gso_date');
 
         if (!empty($startDate) && !empty($endDate)) {
             $query->where('gso_date >=', $startDate);
@@ -166,13 +166,14 @@ class GoodsSaleOnlineModel extends BaseModel
             $query->like('pg_name', $goodsName);
         }
 
-        $queryTotal = clone $query;
-        $queryList  = clone $query;
+        $query->get('goods_sale_online')->result_array();
+        $subQuerySql = $query->last_query();
+
+
 
         // 获取总数
-        $queryTotal->get('goods_sale_online')->first_row();
-        $total = $this->db->query("select count(1) as total from ({$queryTotal->last_query()}) as tmp")->first_row();
-        if (empty($total->total)) {
+        $resultTotal = $this->db->query("select count(1) as total from (select pg_id,pg_name,sum(total) as total,pgs_weight,gso_date,pg_is_dumplings from ({$subQuerySql}) as aaa group by pg_id,gso_date) as bbb")->first_row();
+        if (empty($resultTotal->total)) {
             return array(
                 'total' => 0,
                 'rows'  => []
@@ -180,21 +181,21 @@ class GoodsSaleOnlineModel extends BaseModel
         }
 
         $offset = ($page - 1) * $rows;
-        $queryList->limit($rows, $offset);
 
-        $rows = $queryList->get('goods_sale_online')->result_array();
+        $resultList = $this->db->query("select pg_id,pg_name,sum(total) as total,pgs_weight,gso_date,pg_is_dumplings from ({$subQuerySql}) as aaa group by pg_id,gso_date,pg_is_dumplings limit {$offset}, {$rows}")->result_array();
 
-        foreach ($rows as &$row) {
-            if ($row['pg_is_dumplings'] && !empty($row['pgs_weight'])) {
-                $row['num_unit'] = round($row['total_num'] * $row['per_num'] * $row['pgs_weight'] / 500, 4).'斤';
+
+        foreach ($resultList as &$item) {
+            if ($item['pg_is_dumplings'] && !empty($item['pgs_weight'])) {
+                $item['num_unit'] = round($item['total'] * $item['pgs_weight'] / 500, 4).'斤';
             } else {
-                $row['num_unit'] = $row['total_num'] * $row['per_num'].'个';
+                $item['num_unit'] = $item['total'].'个';
             }
         }
 
         return array(
-            'total' => intval($total->total),
-            'rows'  => $rows
+            'total' => intval($resultTotal->total),
+            'rows'  => $resultList
         );
     }
 }
