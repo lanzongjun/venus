@@ -230,7 +230,7 @@ class BaseModel extends CI_Model
             ->where('crr_type', $originType)
             ->where('crr_ref_id', $insertId)
             ->where('crr_shop_id', $shopId)
-            ->select('crr_id, crr_num, crr_unit, crr_shop_id, crr_provider_goods_id, pg_is_dumplings')
+            ->select('crr_id, crr_num, crr_unit, crr_shop_id, crr_date, crr_provider_goods_id, pg_is_dumplings')
             ->get('core_repertory_record')
             ->first_row();
 
@@ -292,6 +292,9 @@ class BaseModel extends CI_Model
                 ->where('cr_provider_goods_id', $goodsId)
                 ->update('core_repertory', $updateData);
         }
+
+        // 判断日期，不是今天的修改库存每日表
+        $this->modifyRepertoryDaily($shopId, $row->crr_provider_goods_id, $row->crr_date, $diffWeight);
 
         return array(
             'state' => true

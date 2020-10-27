@@ -10,7 +10,7 @@ class CoreRepertoryModel extends BaseModel
         $query->join('provider_goods', 'crd_provider_goods_id = pg_id', 'left');
         $query->join('provider', 'pg_provider_id = p_id');
         $query->join('core_shop', 'crd_shop_id = cs_id', 'left');
-        $query->where('crd_shop_id', $shopId);
+        $query->where('crd_shop_id', intval($shopId));
 
         if (!empty($startDate) && !empty($endDate)) {
             $query->where('crd_date >=', $startDate);
