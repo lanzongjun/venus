@@ -4,17 +4,34 @@ VALUES
 	(2, 1, 'JFJZL001A'),
 	(3, 1, 'JFJZL002A'),
 	(4, 1, 'JFJZL003A'),
-	(5, 1, 'JFJZL007A'),
 	(6, 1, 'JFJZL005A'),
 	(7, 1, 'JFJZL006A'),
 	(4, 1, 'JFJZL003B'),
-	(5, 1, 'JFJZL007B'),
 	(3, 1, 'JFJZL002B'),
 	(8, 1, 'JFJZB001A'),
 	(9, 1, 'JFJYL001A'),
 	(10, 1, 'JFJYL002A'),
 	(11, 1, 'JFJYL003A'),
 	(12, 1, 'JFJYL004A'),
+	(26, 1, 'JFJXC003A'),
+
+	(5, 1, 'JFJZL007A'),
+	(39, 1, 'JFJZL007A'),
+
+	(5, 1, 'JFJZL007B'),
+	(39, 1, 'JFJZL007B'),
+
+	(37, 1, 'JFJXC001A'),
+	(38, 1, 'JFJXC001A'),
+
+	(25, 1, 'JFJXC002A'),
+	(38, 1, 'JFJXC002A'),
+
+	(29, 1, 'JFJXC004A'),
+	(38, 1, 'JFJXC004A'),
+
+	(30, 1, 'JFJXC005A'),
+	(38, 1, 'JFJXC005A'),
 
 	(13, 16, 'JFJSJ012XA'),
 	(36, 1, 'JFJSJ012XA'),
@@ -30,14 +47,12 @@ VALUES
 	(34, 1, 'JFJSJ003XA'),
 	(4, 1, 'JFJSJ003XA'),
 
-
 	(15, 16, 'JFJSJ011XA'),
 	(36, 1, 'JFJSJ011XA'),
 	(33, 1, 'JFJSJ011XA'),
 	(35, 1, 'JFJSJ011XA'),
 	(34, 1, 'JFJSJ011XA'),
 	(4, 1, 'JFJSJ011XA'),
-
 
 	(16, 16, 'JFJSJ004XA'),
 	(36, 1, 'JFJSJ004XA'),
@@ -51,7 +66,7 @@ VALUES
 	(33, 1, 'JFJSJ009XA'),
 	(35, 1, 'JFJSJ009XA'),
 	(34, 1, 'JFJSJ009XA'),
-(4, 1, 'JFJSJ009XA'),
+	(4, 1, 'JFJSJ009XA'),
 
 	(18, 16, 'JFJSJ010XA'),
 	(36, 1, 'JFJSJ010XA'),
@@ -102,20 +117,6 @@ VALUES
 	(34, 1, 'JFJSJ006XA'),
 	(4, 1, 'JFJSJ006XA'),
 
-	(37, 1, 'JFJXC001A'),
-	(38, 1, 'JFJXC001A'),
-
-	(25, 1, 'JFJXC002A'),
-	(38, 1, 'JFJXC002A'),
-
-	(26, 1, 'JFJXC003A'),
-
-	(29, 1, 'JFJXC004A'),
-	(38, 1, 'JFJXC004A'),
-
-	(30, 1, 'JFJXC005A'),
-	(38, 1, 'JFJXC005A'),
-
 	(20, 21, 'JFJSJ001DA'),
 	(36, 1, 'JFJSJ001DA'),
 	(33, 1, 'JFJSJ001DA'),
@@ -135,7 +136,7 @@ VALUES
 	(33, 1, 'JFJSJ003DA'),
 	(35, 1, 'JFJSJ003DA'),
 	(34, 1, 'JFJSJ003DA'),
-(4, 1, 'JFJSJ003DA'),
+	(4, 1, 'JFJSJ003DA'),
 
 	(16, 21, 'JFJSJ004DA'),
 	(36, 1, 'JFJSJ004DA'),
@@ -233,8 +234,8 @@ VALUES
 	(35, 1, 'JFJTC004A'),
 	(34, 1, 'JFJTC004A'),
 	(37, 1, 'JFJTC004A'),
-(38, 1, 'JFJTC004A'),
-(4, 1, 'JFJTC004A'),
+	(38, 1, 'JFJTC004A'),
+	(4, 1, 'JFJTC004A'),
 
 	(23, 21, 'JFJSJ002DB'),
 	(36, 1, 'JFJSJ002DB'),
@@ -339,7 +340,7 @@ VALUES
 	(33, 1, 'JFJSJ011XB'),
 	(35, 1, 'JFJSJ011XB'),
 	(34, 1, 'JFJSJ011XB'),
-(4, 1, 'JFJSJ011XB'),
+	(4, 1, 'JFJSJ011XB'),
 
 	(14, 12, 'JFJSJ003XB'),
 	(36, 1, 'JFJSJ003XB'),
