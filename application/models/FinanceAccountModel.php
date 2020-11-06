@@ -36,7 +36,7 @@ class FinanceAccountModel extends BaseModel
                 );
                 $accountData = $returnData[$row['crr_provider_goods_id']]['data'];
                 if ($returnData[$row['crr_provider_goods_id']]['unit'] == '斤') {
-                    $accountData[$row['crr_type']]['num'] += round(abs($num) / 500, 4) ;
+                    $accountData[$row['crr_type']]['num'] = round($accountData[$row['crr_type']]['num'] + abs($num) / 500, 4) ;
                 } else {
                     $accountData[$row['crr_type']]['num'] += abs($num);
                 }
@@ -97,23 +97,27 @@ class FinanceAccountModel extends BaseModel
                 'title' => '异常订单-索赔单',
                 'num'   => 0,
             ],
-            REPERTORY_TYPE_STAFF_MEAL => [
+            REPERTORY_TYPE_STAFF_MEAL             => [
                 'title' => '员工餐',
                 'num'   => 0,
             ],
-            REPERTORY_TYPE_GOODS_SHOP_LOSS => [
+            REPERTORY_TYPE_GOODS_SHOP_LOSS        => [
                 'title' => '损耗-店内破损',
                 'num'   => 0,
             ],
-            REPERTORY_TYPE_GOODS_ORDER_LOSS => [
+            REPERTORY_TYPE_GOODS_ORDER_LOSS       => [
                 'title' => '损耗-退单',
                 'num'   => 0,
             ],
-            REPERTORY_TYPE_GOODS_CHANGE => [
-                'title' => '调度',
+            REPERTORY_TYPE_GOODS_CHANGE_IN        => [
+                'title' => '调度-转入',
                 'num'   => 0,
             ],
-            '999' => [
+            REPERTORY_TYPE_GOODS_CHANGE_OUT        => [
+                'title' => '调度-转出',
+                'num'   => 0,
+            ],
+            '999'                                 => [
                 'title' => '盘点',
                 'num'   => 0
             ]

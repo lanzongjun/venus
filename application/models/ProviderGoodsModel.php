@@ -6,7 +6,6 @@ class ProviderGoodsModel extends BaseModel
 {
     public function getList($providerName, $goodsName, $page, $rows, $rowsOnly, $dumplingsOnly)
     {
-
         $query = $this->db->join('provider', 'p_id = pg_provider_id', 'left');
 
         if (!empty($providerName)) {
@@ -23,6 +22,9 @@ class ProviderGoodsModel extends BaseModel
 
         $queryTotal = clone $query;
         $queryList  = clone $query;
+
+
+
 
         if (!$rowsOnly) {
             // 获取总数

@@ -62,6 +62,12 @@ function transfer2000 (val, row, index) {
 function transfer2001 (val, row, index) {
     return row.data[2001].num;
 }
+function transfer4000 (val, row, index) {
+    return row.data[4000].num;
+}
+function transfer4001 (val, row, index) {
+    return row.data[4001].num;
+}
 function transfer6000 (val, row, index) {
     return row.data[6000].num;
 }

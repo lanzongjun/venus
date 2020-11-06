@@ -32,10 +32,16 @@ const REPERTORY_TYPE_GOODS_SHOP_LOSS = 3000;
 const REPERTORY_TYPE_GOODS_ORDER_LOSS = 3001;
 
 /**
- * 调度
+ * 调度-转入
  * goods_change
  */
-const REPERTORY_TYPE_GOODS_CHANGE = 4000;
+const REPERTORY_TYPE_GOODS_CHANGE_IN = 4000;
+
+/**
+ * 调度-转出
+ * goods_change
+ */
+const REPERTORY_TYPE_GOODS_CHANGE_OUT = 4001;
 
 /**
  * 员工餐

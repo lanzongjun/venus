@@ -16,6 +16,8 @@
         <th data-options="width:200,align:'center',field:'goods_name'">商品名称</th>
         <th data-options="width:200,align:'center',field:'unit'">单位</th>
         <th data-options="width:200,align:'center',field:'stock', formatter:transfer1000 ">入库数量</th>
+        <th data-options="width:200,align:'center',field:'change_in', formatter:transfer4000 ">调度-转入</th>
+        <th data-options="width:200,align:'center',field:'change_out', formatter:transfer4001 ">调度-转出</th>
         <th data-options="width:200,align:'center',field:'sale_offline_shihua', formatter:transfer2000 ">线下销售-石化结算</th>
         <th data-options="width:200,align:'center',field:'sale_offline_locate', formatter:transfer2001 ">线下销售-现场结算</th>
         <th data-options="width:200,align:'center',field:'sale_online', formatter:transfer6000 ">线上销售</th>
