@@ -80,14 +80,22 @@ class ProviderGoodsCheckModel extends BaseModel
 
         $this->db->where('pgcd_id', $id);
 
-        $this->db->select('pgcd_id, pgcd_provider_goods_id as goods_id, pgcd_num');
+        $this->db->select('pgcd_id, pgcd_provider_goods_id as goods_id, pgcd_num as num, pgcd_unit as unit');
 
         $result = $this->db->get('provider_goods_check_detail')->first_row();
 
         return $result;
     }
 
-    public function addGoodsCheck($shopId, $userId, $date, $goodsId, $num, $unit)
+    /**
+     * 添加判断记录总表
+     * @param $shopId
+     * @param $userId
+     * @param $date
+     * @return array
+     * @author zongjun.lan
+     */
+    public function addGoodsCheck($shopId, $userId, $date)
     {
         // 检验是否存在该日期-店铺的盘点记录
         $check = $this->db
@@ -96,18 +104,26 @@ class ProviderGoodsCheckModel extends BaseModel
             ->get('provider_goods_check')
             ->first_row();
 
-        if (empty($check)) {
-            $insertCheckData = [
-                'pgc_shop_id'  => $shopId,
-                'pgc_date'     => $date,
-                'pgc_operator' => $userId
-            ];
-            $this->db->insert('provider_goods_check', $insertCheckData);
+        if (!empty($check)) {
+            $result = ['state' => false, 'msg' => "【{$date}】已经存在盘点记录，请重新选择日期"];
 
-            $pgcId=$this->db->insert_id('provider_goods_check');
-        } else {
-            $pgcId = $check->pgc_id;
+            return $result;
         }
+
+        $insertCheckData = [
+            'pgc_shop_id'  => $shopId,
+            'pgc_date'     => $date,
+            'pgc_operator' => $userId
+        ];
+        $this->db->insert('provider_goods_check', $insertCheckData);
+
+        $result = ['state' => true, 'msg' => "添加成功"];
+
+        return $result;
+    }
+
+    public function addGoodsCheckDetail($userId, $pgcId, $goodsId, $num, $unit)
+    {
 
         // 检验是否存在改商品的详情
         $checkDetail = $this->db
@@ -239,6 +255,28 @@ class ProviderGoodsCheckModel extends BaseModel
         return $msg;
     }
 
+    // 删除盘点信息
+    public function deleteGoodsCheck($id)
+    {
+        $this->db->trans_begin();
+
+        $this->db->delete('provider_goods_check', array('pgc_id' => $id));
+
+        $this->db->delete('provider_goods_check_detail', array('pgcd_gsc_id' => $id));
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+        } else {
+            $this->db->trans_commit();
+        }
+
+        return array(
+            'state' => true,
+            'msg'   => '删除成功'
+        );
+    }
+
+    // 删除盘点详情信息
     public function deleteGoodsCheckDetail($id)
     {
         $this->db->delete('provider_goods_check_detail', array('pgcd_id' => $id));
@@ -247,5 +285,25 @@ class ProviderGoodsCheckModel extends BaseModel
             'state' => true,
             'msg'   => '删除成功'
         );
+    }
+
+    /**
+     * 根据盘点日期获取盘点详情列表
+     * @param $shopId
+     * @param $selectDate
+     * @return mixed
+     * @author zongjun.lan
+     */
+    public function getDetailList($shopId, $selectDate)
+    {
+        $checkRows = $this->db
+            ->join('provider_goods_check_detail', 'pgc_id = pgcd_gsc_id', 'left')
+            ->where('pgc_shop_id', $shopId)
+            ->where('pgc_date', $selectDate)
+            ->select('pgcd_provider_goods_id, pgcd_num, pgcd_unit')
+            ->get('provider_goods_check')
+            ->result_array();
+
+        return $checkRows;
     }
 }

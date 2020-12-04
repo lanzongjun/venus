@@ -1,5 +1,9 @@
 function showAddWin() {
     $('#d_add_provider_goods_check').window('open');
+}
+
+function showAddWinDetail() {
+    $('#d_add_provider_goods_check_detail').window('open');
     $('#add_provider_goods_check_gid').combobox({
         url:'../ProviderGoodsController/getList?rows_only=true',
         method:'get',
@@ -17,26 +21,58 @@ function saveAddForm() {
     $('#f_add_provider_goods_check').form('submit');
 }
 
+function saveAddFormDetail() {
+    var o_row = $("#dg").datagrid('getSelected');
+    $('#f_add_provider_goods_check_detail').form('submit', {
+
+        url: '../' + __s_c_name + '/addGoodsCheckDetail',
+        type: "POST",
+        queryParams: {
+            pgc_id: o_row.pgc_id
+        },
+
+
+        success: function (data) {
+            var o_response = $.parseJSON(data);
+            if (o_response.state) {
+                $.messager.alert('信息-更新成功', o_response.msg, 'info');
+            } else {
+                $.messager.alert('错误-更新失败', o_response.msg, 'error');
+            }
+            $('#d_add_provider_goods_check_detail').window('close');
+            // $('#dg').datagrid('reload');
+            $('#dg2').datagrid('reload');
+        }
+    });
+
+    // $('#f_add_provider_goods_check_detail').form('submit');
+
+}
+
 function closeAddWin() {
     $('#d_add_provider_goods_check').window('close');
 }
 
-function saveEditForm() {
-    $('#f_edit_provider_goods_check').form('submit');
+function closeAddWinDetail() {
+    $('#d_add_provider_goods_check_detail').window('close');
 }
 
-function closeEditWin() {
-    $('#d_edit_provider_goods_check').window('close');
+function saveEditFormDetail() {
+    $('#f_edit_provider_goods_check_detail').form('submit');
+}
+
+function closeEditWinDetail() {
+    $('#d_edit_provider_goods_check_detail').window('close');
 }
 
 // 编辑
-function showEditWin() {
+function showEditWinDetail() {
     var o_row = $("#dg2").datagrid('getSelected');
     if (!o_row || !o_row.pgcd_id) {
         $.messager.alert('错误', '请选择一条记录后，在进行此操作', 'error');
         return;
     }
-    $('#d_edit_provider_goods_check').window('open');
+    $('#d_edit_provider_goods_check_detail').window('open');
     $('#edit_provider_goods_check_gid').combobox({
         url:'../ProviderGoodsController/getList?rows_only=true',
         method:'get',
@@ -47,7 +83,7 @@ function showEditWin() {
         labelWidth:'90',
         width:'300'
     });
-    $('#f_edit_provider_goods_check').form('load', '../' + __s_c_name + '/getProviderGoodsCheckDetailInfo?id=' + o_row.pgcd_id);
+    $('#f_edit_provider_goods_check_detail').form('load', '../' + __s_c_name + '/getProviderGoodsCheckDetailInfo?id=' + o_row.pgcd_id);
 }
 
 // 库存校验
@@ -81,8 +117,37 @@ function showReloadWin() {
 
 // 删除
 function showRemoveWin() {
+    var o_row = $("#dg").datagrid('getSelected');
+    if (!o_row || !o_row.pgc_id) {
+        $.messager.alert('错误', '请选择一条记录后，在进行此操作', 'error');
+        return;
+    }
+    $.messager.confirm('确认', '此操作将删除盘点记录，是否进行此操作？', function (r) {
+        if (r) {
+            ajaxLoading();
+            $.ajax({
+                url: '../' + __s_c_name + '/deleteGoodsCheck',
+                type: "POST",
+                data: {"id": o_row.pgc_id},
+                success: function (data) {
+                    ajaxLoadEnd();
+                    var o_response = $.parseJSON(data);
+                    if (o_response.state) {
+                        $.messager.alert('信息', o_response.msg, 'info');
+                    } else {
+                        $.messager.alert('错误', o_response.msg, 'error');
+                    }
+                    $('#dg').datagrid('reload');
+                    $('#dg2').datagrid('reload');
+                }
+            });
+        }
+    });
+}
+
+// 删除详情
+function showRemoveWinDetail() {
     var o_row = $("#dg2").datagrid('getSelected');
-    console.log(o_row);
     if (!o_row || !o_row.pgcd_id) {
         $.messager.alert('错误', '请选择一条记录后，在进行此操作', 'error');
         return;
@@ -141,11 +206,17 @@ function init() {
     $('#btn_add').bind('click', function () {
         showAddWin();
     });
-    $('#btn_edit').bind('click', function () {
-        showEditWin();
+    $('#btn_add_detail').bind('click', function () {
+        showAddWinDetail();
+    });
+    $('#btn_edit_detail').bind('click', function () {
+        showEditWinDetail();
     });
     $('#btn_remove').bind('click', function () {
         showRemoveWin();
+    });
+    $('#btn_remove_detail').bind('click', function () {
+        showRemoveWinDetail();
     });
     $('#btn_reload').bind('click', function () {
         showReloadWin();
@@ -170,7 +241,24 @@ function init() {
         }
     });
 
-    $('#f_edit_provider_goods_check').form({
+    // $('#f_add_provider_goods_check_detail').form({
+    //     url: '../' + __s_c_name + '/addGoodsCheckDetail',
+    //     type: "POST",
+    //
+    //     success: function (data) {
+    //         var o_response = $.parseJSON(data);
+    //         if (o_response.state) {
+    //             $.messager.alert('信息-更新成功', o_response.msg, 'info');
+    //         } else {
+    //             $.messager.alert('错误-更新失败', o_response.msg, 'error');
+    //         }
+    //         $('#d_add_provider_goods_check_detail').window('close');
+    //         $('#dg').datagrid('reload');
+    //         $('#dg2').datagrid('reload');
+    //     }
+    // });
+
+    $('#f_edit_provider_goods_check_detail').form({
         url: '../' + __s_c_name + '/editGoodsCheck',
         type: "POST",
         success: function (data) {
@@ -180,7 +268,7 @@ function init() {
             } else {
                 $.messager.alert('错误-更新失败', o_response.msg, 'error');
             }
-            $('#d_edit_provider_goods_check').window('close');
+            $('#d_edit_provider_goods_check_detail').window('close');
             $('#dg').datagrid('reload');
             $('#dg2').datagrid('reload');
         }

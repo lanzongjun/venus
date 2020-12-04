@@ -76,9 +76,38 @@ class ProviderGoodsCheckController extends BaseController
     {
         $postData = $this->getPostData();
 
+        $date = isset($postData['date']) ? $postData['date'] : '';
+
+        if (empty($date)) {
+            echo json_encode(array(
+                'state' => false,
+                'msg'   => '参数错误'
+            ));
+            exit();
+        }
+
+        $this->load->model($this->_s_model);
+        $result = $this->{$this->_s_model}->addGoodsCheck($this->shop_id,$this->user_id, $date);
+
+        echo json_encode($result);
+    }
+
+    public function addGoodsCheckDetail()
+    {
+        $postData = $this->getPostData();
+
         $goodsId = isset($postData['goods_id']) ? $postData['goods_id'] : '';
         $num = isset($postData['num']) ? $postData['num'] : '';
         $unit = isset($postData['unit']) ? $postData['unit'] : '';
+        $pgcId = isset($postData['pgc_id']) ? $postData['pgc_id'] : '';
+
+        if (empty($pgcId)) {
+            echo json_encode(array(
+                'state' => false,
+                'msg'   => '请先选择盘点日期记录'
+            ));
+            exit();
+        }
 
         if (empty($goodsId) || empty($num) || empty($unit)) {
             echo json_encode(array(
@@ -88,10 +117,8 @@ class ProviderGoodsCheckController extends BaseController
             exit();
         }
 
-        $date = date('Y-m-d');
-
         $this->load->model($this->_s_model);
-        $result = $this->{$this->_s_model}->addGoodsCheck($this->shop_id,$this->user_id, $date, $goodsId, $num, $unit);
+        $result = $this->{$this->_s_model}->addGoodsCheckDetail($this->user_id, $pgcId, $goodsId, $num, $unit);
 
         echo json_encode($result);
     }
@@ -134,6 +161,26 @@ class ProviderGoodsCheckController extends BaseController
 
         $this->load->model($this->_s_model);
         $result = $this->{$this->_s_model}->reloadGoodsCheck($this->shop_id, $id);
+
+        echo json_encode($result);
+    }
+
+    public function deleteGoodsCheck()
+    {
+        $postData = $this->getPostData();
+
+        $id = isset($postData['id']) ? $postData['id'] : '';
+
+        if (empty($id)) {
+            echo json_encode(array(
+                'state' => false,
+                'msg'   => '参数错误'
+            ));
+            exit();
+        }
+
+        $this->load->model($this->_s_model);
+        $result = $this->{$this->_s_model}->deleteGoodsCheck($id);
 
         echo json_encode($result);
     }

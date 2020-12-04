@@ -21,8 +21,7 @@ class CoreRepertoryController extends BaseController
     {
         $getData = $this->getGetData();
 
-        $startDate = isset($getData['start_date']) ? $getData['start_date'] : '';
-        $endDate = isset($getData['end_date']) ? $getData['end_date'] : '';
+        $selectDate = isset($getData['select_date']) ? $getData['select_date'] : '';
         $providerId = isset($getData['provider_id']) ? $getData['provider_id'] : '';
         $goodsName = isset($getData['goods_name']) ? $getData['goods_name'] : '';
         $page = isset($getData['page']) ? $getData['page'] : 1;
@@ -33,8 +32,7 @@ class CoreRepertoryController extends BaseController
 
         $o_result = $this->{$this->_s_model}->getList(
             $this->shop_id,
-            $startDate,
-            $endDate,
+            $selectDate,
             $providerId,
             $goodsName,
             $page,

@@ -18,13 +18,15 @@
         <th data-options="width:200,align:'center',field:'crd_date'">日期</th>
         <th data-options="width:200,align:'center',field:'goods_name'">商品名称</th>
         <th data-options="width:200,align:'center',field:'num_unit'">剩余库存(单位)</th>
+        <th data-options="width:200,align:'center',field:'check_num_unit'">盘点剩余库存(单位)</th>
+        <th data-options="width:200,align:'center',field:'diff_num_unit',styler:changeColor">差值(单位)</th>
     </tr>
     </thead>
 </table>
 
 <div id="dom_toolbar1">
-    <input id="start_date" class="easyui-datebox" labelWidth="70" style="width:180px;" label="开始时间:" labelPosition="left" data-options=""/>
-    <input id="end_date" class="easyui-datebox" labelWidth="70" style="width:180px;" label="结束时间:" labelPosition="left" data-options=""/>
+    <input id="select_date" class="easyui-datebox" labelWidth="70" style="width:200px;" label="查询日期:" labelPosition="left" data-options=""/>
+<!--    <input id="end_date" class="easyui-datebox" labelWidth="70" style="width:180px;" label="结束时间:" labelPosition="left" data-options=""/>-->
     <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
 <!--    <input id="shop_id" class="easyui-combobox" data-options="-->
 <!--                        url:'../CoreShopController/getList?rows_only=true',-->
