@@ -46,7 +46,9 @@ class CoreRepertoryController extends BaseController
                 'provider_name' => true,
                 'crd_date' => true,
                 'goods_name' => true,
-                'num_unit' => true
+                'num_unit' => true,
+                'check_num_unit' => true,
+                'diff_num_unit' => true,
             ];
 
             $intersectData = array_map(function ($item) use ($intersectKeys) {
@@ -56,7 +58,7 @@ class CoreRepertoryController extends BaseController
             $this->output(
                 '库存列表',
                 [
-                    '商品ID','店铺','供应商','日期','商品名称','剩余库存(单位)'
+                    '商品ID','店铺','供应商','日期','商品名称','剩余库存(单位)','盘点剩余库存(单位)','差值(单位)'
                 ],
                 $intersectData
             );
