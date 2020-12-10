@@ -143,7 +143,7 @@ $(function () {
         onLoadSuccess: function (data) {
             if (data.rows.length > 0) {
                 //调用mergeCellsByField()合并单元格
-                mergeCellsByField("dg", "pgs_sku_code");
+                mergeCellsByField("dg", "pgs_sku_code,cs_name");
             }
         }
     });

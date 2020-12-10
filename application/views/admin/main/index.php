@@ -18,7 +18,7 @@
         </style>
     </head>
     <body class="easyui-layout">
-        <div data-options="region:'north',border:false" style="height:60px;background:#333333;padding:5px;font-size:30px;">Venus(饺非饺进销存管理系统)</div>
+        <div data-options="region:'north',border:false" style="height:60px;background:#333333;padding:5px;font-size:30px;"><?php echo $title ?></div>
         <div data-options="region:'west',split:true" style="width:180px;">
             <div class="easyui-accordion" data-options="fit:true,border:true">
                 <div title="导航">

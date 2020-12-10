@@ -23,6 +23,8 @@ class BaseController extends CI_Controller
         parent::__construct();
 
         $this->load->library('session');
+        $this->load->helper('common_helper');
+
         // 没有session需要重定向登录
         if (empty($this->session->s_user)) {
             redirect('admin/index');

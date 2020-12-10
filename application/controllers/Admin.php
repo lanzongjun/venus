@@ -5,21 +5,26 @@ include_once 'BaseController.php';
 
 class Admin extends CI_Controller
 {
-    
-    public function index() {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->helper('common_helper');
+    }
+
+    public function index()
+    {
         if (!file_exists(APPPATH . 'views/admin/login/index.php')) {
             // Whoops, we don't have a page for that!
             show_404();
         }
-        $data['title'] = ucfirst('index'); // Capitalize the first letter
-        
+        $data['title'] = my_env('PROJECT_NAME'); // Capitalize the first letter
+
         $this->load->helper('url');
         $this->load->view('admin/login/index', $data);
     }
 
     public function check()
     {
-
         $postData = $this->input->post();
         $this->load->model('UserModel');
         $user = $this->UserModel->u_select($postData['u_name']);
@@ -58,9 +63,9 @@ class Admin extends CI_Controller
         $this->session->unset_userdata('s_id');
     }
 
-    function main()
+    public function main()
     {
-        $data['title'] = ucfirst('main');
+        $data['title'] = my_env('PROJECT_NAME');;
         $this->load->library('session');
         $s_user = $this->session->userdata('s_user');
         if (!$s_user) {
