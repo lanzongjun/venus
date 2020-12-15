@@ -8,7 +8,7 @@ function showAddWin() {
         panelHeight:'auto',
         label: '供应商名称:',
         labelPosition: 'left',
-        labelWidth:'90',
+        labelWidth:'100',
         width:'300'
     });
 }
@@ -46,7 +46,7 @@ function showEditWin() {
         panelHeight:'auto',
         label: '供应商名称:',
         labelPosition: 'left',
-        labelWidth:'90',
+        labelWidth:'100',
         width:'300'
     });
     $('#f_edit_provider_goods').form('load', '../' + __s_c_name + '/getProviderGoodsInfo?id=' + o_row.pg_id);

@@ -19,6 +19,9 @@ class BaseModel extends CI_Model
             case '2':
                 $unitMap = '斤';
                 break;
+            case '3':
+                $unitMap = '克';
+                break;
             default:
                 $unitMap = '未知';
 
@@ -53,7 +56,7 @@ class BaseModel extends CI_Model
 
         $this->db->insert('core_repertory_record', $insertRecordData);
 
-        // 判断是否是饺子
+        // 判断是否需要计量
         $row = $this->db
             ->where('pg_id', $goodsId)
             ->get('provider_goods')
@@ -79,7 +82,7 @@ class BaseModel extends CI_Model
 
         if (empty($existsRep)) {
 
-            $crUnit = $isDumplings ? 2 : 1;
+            $crUnit = $isDumplings ? 2 : 1; // 1:个；2:克
 
             $insertData = [
                 'cr_shop_id'           => $shopId,
@@ -161,7 +164,7 @@ class BaseModel extends CI_Model
         ];
         $this->db->delete('core_repertory_record', $deleteWhere);
 
-        // 判断是否是饺子
+        // 判断是否需要计量
         $isDumplings = $row->pg_is_dumplings;
 
         // 删除记录 数据负负得正 添加-
@@ -328,6 +331,8 @@ class BaseModel extends CI_Model
             $allTotal = round($num * $perWeight, 4);
         } elseif ($isDumplings && $unit == 2) {
             $allTotal = round($num * 500, 4);
+        } elseif ($isDumplings && $unit == 3){// 单位为克
+            $allTotal = round($num, 4);
         } else {
             $allTotal = intval($num);
         }

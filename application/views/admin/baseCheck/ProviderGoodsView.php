@@ -15,7 +15,7 @@
         <th data-options="width:100,align:'center',field:'pg_id'">商品ID</th>
         <th data-options="width:150,align:'center',field:'p_name'">供应商名称</th>
         <th data-options="width:150,align:'center',field:'pg_name'">商品名称</th>
-        <th data-options="width:150,align:'center',field:'is_dumplings'">是否是饺子</th>
+        <th data-options="width:150,align:'center',field:'is_dumplings'">是否需要计量</th>
         <th data-options="width:200,align:'center',field:'pg_create_time'">创建时间</th>
         <th data-options="width:200,align:'center',field:'pg_update_time'">更新时间</th>
     </tr>
@@ -23,8 +23,8 @@
 </table>
 <div id="dom_toolbar1">
     <div>
-        <input id="provider_name" class="easyui-textbox" labelWidth="85" style="width:220px;" label="供应商名称:" labelPosition="left"/>
-        <input id="provider_goods_name" class="easyui-textbox" labelWidth="75" style="width:220px;" label="商品名称:" labelPosition="left"/>
+        <input id="provider_name" class="easyui-textbox" labelWidth="85" style="width:220px;" label="供应商名称:" labelPosition="left" placeholder=""/>
+        <input id="provider_goods_name" class="easyui-textbox" labelWidth="75" style="width:220px;" label="商品名称:" labelPosition="left" placeholder=""/>
         <a id="btn_search" href="#" data-options="iconCls:'icon-search'" class="easyui-linkbutton">查询</a>
         <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
         <a id="btn_add" href="#" data-options="iconCls:'icon-add'" class="easyui-linkbutton">新增</a>
@@ -38,23 +38,25 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input id="edit_provider_goods_pid" name="p_id">
+                        <input id="edit_provider_goods_pid" name="p_id" placeholder="">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-textbox" name="pg_name" data-options="labelWidth:'90',label:'商品名称:',width:'240px'">
+                        <input class="easyui-textbox" name="pg_name" data-options="labelWidth:'100',label:'商品名称:',
+                        width:'240px'" placeholder="">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <select class="easyui-combobox" name="is_dumplings" data-options="labelWidth:'90',label:'是否是饺子:',width:'150',panelHeight:'auto'">
+                        <select class="easyui-combobox" name="is_dumplings" data-options="labelWidth:'100',
+                        label:'是否需要计量:',width:'150',panelHeight:'auto'">
                             <option value="0">否</option>
-                            <option value="1" selected="true">是</option>
+                            <option value="1" selected>是</option>
                         </select>
                     </div>
                 </td>
@@ -73,23 +75,25 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input id="add_provider_goods_pid" name="p_id">
+                        <input id="add_provider_goods_pid" name="p_id" placeholder="">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-textbox" name="pg_name" data-options="labelWidth:'90',label:'商品名称:',width:'300px'">
+                        <input class="easyui-textbox" name="pg_name" data-options="labelWidth:'100',label:'商品名称:',
+                        width:'300px'" placeholder="">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <select class="easyui-combobox" name="is_dumplings" data-options="labelWidth:'90',label:'是否是饺子:',width:'150',panelHeight:'auto'">
+                        <select class="easyui-combobox" name="is_dumplings" data-options="labelWidth:'100',
+                        label:'是否需要计量:',width:'160',panelHeight:'auto'">
                             <option value="0">否</option>
-                            <option value="1" selected="true">是</option>
+                            <option value="1" selected>是</option>
                         </select>
                     </div>
                 </td>

@@ -8,6 +8,11 @@
     <script type="text/javascript" src="<?php echo base_url("/resource/admin/jquery.min.js") ?>"></script>
     <script type="text/javascript" src="<?php echo base_url("/resource/admin/jquery.easyui.min.js") ?>"></script>
 </head>
+<style type="text/css">
+    .datagrid-header-rownumber, .datagrid-cell-rownumber {
+        width: 30px;
+    }
+</style>
 <body>
 <table id="dg" title="销售管理-线上销售-销售合计" class="easyui-datagrid" toolbar="#dom_toolbar1" data-options="border:false,fit:true,rownumbers:true,singleSelect:true,method:'get',url:'../<?php echo $c_name; ?>/getList/',pagination:true,pageSize:50,pageList: [50, 100, 200, 300]">
     <thead>
@@ -32,54 +37,6 @@
     </div>
 </div>
 
-<div id="d_add_goods_stock" class="easyui-window" title="新增商品进货信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:460px;height:210px;padding:5px;">
-    <form id="f_add_goods_stock" method="post">
-        <table>
-            <tr>
-                <td>
-                    <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-combobox" name="pg_id" data-options="
-                        url:'../ProviderGoodsController/getList?rows_only=true',
-                        method:'get',
-                        valueField:'pg_id',
-                        textField:'provider_goods_format',
-                        label: '供应商商品信息:',
-                        labelPosition: 'left',
-                        labelWidth:'110',
-                        width:'400'
-                        ">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-datebox" name="date" data-options="labelWidth:'110',label:'进货日期:',width:'300px'">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="stock" data-options="labelWidth:'110',label:'重量(KG):',
-                        width:'300', min:0, precision:4">
-                    </div>
-
-                </td>
-            </tr>
-        </table>
-        <div style="text-align:center;padding:5px 0">
-            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="saveAddForm()" style="width:80px">保存</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="closeAddWin()" style="width:80px">取消</a>
-        </div>
-    </form>
-</div>
-
-<style type="text/css">
-    .datagrid-header-rownumber, .datagrid-cell-rownumber {
-        width: 30px;
-    }
-</style>
 <script type="text/javascript">
     var __s_c_name = '<?php echo $c_name; ?>';
 </script>

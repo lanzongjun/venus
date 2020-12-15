@@ -27,20 +27,21 @@
 
 <div id="dom_toolbar">
     <div>
-        <select id="type" class="easyui-combobox" data-options="
-                        panelHeight:'auto',
-                        label: '销售类型:',
-                        labelPosition: 'left',
-                        labelWidth:'70',
-                        width:'200px',
-                        panelHeight:'auto'
-                        ">
+        <select id="type" class="easyui-combobox"
+                data-options="
+                panelHeight:'auto',
+                label: '销售类型:',
+                labelPosition: 'left',
+                labelWidth:'70',
+                width:'200px',
+                panelHeight:'auto'
+            ">
             <option value="0">全部</option>
             <option value="1">石化结算</option>
             <option value="2">收款结算</option>
         </select>
-        <input id="start_date" class="easyui-datebox" labelWidth="70" style="width:200px;" label="开始时间:" labelPosition="left" data-options="formatter:myformatter,parser:myparser"/>
-        <input id="end_date" class="easyui-datebox" labelWidth="70" style="width:200px;" label="结束时间:" labelPosition="left" data-options="formatter:myformatter,parser:myparser"/>
+        <input id="start_date" class="easyui-datebox" labelWidth="70" style="width:200px;" label="开始时间:" labelPosition="left" data-options="formatter:myformatter,parser:myparser" placeholder=""/>
+        <input id="end_date" class="easyui-datebox" labelWidth="70" style="width:200px;" label="结束时间:" labelPosition="left" data-options="formatter:myformatter,parser:myparser" placeholder=""/>
         <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
         <a id="btn_search" data-options="iconCls:'icon-search'" href="#" class="easyui-linkbutton">查询</a>
         <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
@@ -55,26 +56,24 @@
     </div>
 </div>
 
-<div id="d_edit_sale_offline" class="easyui-window" title="编辑线下销售信息" data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:460px;height:350px;padding:5px;">
+<div id="d_edit_sale_offline" class="easyui-window" title="编辑线下销售信息" data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:460px;height:360px;padding:5px;">
     <form id="f_edit_sale_offline" method="post">
         <table>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input id="edit_sale_offline_gid" name="goods_id" disabled>
-
+                        <input id="edit_sale_offline_gid" name="goods_id" disabled placeholder="">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input id="edit_sale_offline_date" name="date" disabled
-                               class="easyui-datebox"
-                               data-options="
-                               labelWidth:'70',
-                               label:'销售日期:',
-                               width:'300px'
+                        <input id="edit_sale_offline_date" name="date" disabled class="easyui-datebox" placeholder=""
+                            data-options="
+                            labelWidth:'70',
+                            label:'销售日期:',
+                            width:'300px'
                         ">
                     </div>
                 </td>
@@ -83,7 +82,7 @@
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
                         <select class="easyui-combobox" name="type" data-options="labelWidth:'70',label:'类型:',width:'300',panelHeight:'auto'">
-                            <option value="1" selected="true">石化结算</option>
+                            <option value="1" selected>石化结算</option>
                             <option value="2">线下销售</option>
                         </select>
                     </div>
@@ -92,8 +91,14 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',
-                        width:'300', min:0, precision:4">
+                        <input class="easyui-numberbox" name="num" placeholder=""
+                             data-options="
+                             labelWidth:'70',
+                             label:'数量:',
+                             width:'300',
+                             min:0,
+                             precision:4
+                         ">
                     </div>
 
                 </td>
@@ -102,8 +107,9 @@
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
                         <select class="easyui-combobox" name="unit" data-options="labelWidth:'70',label:'单位:',width:'130',panelHeight:'auto'">
-                            <option value="1" selected="true">个</option>
+                            <option value="1" selected>个</option>
                             <option value="2">斤</option>
+                            <option value="3">克</option>
                         </select>
                     </div>
                 </td>
@@ -111,15 +117,16 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-textbox" name="remark" data-options="
-                        label:'备注:',
-                        width:'400px',
-                        height:'60px',
-                        panelHeight:'auto',
-                        multiline: 'true',
-                        labelPosition: 'left',
-                        labelWidth:'70'
-                    ">
+                        <input class="easyui-textbox" name="remark" placeholder=""
+                            data-options="
+                            label:'备注:',
+                            width:'400px',
+                            height:'60px',
+                            panelHeight:'auto',
+                            multiline: 'true',
+                            labelPosition: 'left',
+                            labelWidth:'70'
+                        ">
                     </div>
                 </td>
             </tr>
@@ -132,20 +139,25 @@
     </form>
 </div>
 
-<div id="d_add_sale_offline" class="easyui-window" title="新增线下销售信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:460px;height:350px;padding:5px;">
+<div id="d_add_sale_offline" class="easyui-window" title="新增线下销售信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:460px;height:360px;padding:5px;">
     <form id="f_add_sale_offline" method="post">
         <table>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input id="add_sale_offline_gid" name="goods_id">
+                        <input id="add_sale_offline_gid" name="goods_id" placeholder="">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input id="add_sale_offline_date" class="easyui-datebox" name="date" data-options="labelWidth:'70',label:'销售日期:',width:'300px'">
+                        <input id="add_sale_offline_date" class="easyui-datebox" name="date" placeholder=""
+                            data-options="
+                            labelWidth:'70',
+                            label:'销售日期:',
+                            width:'300px'
+                        ">
                     </div>
                 </td>
             </tr>
@@ -153,7 +165,7 @@
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
                         <select class="easyui-combobox" name="type" data-options="labelWidth:'70',label:'类型:',width:'300',panelHeight:'auto'">
-                            <option value="1" selected="true">石化结算</option>
+                            <option value="1" selected>石化结算</option>
                             <option value="2">线下销售</option>
                         </select>
                     </div>
@@ -162,8 +174,14 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',
-                        width:'300', min:0, precision:4">
+                        <input class="easyui-numberbox" name="num" placeholder=""
+                            data-options="
+                            labelWidth:'70',
+                            label:'数量:',
+                            width:'300',
+                            min:0,
+                            precision:4
+                        ">
                     </div>
 
                 </td>
@@ -172,8 +190,9 @@
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
                         <select class="easyui-combobox" name="unit" data-options="labelWidth:'70',label:'单位:',width:'130',panelHeight:'auto'">
-                            <option value="1" selected="true">个</option>
+                            <option value="1" selected>个</option>
                             <option value="2">斤</option>
+                            <option value="3">克</option>
                         </select>
                     </div>
 
@@ -182,15 +201,16 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-textbox" name="remark" data-options="
-                        label:'备注:',
-                        width:'400px',
-                        height:'60px',
-                        panelHeight:'auto',
-                        multiline: 'true',
-                        labelPosition: 'left',
-                        labelWidth:'70'
-                    ">
+                        <input class="easyui-textbox" name="remark" placeholder=""
+                            data-options="
+                            label:'备注:',
+                            width:'400px',
+                            height:'60px',
+                            panelHeight:'auto',
+                            multiline: 'true',
+                            labelPosition: 'left',
+                            labelWidth:'70'
+                        ">
                     </div>
                 </td>
             </tr>

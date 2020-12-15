@@ -17,7 +17,7 @@
         <th data-options="width:180,align:'center',field:'p_name'">供应商</th>
         <th data-options="width:180,align:'center',field:'pg_name'">商品名称</th>
         <th data-options="width:130,align:'center',field:'gs_date'">进货日期</th>
-        <th data-options="width:100,align:'center',field:'num_unit'">数量(单位)</th>
+        <th data-options="width:150,align:'center',field:'num_unit'">数量(单位)</th>
         <th data-options="width:300,align:'center',field:'remark'">备注</th>
         <th data-options="width:100,align:'center',field:'u_name'">操作人</th>
         <th data-options="width:200,align:'center',field:'gs_create_time'">创建时间</th>
@@ -28,11 +28,13 @@
 
 <div id="dom_toolbar1">
     <div>
-        <input id="start_date" class="easyui-datebox" labelWidth="70" style="width:180px;" label="开始时间:" labelPosition="left" data-options="formatter:myformatter,parser:myparser"/>
-        <input id="end_date" class="easyui-datebox" labelWidth="70" style="width:180px;" label="结束时间:" labelPosition="left" data-options="formatter:myformatter,parser:myparser"/>
+        <input id="start_date" class="easyui-datebox" labelWidth="70" style="width:180px;" label="开始时间:" labelPosition="left" data-options="formatter:myformatter,parser:myparser" placeholder=""/>
+        <input id="end_date" class="easyui-datebox" labelWidth="70" style="width:180px;" label="结束时间:" labelPosition="left" data-options="formatter:myformatter,parser:myparser" placeholder=""/>
         <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
-        <input id="provider_goods_name" class="easyui-textbox" labelWidth="90" style="width:200px;" label="供应商商品:" labelPosition="left"/>
-        <input id="provider_name" class="easyui-combobox" data-options="
+        <input id="provider_goods_name" class="easyui-textbox" labelWidth="90" style="width:200px;" label="供应商商品:"
+               labelPosition="left" placeholder=""/>
+        <input id="provider_name" class="easyui-combobox" placeholder=""
+               data-options="
                         url:'../ProviderController/getList?rows_only=true',
                         method:'get',
                         valueField:'p_id',
@@ -57,20 +59,20 @@
     </div>
 </div>
 
-<div id="d_edit_goods_stock" class="easyui-window" title="编辑商品进货信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:460px;height:310px;padding:5px;">
+<div id="d_edit_goods_stock" class="easyui-window" title="编辑商品进货信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:460px;height:320px;padding:5px;">
     <form id="f_edit_goods_stock" method="post">
         <table>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input id="edit_goods_stock_gid" name="goods_id" disabled>
+                        <input id="edit_goods_stock_gid" name="goods_id" disabled placeholder="">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input id="edit_goods_stock_date" name="date" disabled
+                        <input id="edit_goods_stock_date" name="date" disabled placeholder=""
                                class="easyui-datebox"
                                data-options="
                                labelWidth:'70',
@@ -78,15 +80,14 @@
                                width:'300px'
                                ">
                     </div>
-
                 </td>
 
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',
-                        width:'300', min:0, precision:4">
+                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70', label:'数量:',
+                        width:'300', min:0,precision:4" placeholder="">
                     </div>
 
                 </td>
@@ -94,9 +95,11 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'70',label:'单位:',width:'200',panelHeight:'auto'">
-                            <option value="1" selected="true">个</option>
+                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'70',label:'单位:',
+                        width:'200',panelHeight:'auto'">
+                            <option value="1" selected>个</option>
                             <option value="2">斤</option>
+                            <option value="3">克</option>
                         </select>
                     </div>
 
@@ -105,7 +108,8 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-textbox" name="remark" data-options="
+                        <input class="easyui-textbox" name="remark" placeholder=""
+                        data-options="
                         label:'备注:',
                         width:'400px',
                         height:'60px',
@@ -126,21 +130,21 @@
     </form>
 </div>
 
-<div id="d_add_goods_stock" class="easyui-window" title="新增商品进货信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:460px;height:310px;padding:5px;">
+<div id="d_add_goods_stock" class="easyui-window" title="新增商品进货信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:460px;height:320px;padding:5px;">
     <form id="f_add_goods_stock" method="post">
         <table>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input id="add_goods_stock_gid" name="goods_id">
-
+                        <input id="add_goods_stock_gid" name="goods_id" placeholder="">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input id='add_goods_stock_date' class="easyui-datebox" name="date" data-options="labelWidth:'70',label:'进货日期:',width:'300px'">
+                        <input id='add_goods_stock_date' class="easyui-datebox" name="date"
+                               data-options="labelWidth:'70',label:'进货日期:',width:'300px'" placeholder="">
                     </div>
                 </td>
             </tr>
@@ -148,7 +152,7 @@
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
                         <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',
-                        width:'300', min:0, precision:4">
+                        width:'300', min:0, precision:4" placeholder="">
                     </div>
 
                 </td>
@@ -156,9 +160,11 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'70',label:'单位:',width:'200',panelHeight:'auto'">
-                            <option value="1" selected="true">个</option>
+                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'70',label:'单位:',
+                        width:'200',panelHeight:'auto'">
+                            <option value="1" selected>个</option>
                             <option value="2">斤</option>
+                            <option value="3">克</option>
                         </select>
                     </div>
                 </td>
@@ -166,7 +172,7 @@
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-textbox" name="remark" data-options="
+                        <input class="easyui-textbox" name="remark" placeholder="" data-options="
                         label:'备注:',
                         width:'400px',
                         height:'60px',

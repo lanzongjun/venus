@@ -28,10 +28,11 @@
 
 <div id="dom_toolbar1">
     <div>
-        <input id="start_date" class="easyui-datebox" labelWidth="70" style="width:180px;" label="开始时间:" labelPosition="left" data-options="formatter:myformatter,parser:myparser"/>
-        <input id="end_date" class="easyui-datebox" labelWidth="70" style="width:180px;" label="结束时间:" labelPosition="left" data-options="formatter:myformatter,parser:myparser"/>
+        <input id="start_date" class="easyui-datebox" labelWidth="70" style="width:180px;" label="开始时间:" labelPosition="left" data-options="formatter:myformatter,parser:myparser" placeholder=""/>
+        <input id="end_date" class="easyui-datebox" labelWidth="70" style="width:180px;" label="结束时间:" labelPosition="left" data-options="formatter:myformatter,parser:myparser" placeholder=""/>
         <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
-        <input id="provider_goods_name" class="easyui-textbox" labelWidth="90" style="width:220px;" label="供应商商品:" labelPosition="left"/>
+        <input id="provider_goods_name" class="easyui-textbox" labelWidth="90" style="width:220px;" label="供应商商品:"
+               labelPosition="left" placeholder=""/>
         <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
         <a id="btn_search" data-options="iconCls:'icon-search'" href="#" class="easyui-linkbutton">查询</a>
         <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
@@ -91,7 +92,7 @@
 <!--                    <div style="margin-left:5px;margin-bottom:5px">-->
 <!--                        <select class="easyui-combobox" name="change_type" readonly disabled-->
 <!--                                data-options="labelWidth:'110',label:'入/出:',width:'200',panelHeight:'auto'">-->
-<!--                            <option value="1" selected="true">转入</option>-->
+<!--                            <option value="1" selected>转入</option>-->
 <!--                            <option value="2">转出</option>-->
 <!--                        </select>-->
 <!--                    </div>-->
@@ -109,7 +110,7 @@ width:'200', min:0, precision:4">-->
 <!--                <td>-->
 <!--                    <div style="margin-left:5px;margin-bottom:5px">-->
 <!--                        <select class="easyui-combobox" name="unit" data-options="labelWidth:'110',label:'单位:',width:'200',panelHeight:'auto'">-->
-<!--                            <option value="1" selected="true">个</option>-->
+<!--                            <option value="1" selected>个</option>-->
 <!--                            <option value="2">斤</option>-->
 <!--                        </select>-->
 <!--                    </div>-->
@@ -139,27 +140,28 @@ width:'200', min:0, precision:4">-->
 <!--    </form>-->
 <!--</div>-->
 
-<div id="d_add_goods_change" class="easyui-window" title="新增商品调度信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:460px;height:390px;padding:5px;">
+<div id="d_add_goods_change" class="easyui-window" title="新增商品调度信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:460px;height:400px;padding:5px;">
     <form id="f_add_goods_change" method="post">
         <table>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input id="add_goods_change_gid" name="goods_id">
+                        <input id="add_goods_change_gid" name="goods_id" placeholder="">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input id="add_goods_change_shopid" name="change_shop">
+                        <input id="add_goods_change_shopid" name="change_shop" placeholder="">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input id='add_goods_change_date' class="easyui-datebox" name="date" data-options="labelWidth:'70',label:'调度日期:',width:'240'">
+                        <input id='add_goods_change_date' class="easyui-datebox" name="date" placeholder=""
+                               data-options="labelWidth:'70',label:'调度日期:',width:'240'">
                     </div>
                 </td>
             </tr>
@@ -167,7 +169,7 @@ width:'200', min:0, precision:4">-->
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
                         <select class="easyui-combobox" name="change_type" data-options="labelWidth:'70',label:'入/出:',width:'200',panelHeight:'auto'">
-                            <option value="1" selected="true">转入</option>
+                            <option value="1" selected>转入</option>
                             <option value="2">转出</option>
                         </select>
                     </div>
@@ -176,8 +178,8 @@ width:'200', min:0, precision:4">-->
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-numberbox" name="num" data-options="labelWidth:'70',label:'数量:',
-                        width:'200', min:0, precision:4">
+                        <input class="easyui-numberbox" name="num" placeholder=""
+                               data-options="labelWidth:'70', label:'数量:', width:'200', min:0, precision:4">
                     </div>
                 </td>
             </tr>
@@ -185,8 +187,9 @@ width:'200', min:0, precision:4">-->
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
                         <select class="easyui-combobox" name="unit" data-options="labelWidth:'70',label:'单位:',width:'200',panelHeight:'auto'">
-                            <option value="1" selected="true">个</option>
+                            <option value="1" selected>个</option>
                             <option value="2">斤</option>
+                            <option value="3">克</option>
                         </select>
                     </div>
                 </td>
@@ -194,15 +197,16 @@ width:'200', min:0, precision:4">-->
             <tr>
                 <td>
                     <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-textbox" name="remark" data-options="
-                        label:'备注:',
-                        width:'400px',
-                        height:'60px',
-                        panelHeight:'auto',
-                        multiline: 'true',
-                        labelPosition: 'left',
-                        labelWidth:'70'
-                    ">
+                        <input class="easyui-textbox" name="remark" placeholder=""
+                            data-options="
+                            label:'备注:',
+                            width:'400px',
+                            height:'60px',
+                            panelHeight:'auto',
+                            multiline: 'true',
+                            labelPosition: 'left',
+                            labelWidth:'70'
+                        ">
                     </div>
                 </td>
             </tr>
