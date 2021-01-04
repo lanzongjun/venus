@@ -60,17 +60,19 @@ class CoreRepertoryModel extends BaseModel
 
         foreach ($rows as &$row) {
 
+            $checkUnitNum = isset($checkRows[$row['goods_id']]['pgcd_num']) ?
+                $checkRows[$row['goods_id']]['pgcd_num'] : 0;
+
             if ($row['pg_is_dumplings']) {
                 $numUnit = round($row['crd_num'] / 500, 4);
                 $row['num_unit'] = $numUnit.'(斤)';
 
-                if (empty($checkRows[$row['goods_id']]['pgcd_num'])) {
+                if (empty($checkUnitNum)) {
                     $row['check_num_unit'] = '--';
                     $row['diff_num_unit'] = '--';
                 } else {
-                    $checkUnitNum = $checkRows[$row['goods_id']]['pgcd_num'];
-                    $row['check_num_unit'] = $checkUnitNum.'(斤)';
-                    $gap = $checkUnitNum - $numUnit;
+                    $row['check_num_unit'] = round($checkUnitNum / 500, 4).'(斤)';
+                    $gap = round($checkUnitNum / 500, 4) - $numUnit;
                     $row['diff_num_unit'] = round($gap, 4).'(斤)';
                 }
             } else {
@@ -78,13 +80,12 @@ class CoreRepertoryModel extends BaseModel
                 $row['num_unit'] = $numUnit.'(个)';
 
 
-                if (empty($checkRows[$row['goods_id']]['pgcd_num'])) {
+                if (empty($checkUnitNum)) {
                     $row['check_num_unit'] = '--';
                     $row['diff_num_unit'] = '--';
                 } else {
-                    $checkUnitNum = $checkRows[$row['goods_id']]['pgcd_num'];
                     $row['check_num_unit'] = intval($checkUnitNum).'(个)';
-                    $gap = $checkUnitNum - $numUnit;
+                    $gap = intval($checkUnitNum - $numUnit);
                     $row['diff_num_unit'] = $gap.'(个)';
                 }
             }
