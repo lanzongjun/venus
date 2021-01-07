@@ -22,7 +22,6 @@ function showAddWin() {
 
 // 新增
 function saveAddForm() {
-    console.log(222);
     $('#f_add_goods_loss').form('submit');
 }
 

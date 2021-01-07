@@ -56,4 +56,51 @@ class GoodsSaleOnlineController extends BaseController
 
         echo json_encode($result);
     }
+
+    /**
+     * 线上数据编辑修改
+     * @author zongjun.lan
+     */
+    public function editGoodsOnlineInfo()
+    {
+        $postData = $this->getPostData();
+        $id       = isset($postData['id']) ? $postData['id'] : '';
+        $num      = isset($postData['num']) ? $postData['num'] : '';
+
+        if (empty($id) || empty($num)) {
+            echo array(
+                'state' => false,
+                'msg'   => '请填写正确的参数'
+            );
+            exit();
+        }
+
+        $this->load->model($this->_s_model);
+        $result = $this->{$this->_s_model}->editGoodsOnlineInfo($id, $num);
+
+        echo json_encode($result);
+    }
+
+    /**
+     * 线上数据删除
+     * @author zongjun.lan
+     */
+    public function deleteGoodsOnlineInfo()
+    {
+        $postData = $this->getPostData();
+        $id       = isset($postData['id']) ? $postData['id'] : '';
+
+        if (empty($id)) {
+            echo array(
+                'state' => false,
+                'msg'   => '请填写正确的参数'
+            );
+            exit();
+        }
+
+        $this->load->model($this->_s_model);
+        $result = $this->{$this->_s_model}->deleteGoodsOnlineInfo($id);
+
+        echo json_encode($result);
+    }
 }

@@ -50,10 +50,9 @@ class GoodsSaleOnlineModel extends BaseModel
 
             $this->db->trans_begin();
 
-            $this->db->insert_batch('goods_sale_online', $formatData);
+            //$this->db->insert_batch('goods_sale_online', $formatData);
 
-            // 返回的id 是最后一次插入的那段数据的第一个ID
-            $firstInsertId = $this->db->insert_id();
+
 
             //处理库存关系
             $skuList = array_unique(array_column($formatData, 'gso_sku_code'));
@@ -64,6 +63,11 @@ class GoodsSaleOnlineModel extends BaseModel
             $goodsSkuMap = $query->get('provider_goods_sku')->result_array();
 
             foreach ($formatData as $formatDataItem) {
+
+                // 插入数据
+                $this->db->insert('goods_sale_online', $formatDataItem);
+                // 返回的id 是最后一次插入的那段数据的第一个ID
+                $firstInsertId = $this->db->insert_id();
                 foreach ($goodsSkuMap as $goodsSkuMapItem) {
 
                     if ($formatDataItem['gso_sku_code'] == $goodsSkuMapItem['pgs_sku_code']) {
@@ -89,7 +93,7 @@ class GoodsSaleOnlineModel extends BaseModel
                         }
                     }
                 }
-                $firstInsertId++;
+                //$firstInsertId++;
             }
 
             if ($this->db->trans_status() === FALSE) {
@@ -197,5 +201,183 @@ class GoodsSaleOnlineModel extends BaseModel
             'total' => intval($resultTotal->total),
             'rows'  => $resultList
         );
+    }
+
+    public function editGoodsOnlineInfo($id, $num)
+    {
+        $originRow = $this->db->where('gso_id', intval($id))->get('goods_sale_online')->first_row();
+        $gap = bcsub($num, $originRow->gso_num);
+
+        // 数量没有变化不做修改
+        if (empty($gap)) {
+            return  array(
+                'state' => true,
+                'msg' => '销量未更改，不做修改'
+            );
+        }
+
+        $shopId  = intval($originRow->gso_shop_id);
+        $skuCode = $originRow->gso_sku_code;
+        $date    = $originRow->gso_date;
+
+        $this->db->trans_begin();
+
+        /* 修改库存份数 */
+        $this->db->where('gso_id', intval($id))->update('goods_sale_online', ['gso_num' => intval($num)]);
+
+        /* 查询库存记录表记录 */
+        $repertoryRecordRows = $this->db
+            ->where('crr_shop_id', $shopId)
+            ->where('crr_ref_id', intval($originRow->gso_id))
+            ->where('crr_type', REPERTORY_TYPE_GOODS_SALE_ONLINE)
+            ->where('crr_date', $date)
+            ->get('core_repertory_record')
+            ->result();
+
+        /* 获取sku-map */
+        $skuMap = $this->db
+            ->join('provider_goods_sample', 'provider_goods_sample.pgs_provider_goods_id = provider_goods_sku.pgs_provider_goods_id', 'left')
+            ->where('pgs_sku_code', $skuCode)
+            ->select('provider_goods_sku.pgs_provider_goods_id, provider_goods_sku.pgs_num, provider_goods_sample.pgs_weight')
+            ->get('provider_goods_sku')
+            ->result();
+
+        $skuMap = array_column($skuMap, NULL, 'pgs_provider_goods_id');
+
+        /* 修改库存记录数据 */
+        $recordWhere = [
+            'crr_shop_id' => $shopId,
+            'crr_ref_id' => intval($originRow->gso_id),
+            'crr_type'   => REPERTORY_TYPE_GOODS_SALE_ONLINE
+        ];
+        $repWhere = [
+            'cr_shop_id' => $shopId,
+        ];
+        $dailyWhere = [
+            'crd_shop_id' => $shopId,
+            'crd_date >=' => $date,
+            'crd_date <'  => date('Y-m-d')
+        ];
+        foreach ($repertoryRecordRows as $recordRow) {
+
+            $goodsId = $recordRow->crr_provider_goods_id;
+            $recordWhere['crr_provider_goods_id'] = intval($goodsId);
+            $recordWhere['crr_date'] = $recordRow->crr_date;
+            $recordGap = $gap * $skuMap[$goodsId]->pgs_num;
+
+            /* 修改库存记录数据 */
+            $this->db->where($recordWhere)
+                ->set('crr_num', "crr_num - ({$recordGap})", false)
+                ->update('core_repertory_record');
+
+            /* 修改总库存数据 */
+            $repWhere['cr_provider_goods_id'] = intval($goodsId);
+            if (empty($skuMap[$goodsId]->pgs_weight)) {
+                $repGap = $gap * $skuMap[$goodsId]->pgs_num;
+            } else {
+                $repGap = round($gap * $skuMap[$goodsId]->pgs_num * $skuMap[$goodsId]->pgs_weight, 4);
+            }
+            $this->db->where($repWhere)
+                ->set('cr_num', "cr_num - ({$repGap})", false)
+                ->update('core_repertory');
+
+            /* 修改库存日表数据 */
+            $dailyWhere['crd_provider_goods_id'] = intval($goodsId);
+            $this->db->where($dailyWhere)
+                ->set('crd_num', "crd_num - ({$repGap})", false)
+                ->update('core_repertory_daily');
+        }
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+        } else {
+            $this->db->trans_commit();
+        }
+
+        return  array(
+            'state' => true,
+            'msg' => '修改成功'
+        );
+    }
+
+    public function deleteGoodsOnlineInfo($id)
+    {
+        $originRow = $this->db->where('gso_id', intval($id))->get('goods_sale_online')->first_row();
+
+        if (empty($originRow)) {
+            return  array(
+                'state' => true,
+                'msg' => '记录不存在'
+            );
+        }
+
+        $num     = $originRow->gso_num;
+        $shopId  = intval($originRow->gso_shop_id);
+        $skuCode = $originRow->gso_sku_code;
+        $date    = $originRow->gso_date;
+
+        $this->db->trans_begin();
+
+        /* 删除库存份数 */
+        $this->db->where('gso_id', intval($id))->delete('goods_sale_online');
+
+        /* 删除库存记录数据 */
+        $recordWhere = [
+            'crr_shop_id' => $shopId,
+            'crr_date'    => $date,
+            'crr_type'    => REPERTORY_TYPE_GOODS_SALE_ONLINE,
+            'crr_ref_id'  => intval($id),
+        ];
+        $this->db->where($recordWhere)->delete('core_repertory_record');
+
+        /* 获取sku-map */
+        $skuMap = $this->db
+            ->join('provider_goods_sample', 'provider_goods_sample.pgs_provider_goods_id = provider_goods_sku.pgs_provider_goods_id', 'left')
+            ->where('pgs_sku_code', $skuCode)
+            ->select('provider_goods_sku.pgs_provider_goods_id, provider_goods_sku.pgs_num, provider_goods_sample.pgs_weight')
+            ->get('provider_goods_sku')
+            ->result();
+
+        foreach ($skuMap as $item) {
+
+            $goodsId = $item->pgs_provider_goods_id;
+
+            /* 修改总库存数据 */
+            $repWhere = [
+                'cr_shop_id' => $shopId,
+                'cr_provider_goods_id' => intval($goodsId)
+            ];
+            if (empty($item->pgs_weight)) {
+                $repGap = $num * $item->pgs_num;
+            } else {
+                $repGap = round($num * $item->pgs_num * $item->pgs_weight, 4);
+            }
+            $this->db->where($repWhere)
+                ->set('cr_num', "cr_num + ({$repGap})", false)
+                ->update('core_repertory');
+
+            /* 修改库存日表数据 */
+            $dailyWhere = [
+                'crd_shop_id' => $shopId,
+                'crd_date >=' => $date,
+                'crd_date <'  => date('Y-m-d'),
+                'crd_provider_goods_id' => intval($goodsId)
+            ];
+            $this->db->where($dailyWhere)
+                ->set('crd_num', "crd_num + ({$repGap})", false)
+                ->update('core_repertory_daily');
+        }
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+        } else {
+            $this->db->trans_commit();
+        }
+
+        return  array(
+            'state' => true,
+            'msg' => '修改成功'
+        );
+
     }
 }

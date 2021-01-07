@@ -156,7 +156,6 @@ class GoodsStaffMealModel extends BaseModel
 
         $updateData = [
             'gsm_operator' => $userId,
-            'gsm_date'     => $date,
             'gsm_unit'     => $unit,
             'gsm_num'      => $num,
             'gsm_remark'   => $remark
