@@ -69,6 +69,17 @@ class GoodsExceptionHandleController extends BaseController
             $remark
         );
 
+        // LOG
+        $this->OperationLogModel->write(
+            $this->user_id,
+            GoodsExceptionHandleConstant::ADD_EXCEPTION_HANDLE,
+            GoodsExceptionHandleConstant::getMessage(GoodsExceptionHandleConstant::ADD_EXCEPTION_HANDLE),
+            [
+                'params' => $postData,
+                'result' => $result
+            ]
+        );
+
         echo json_encode($result);
     }
 
@@ -88,6 +99,17 @@ class GoodsExceptionHandleController extends BaseController
 
         $this->load->model($this->_s_model);
         $result = $this->{$this->_s_model}->deleteExceptionHandleRecord($id);
+
+        // LOG
+        $this->OperationLogModel->write(
+            $this->user_id,
+            GoodsExceptionHandleConstant::DELETE_EXCEPTION_HANDLE,
+            GoodsExceptionHandleConstant::getMessage(GoodsExceptionHandleConstant::DELETE_EXCEPTION_HANDLE),
+            [
+                'params' => $postData,
+                'result' => $result
+            ]
+        );
 
         echo json_encode($result);
     }
@@ -137,6 +159,17 @@ class GoodsExceptionHandleController extends BaseController
             $order,
             $isReduceStock,
             $remark
+        );
+
+        // LOG
+        $this->OperationLogModel->write(
+            $this->user_id,
+            GoodsExceptionHandleConstant::EDIT_EXCEPTION_HANDLE,
+            GoodsExceptionHandleConstant::getMessage(GoodsExceptionHandleConstant::EDIT_EXCEPTION_HANDLE),
+            [
+                'params' => $postData,
+                'result' => $result
+            ]
         );
 
         echo json_encode($result);

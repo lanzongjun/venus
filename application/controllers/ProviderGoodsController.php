@@ -84,6 +84,17 @@ class ProviderGoodsController extends BaseController
         $this->load->model($this->_s_model);
         $result = $this->{$this->_s_model}->addProviderGoods($providerId, $providerGoodsName, $isDumplings);
 
+        // LOG
+        $this->OperationLogModel->write(
+            $this->user_id,
+            ProviderGoodsConstant::ADD_PROVIDER_GOODS,
+            ProviderGoodsConstant::getMessage(ProviderGoodsConstant::ADD_PROVIDER_GOODS),
+            [
+                'params' => $postData,
+                'result' => $result
+            ]
+        );
+
         echo json_encode($result);
     }
 
@@ -105,6 +116,17 @@ class ProviderGoodsController extends BaseController
 
         $this->load->model($this->_s_model);
         $result = $this->{$this->_s_model}->editProviderGoods($postData);
+
+        // LOG
+        $this->OperationLogModel->write(
+            $this->user_id,
+            ProviderGoodsConstant::EDIT_PROVIDER_GOODS,
+            ProviderGoodsConstant::getMessage(ProviderGoodsConstant::EDIT_PROVIDER_GOODS),
+            [
+                'params' => $postData,
+                'result' => $result
+            ]
+        );
 
         echo json_encode($result);
     }

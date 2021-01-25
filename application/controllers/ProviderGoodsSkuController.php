@@ -66,6 +66,17 @@ class ProviderGoodsSkuController extends BaseController
         $this->load->model($this->_s_model);
         $result = $this->{$this->_s_model}->addProviderGoodsSku($skuCode, $providerGoods, $num);
 
+        // LOG
+        $this->OperationLogModel->write(
+            $this->user_id,
+            ProviderGoodsSkuConstant::ADD_PROVIDER_GOODS_SKU,
+            ProviderGoodsSkuConstant::getMessage(ProviderGoodsSkuConstant::ADD_PROVIDER_GOODS_SKU),
+            [
+                'params' => $postData,
+                'result' => $result
+            ]
+        );
+
         echo json_encode($result);
     }
 
@@ -89,6 +100,17 @@ class ProviderGoodsSkuController extends BaseController
 
         $this->load->model($this->_s_model);
         $result = $this->{$this->_s_model}->editProviderGoodsSku($providerGoodsSkuId, $providerGoodsId, $skuCode, $num);
+
+        // LOG
+        $this->OperationLogModel->write(
+            $this->user_id,
+            ProviderGoodsSkuConstant::EDIT_PROVIDER_GOODS_SKU,
+            ProviderGoodsSkuConstant::getMessage(ProviderGoodsSkuConstant::EDIT_PROVIDER_GOODS_SKU),
+            [
+                'params' => $postData,
+                'result' => $result
+            ]
+        );
 
         echo json_encode($result);
     }

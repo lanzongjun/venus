@@ -24,11 +24,24 @@ class BaseController extends CI_Controller
 
         $this->load->library('session');
         $this->load->helper('common_helper');
+        $this->load->model('UserModel');
+        $this->load->model('OperationLogModel');
 
-        // 没有session需要重定向登录
-        if (empty($this->session->s_user)) {
-            redirect('admin/index');
-        }
+
+//        // 没有session需要重定向登录
+//        if (empty($this->session->s_user)) {
+////            redirect('admin/index');
+//            redirect(site_url('admin/index'));
+//        }
+
+        //检测是否已登录
+        $this->UserModel->isLogin();
+        // 获取class
+        $className = $this->router->fetch_class();
+
+        include_once APPPATH . 'constants/' . str_replace('Controller', 'Constant.php', $className);
+
+
 
         $this->user = $this->session->s_user;
 

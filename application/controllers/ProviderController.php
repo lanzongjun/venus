@@ -61,8 +61,20 @@ class ProviderController extends BaseController
         $postData = $this->input->post();
 
         $this->load->model($this->_s_model);
-        $o_result = $this->{$this->_s_model}->addProviderInfo($postData);
-        echo json_encode($o_result);
+        $result = $this->{$this->_s_model}->addProviderInfo($postData);
+
+        // LOG
+        $this->OperationLogModel->write(
+            $this->user_id,
+            ProviderConstant::ADD_PROVIDER,
+            ProviderConstant::getMessage(ProviderConstant::ADD_PROVIDER),
+            [
+                'params' => $postData,
+                'result' => $result
+            ]
+        );
+
+        echo json_encode($result);
     }
 
     /**
@@ -74,6 +86,18 @@ class ProviderController extends BaseController
 
         $this->load->model($this->_s_model);
         $result = $this->{$this->_s_model}->editProviderInfo($postData);
+
+        // LOG
+        $this->OperationLogModel->write(
+            $this->user_id,
+            ProviderConstant::EDIT_PROVIDER,
+            ProviderConstant::getMessage(ProviderConstant::EDIT_PROVIDER),
+            [
+                'params' => $postData,
+                'result' => $result
+            ]
+        );
+
         echo json_encode($result);
     }
 }

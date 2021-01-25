@@ -97,6 +97,17 @@ class CoreSkuController extends BaseController
         $this->load->model($this->_s_model);
         $result = $this->{$this->_s_model}->addSkuInfo($postData);
 
+        // LOG
+        $this->OperationLogModel->write(
+            $this->user_id,
+            CoreSkuConstant::ADD_SKU,
+            CoreSkuConstant::getMessage(CoreSkuConstant::ADD_SKU),
+            [
+                'params' => $postData,
+                'result' => $result
+            ]
+        );
+
         echo json_encode($result);
     }
 
@@ -119,6 +130,17 @@ class CoreSkuController extends BaseController
 
         $this->load->model($this->_s_model);
         $result = $this->{$this->_s_model}->editSkuInfo($id, $code, $name, $description);
+
+        // LOG
+        $this->OperationLogModel->write(
+            $this->user_id,
+            CoreSkuConstant::EDIT_SKU,
+            CoreSkuConstant::getMessage(CoreSkuConstant::EDIT_SKU),
+            [
+                'params' => $postData,
+                'result' => $result
+            ]
+        );
 
         echo json_encode($result);
     }

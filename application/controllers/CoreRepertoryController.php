@@ -62,6 +62,18 @@ class CoreRepertoryController extends BaseController
                 ],
                 $intersectData
             );
+
+            // LOG
+            $this->OperationLogModel->write(
+                $this->user_id,
+                CoreRepertoryConstant::OUTPUT_CORE_REPERTORY,
+                CoreRepertoryConstant::getMessage(CoreRepertoryConstant::OUTPUT_CORE_REPERTORY),
+                [
+                    'params' => $getData,
+                    'result' => ['msg' => '导出成功']
+                ]
+            );
+
             exit();
         }
 

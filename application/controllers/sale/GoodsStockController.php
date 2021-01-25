@@ -102,6 +102,17 @@ class GoodsStockController extends BaseController
             $remark
         );
 
+        // LOG
+        $this->OperationLogModel->write(
+            $this->user_id,
+            GoodsStockConstant::ADD_GOODS_STOCK,
+            GoodsStockConstant::getMessage(GoodsStockConstant::ADD_GOODS_STOCK),
+            [
+                'params' => $postData,
+                'result' => $result
+            ]
+        );
+
         echo json_encode($result);
     }
 
@@ -121,6 +132,17 @@ class GoodsStockController extends BaseController
 
         $this->load->model($this->_s_model);
         $result = $this->{$this->_s_model}->deleteGoodsStockRecord($gsId);
+
+        // LOG
+        $this->OperationLogModel->write(
+            $this->user_id,
+            GoodsStockConstant::DELETE_GOODS_STOCK,
+            GoodsStockConstant::getMessage(GoodsStockConstant::DELETE_GOODS_STOCK),
+            [
+                'params' => $postData,
+                'result' => $result
+            ]
+        );
 
         echo json_encode($result);
     }
@@ -166,6 +188,17 @@ class GoodsStockController extends BaseController
             $num,
             $unit,
             $remark
+        );
+
+        // LOG
+        $this->OperationLogModel->write(
+            $this->user_id,
+            GoodsStockConstant::EDIT_GOODS_STOCK,
+            GoodsStockConstant::getMessage(GoodsStockConstant::EDIT_GOODS_STOCK),
+            [
+                'params' => $postData,
+                'result' => $result
+            ]
         );
 
         echo json_encode($result);

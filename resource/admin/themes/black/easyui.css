@@ -5,6 +5,16 @@
   -ms-box-sizing: border-box;
   box-sizing: border-box;
 }
+
+.system_title_panel {
+  height:60px !important;
+  background:#EEEEEE !important;
+  padding:10px !important;
+  font-size:30px !important;
+  color:#000000 !important;
+  cursor: pointer !important;
+}
+
 .panel {
   overflow: hidden;
   text-align: left;

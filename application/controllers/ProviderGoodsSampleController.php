@@ -66,9 +66,20 @@ class ProviderGoodsSampleController extends BaseController
         }
 
         $this->load->model($this->_s_model);
-        $o_result = $this->{$this->_s_model}->addProviderGoodsSampleInfo($pgId, $weight, $num);
+        $result = $this->{$this->_s_model}->addProviderGoodsSampleInfo($pgId, $weight, $num);
 
-        echo json_encode($o_result);
+        // LOG
+        $this->OperationLogModel->write(
+            $this->user_id,
+            ProviderGoodsSampleConstant::ADD_PROVIDER_GOODS_SAMPLE_INFO,
+            ProviderGoodsSampleConstant::getMessage(ProviderGoodsSampleConstant::ADD_PROVIDER_GOODS_SAMPLE_INFO),
+            [
+                'params' => $postData,
+                'result' => $result
+            ]
+        );
+
+        echo json_encode($result);
     }
 
     public function editProviderGoodsSampleInfo()
@@ -77,6 +88,18 @@ class ProviderGoodsSampleController extends BaseController
 
         $this->load->model($this->_s_model);
         $result = $this->{$this->_s_model}->editProviderGoodsSampleInfo($postData);
+
+        // LOG
+        $this->OperationLogModel->write(
+            $this->user_id,
+            ProviderGoodsSampleConstant::EDIT_PROVIDER_GOODS_SAMPLE_INFO,
+            ProviderGoodsSampleConstant::getMessage(ProviderGoodsSampleConstant::EDIT_PROVIDER_GOODS_SAMPLE_INFO),
+            [
+                'params' => $postData,
+                'result' => $result
+            ]
+        );
+
         echo json_encode($result);
     }
 

@@ -109,7 +109,7 @@ class GoodsLossController extends BaseController
         }
 
         $this->load->model($this->_s_model);
-        $o_result = $this->{$this->_s_model}->addGoodsLossInfo(
+        $result = $this->{$this->_s_model}->addGoodsLossInfo(
             $this->shop_id,
             $this->user_id,
             $type,
@@ -121,7 +121,18 @@ class GoodsLossController extends BaseController
             $remark
         );
 
-        echo json_encode($o_result);
+        // LOG
+        $this->OperationLogModel->write(
+            $this->user_id,
+            GoodsLossConstant::ADD_GOODS_LOSS_INFO,
+            GoodsLossConstant::getMessage(GoodsLossConstant::ADD_GOODS_LOSS_INFO),
+            [
+                'params' => $postData,
+                'result' => $result
+            ]
+        );
+
+        echo json_encode($result);
     }
 
     public function editGoodsLossInfo()
@@ -155,6 +166,17 @@ class GoodsLossController extends BaseController
             $remark
         );
 
+        // LOG
+        $this->OperationLogModel->write(
+            $this->user_id,
+            GoodsLossConstant::EDIT_GOODS_LOSS_INFO,
+            GoodsLossConstant::getMessage(GoodsLossConstant::EDIT_GOODS_LOSS_INFO),
+            [
+                'params' => $postData,
+                'result' => $result
+            ]
+        );
+
         echo json_encode($result);
     }
 
@@ -174,6 +196,17 @@ class GoodsLossController extends BaseController
 
         $this->load->model($this->_s_model);
         $result = $this->{$this->_s_model}->deleteGoodsLoss($id);
+
+        // LOG
+        $this->OperationLogModel->write(
+            $this->user_id,
+            GoodsLossConstant::DELETE_GOODS_LOSS_INFO,
+            GoodsLossConstant::getMessage(GoodsLossConstant::DELETE_GOODS_LOSS_INFO),
+            [
+                'params' => $postData,
+                'result' => $result
+            ]
+        );
 
         echo json_encode($result);
     }

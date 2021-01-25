@@ -46,6 +46,18 @@ class FinanceAccountController extends BaseController
                 ],
                 $intersectData
             );
+
+            // LOG
+            $this->OperationLogModel->write(
+                $this->user_id,
+                FinanceAccountConstant::OUTPUT_FINANCE_ACCOUNT,
+                FinanceAccountConstant::getMessage(FinanceAccountConstant::OUTPUT_FINANCE_ACCOUNT),
+                [
+                    'params' => $getData,
+                    'result' => ['msg' => '导出成功']
+                ]
+            );
+
             exit();
         }
 

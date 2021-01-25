@@ -8,6 +8,7 @@ class Admin extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->library('session');
         $this->load->helper('common_helper');
     }
 
@@ -30,7 +31,6 @@ class Admin extends CI_Controller
         $user = $this->UserModel->u_select($postData['u_name']);
         if ($user) {
             if ($user->u_password == $postData['u_pw']) {
-                $this->load->library('session');
                 $this->session->set_userdata('s_user', $user);
                 //$s_user = $this->session->all_userdata();
                 $this->load->helper('url');
@@ -49,30 +49,41 @@ class Admin extends CI_Controller
         }
     }
 
-    function is_login() {
-        $this->load->library('session');
+    public function is_login()
+    {
         if ($this->session->userdata('s_id')) {
-            echo "logined";
+            $data = [
+                'status' => 0,
+                'msg'    => 'login'
+            ];
         } else {
-            echo "no login";
+            $data = [
+                'status' => -1,
+                'msg'    => 'logout'
+            ];
         }
+        echo json_encode($data);
     }
 
-    function logout() {
-        $this->load->library('session');
-        $this->session->unset_userdata('s_id');
+    public function logout()
+    {
+        $this->session->sess_destroy();
+        $data['title'] = ucfirst('index'); // Capitalize the first letter
+
+        $this->load->helper('url');
+        $this->load->view('admin/login/index', $data);
     }
 
     public function main()
     {
         $data['title'] = my_env('PROJECT_NAME');;
-        $this->load->library('session');
         $s_user = $this->session->userdata('s_user');
         if (!$s_user) {
             $data['title'] = ucfirst('index');
             $this->load->helper('url');
             $this->load->view('admin/login/index', $data);
         } else {
+            $data['nickname'] = $this->session->s_user->u_name.'，你好';
             $this->load->helper('url');
             $this->load->view('admin/main/index', $data);
         }

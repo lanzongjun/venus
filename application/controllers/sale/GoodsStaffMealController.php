@@ -62,6 +62,17 @@ class GoodsStaffMealController extends BaseController
             $remark
         );
 
+        // LOG
+        $this->OperationLogModel->write(
+            $this->user_id,
+            GoodsStaffMealConstant::ADD_STAFF_MEAL,
+            GoodsStaffMealConstant::getMessage(GoodsStaffMealConstant::ADD_STAFF_MEAL),
+            [
+                'params' => $postData,
+                'result' => $result
+            ]
+        );
+
         echo json_encode($result);
     }
 
@@ -81,6 +92,17 @@ class GoodsStaffMealController extends BaseController
 
         $this->load->model($this->_s_model);
         $result = $this->{$this->_s_model}->deleteStaffMealRecord($id);
+
+        // LOG
+        $this->OperationLogModel->write(
+            $this->user_id,
+            GoodsStaffMealConstant::DELETE_STAFF_MEAL,
+            GoodsStaffMealConstant::getMessage(GoodsStaffMealConstant::DELETE_STAFF_MEAL),
+            [
+                'params' => $postData,
+                'result' => $result
+            ]
+        );
 
         echo json_encode($result);
     }
@@ -124,6 +146,17 @@ class GoodsStaffMealController extends BaseController
             $unit,
             $num,
             $remark
+        );
+
+        // LOG
+        $this->OperationLogModel->write(
+            $this->user_id,
+            GoodsStaffMealConstant::EDIT_STAFF_MEAL,
+            GoodsStaffMealConstant::getMessage(GoodsStaffMealConstant::EDIT_STAFF_MEAL),
+            [
+                'params' => $postData,
+                'result' => $result
+            ]
         );
 
         echo json_encode($result);

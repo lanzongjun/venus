@@ -68,6 +68,17 @@ class GoodsChangeController extends BaseController
             $remark
         );
 
+        // LOG
+        $this->OperationLogModel->write(
+            $this->user_id,
+            GoodsChangeConstant::ADD_GOODS_CHANGE,
+            GoodsChangeConstant::getMessage(GoodsChangeConstant::ADD_GOODS_CHANGE),
+            [
+                'params' => $postData,
+                'result' => $result
+            ]
+        );
+
         echo json_encode($result);
     }
 
@@ -87,6 +98,17 @@ class GoodsChangeController extends BaseController
 
         $this->load->model($this->_s_model);
         $result = $this->{$this->_s_model}->deleteGoodsChangeRecord($id);
+
+        // LOG
+        $this->OperationLogModel->write(
+            $this->user_id,
+            GoodsChangeConstant::DELETE_GOODS_CHANGE,
+            GoodsChangeConstant::getMessage(GoodsChangeConstant::DELETE_GOODS_CHANGE),
+            [
+                'params' => $postData,
+                'result' => $result
+            ]
+        );
 
         echo json_encode($result);
     }
@@ -138,6 +160,17 @@ class GoodsChangeController extends BaseController
             $changeType,
             $changeShop,
             $remark
+        );
+
+        // LOG
+        $this->OperationLogModel->write(
+            $this->user_id,
+            GoodsChangeConstant::EDIT_GOODS_CHANGE,
+            GoodsChangeConstant::getMessage(GoodsChangeConstant::EDIT_GOODS_CHANGE),
+            [
+                'params' => $postData,
+                'result' => $result
+            ]
         );
 
         echo json_encode($result);

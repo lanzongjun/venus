@@ -92,7 +92,7 @@ class GoodsSaleOfflineController extends BaseController
     public function addGoodsSaleOffline()
     {
         $postData = $this->getPostData();
-;
+
         $goodsId = isset($postData['goods_id']) ? $postData['goods_id'] : '';
         $date    = isset($postData['date']) ? $postData['date'] : '';
         $type    = isset($postData['type']) ? $postData['type'] : '';
@@ -118,6 +118,17 @@ class GoodsSaleOfflineController extends BaseController
             $num,
             $unit,
             $remark
+        );
+
+        // LOG
+        $this->OperationLogModel->write(
+            $this->user_id,
+            GoodsSaleOfflineConstant::ADD_GOODS_SALE_OFFLINE,
+            GoodsSaleOfflineConstant::getMessage(GoodsSaleOfflineConstant::ADD_GOODS_SALE_OFFLINE),
+            [
+                'params' => $postData,
+                'result' => $result
+            ]
         );
 
         echo json_encode($result);
@@ -154,6 +165,17 @@ class GoodsSaleOfflineController extends BaseController
             $remark
         );
 
+        // LOG
+        $this->OperationLogModel->write(
+            $this->user_id,
+            GoodsSaleOfflineConstant::EDIT_GOODS_SALE_OFFLINE,
+            GoodsSaleOfflineConstant::getMessage(GoodsSaleOfflineConstant::EDIT_GOODS_SALE_OFFLINE),
+            [
+                'params' => $postData,
+                'result' => $result
+            ]
+        );
+
         echo json_encode($result);
     }
 
@@ -173,6 +195,17 @@ class GoodsSaleOfflineController extends BaseController
 
         $this->load->model($this->_s_model);
         $result = $this->{$this->_s_model}->deleteGoodsSaleOffline($id);
+
+        // LOG
+        $this->OperationLogModel->write(
+            $this->user_id,
+            GoodsSaleOfflineConstant::DELETE_GOODS_SALE_OFFLINE,
+            GoodsSaleOfflineConstant::getMessage(GoodsSaleOfflineConstant::DELETE_GOODS_SALE_OFFLINE),
+            [
+                'params' => $postData,
+                'result' => $result
+            ]
+        );
 
         echo json_encode($result);
     }

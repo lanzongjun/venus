@@ -39,4 +39,16 @@ class UserModel extends BaseModel
         return $query->first_row();
     }
 
+    /**
+     * 检测是否登录
+     */
+    public function isLogin()
+    {
+        $adminUserId = $this->session->s_user->u_id;
+        if (empty($adminUserId)) {
+            redirect(site_url('admin/index'));
+        }
+        return true;
+    }
+
 }

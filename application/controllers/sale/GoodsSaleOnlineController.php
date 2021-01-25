@@ -54,6 +54,17 @@ class GoodsSaleOnlineController extends BaseController
         $this->load->model($this->_s_model);
         $result = $this->{$this->_s_model}->addSaleOnlineExcelData($excelData);
 
+        // LOG
+        $this->OperationLogModel->write(
+            $this->user_id,
+            GoodsSaleOnlineConstant::IMPORT_EXCEL,
+            GoodsSaleOnlineConstant::getMessage(GoodsSaleOnlineConstant::IMPORT_EXCEL),
+            [
+                'params' => '',
+                'result' => $result
+            ]
+        );
+
         echo json_encode($result);
     }
 
@@ -78,6 +89,17 @@ class GoodsSaleOnlineController extends BaseController
         $this->load->model($this->_s_model);
         $result = $this->{$this->_s_model}->editGoodsOnlineInfo($id, $num);
 
+        // LOG
+        $this->OperationLogModel->write(
+            $this->user_id,
+            GoodsSaleOnlineConstant::EDIT_GOODS_ONLINE_INFO,
+            GoodsSaleOnlineConstant::getMessage(GoodsSaleOnlineConstant::EDIT_GOODS_ONLINE_INFO),
+            [
+                'params' => $postData,
+                'result' => $result
+            ]
+        );
+
         echo json_encode($result);
     }
 
@@ -100,6 +122,17 @@ class GoodsSaleOnlineController extends BaseController
 
         $this->load->model($this->_s_model);
         $result = $this->{$this->_s_model}->deleteGoodsOnlineInfo($id);
+
+        // LOG
+        $this->OperationLogModel->write(
+            $this->user_id,
+            GoodsSaleOnlineConstant::DELETE_GOODS_ONLINE_INFO,
+            GoodsSaleOnlineConstant::getMessage(GoodsSaleOnlineConstant::DELETE_GOODS_ONLINE_INFO),
+            [
+                'params' => $postData,
+                'result' => $result
+            ]
+        );
 
         echo json_encode($result);
     }
