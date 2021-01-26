@@ -25,8 +25,9 @@ class OperationLogModel extends BaseModel
 
     }
 
-    public function getList($isRoot,
-        $sId,
+    public function getList(
+        $uid,
+        $shopId,
         $title,
         $content,
         $nickname,
@@ -36,11 +37,9 @@ class OperationLogModel extends BaseModel
         $rows)
     {
         $query = $this->db;
-        $query->join('admin_user', 'admin_user.uid = operation_log.uid', 'left');
-
-        if (!$isRoot) {
-            $query->where('operation_log.uid', $sId);
-        }
+        $query->join('user', 'user.u_id = operation_log.uid', 'left');
+        $query->where('u_id', $uid);
+        $query->where('u_shop_id', $shopId);
 
         if (!empty($title)) {
             $query->like('title', $title);
@@ -73,7 +72,7 @@ class OperationLogModel extends BaseModel
         }
 
         // 获取分页数据
-        $queryList->select('operation_log.id, nickname, identify_code, ip, title, content, create_time');
+        $queryList->select('operation_log.id, u_name as nickname, identify_code, ip, title, content, create_time');
 
         $offset = ($page - 1) * $rows;
         $queryList->limit($rows, $offset);
@@ -83,7 +82,8 @@ class OperationLogModel extends BaseModel
         foreach ($rows as  &$row) {
             $row['ip'] = long2ip($row['ip']);
             $content = json_decode($row['content'], true);
-            $row['content'] = empty($content['res']['msg']) ? $row['content'] : $content['res']['msg'];
+            $row['params'] = empty($content['params']) ? '--' : json_encode($content['params']);
+            $row['message'] = empty($content['result']['msg']) ? '--' : $content['result']['msg'];
         }
 
         return array(
