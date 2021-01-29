@@ -41,6 +41,7 @@ class FinanceAccountController extends BaseController
                 '财务结算列表',
                 [
                     '商品ID','商品名称','单位','入库数量',
+                    '调度-转入','调度-转出',
                     '线下销售-石化结算','线下销售-现场结算','线上销售',
                     '异常情况','员工餐','损耗-店内破损','损耗-退单'
                 ],
@@ -73,6 +74,8 @@ class FinanceAccountController extends BaseController
                 'goods_name' => $item['goods_name'],
                 'unit' => $item['unit'],
                 'stock' => $item['data'][REPERTORY_TYPE_GOODS_STOCK]['num'],
+                'change_in' => $item['data'][REPERTORY_TYPE_GOODS_CHANGE_IN]['num'],
+                'change_out' => $item['data'][REPERTORY_TYPE_GOODS_CHANGE_OUT]['num'],
                 'offline_shihua' => $item['data'][REPERTORY_TYPE_GOODS_SALE_OFFLINE_SHIHUA]['num'],
                 'offline_locate' => $item['data'][REPERTORY_TYPE_GOODS_SALE_OFFLINE_LOCATE]['num'],
                 'online' => $item['data'][REPERTORY_TYPE_GOODS_SALE_ONLINE]['num'],
