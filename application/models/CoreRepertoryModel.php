@@ -62,6 +62,8 @@ class CoreRepertoryModel extends BaseModel
 
             $checkUnitNum = isset($checkRows[$row['goods_id']]['pgcd_num']) ?
                 $checkRows[$row['goods_id']]['pgcd_num'] : 0;
+            $checkUnit = isset($checkRows[$row['goods_id']]['pgcd_unit']) ?
+                $checkRows[$row['goods_id']]['pgcd_unit'] : 0;
 
             if ($row['pg_is_dumplings']) {
                 $numUnit = round($row['crd_num'] / 500, 4);
@@ -71,8 +73,13 @@ class CoreRepertoryModel extends BaseModel
                     $row['check_num_unit'] = '--';
                     $row['diff_num_unit'] = '--';
                 } else {
-                    $row['check_num_unit'] = round($checkUnitNum / 500, 4).'(斤)';
-                    $gap = round($checkUnitNum / 500, 4) - $numUnit;
+                    if ($checkUnit == 3) { // 克
+                        $row['check_num_unit'] = round($checkUnitNum / 500, 4).'(斤)';
+                        $gap = round($checkUnitNum / 500, 4) - $numUnit;
+                    } else {
+                        $row['check_num_unit'] = $checkUnitNum.'(斤)';
+                        $gap = $checkUnitNum - $numUnit;
+                    }
                     $row['diff_num_unit'] = round($gap, 4).'(斤)';
                 }
             } else {
