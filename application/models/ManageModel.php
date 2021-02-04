@@ -21,7 +21,7 @@ class ManageModel extends BaseModel
             ->where('manage_role.is_deleted', 0)
             ->select('manage.id, uid, role_id, name as role_name, desc as role_desc, perms')
             ->get('manage')
-            ->result_array();
+            ->first_row();
 
         return $result;
     }

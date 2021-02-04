@@ -55,7 +55,7 @@ class Authhandler
 
         // 待验证权限
         if (is_string($names)) {
-            $names = strtolower($names);
+//            $names = strtolower($names);
             if (strpos($names, ',') !== false) {
                 $names = explode(',', $names);
             } else {
@@ -75,10 +75,12 @@ class Authhandler
         if ('or' == $relation and !empty($list)) {
             return true;
         }
+
         $diff = array_diff($names, $list);
         if ('and' == $relation and empty($diff)) {
             return true;
         }
+
         return false;
     }
 
@@ -90,19 +92,15 @@ class Authhandler
     public function getAuthList($uid)
     {
         $this->_CI->load->model("ManageModel");
-        $perms = $this->_CI->ManageModel->getPermsByUID($uid);
+        $userPerms = $this->_CI->ManageModel->getPermsByUID($uid);
 
-        $ids = [];
-        foreach ($perms as $perm) {
-            $ids = array_merge($ids, explode(',', trim($perm['perms'], ',')));
-        }
-        $ids = array_unique($ids);
         $this->_CI->load->model("ManagePermsModel");
-        $rules = $this->_CI->ManagePermsModel->getRulesByIds($ids);
-        dd($rules);
-        // TODO 
-        $_SESSION['admin']['AUTH_'.$uid] = $rules;
-        $authList = array_column($rules, 'name');
+        $rules = $this->_CI->ManagePermsModel->getRulesByIds(explode(',', $userPerms->perms));
+
+
+        //$_SESSION['admin']['AUTH_'.$uid] = $rules;
+        $authList = array_column($rules, 'url');
+
         return $authList;
     }
 }
