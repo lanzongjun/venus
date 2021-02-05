@@ -34,3 +34,15 @@ CREATE TABLE `vms_manage_role` (
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色表';
+
+
+
+INSERT INTO `vms_manage_perms` (`id`, `name`, `identity_code`, `is_open`, `parent_id`, `is_show`, `status`, `url`, `create_time`, `update_time`)
+VALUES
+	(1, '供应商管理', '', 1, 0, 1, 1, '', '2021-02-04 15:57:00', '2021-02-04 15:57:20'),
+	(2, '添加供应商', 'add_provider', 0, 1, 1, 1, 'ProviderController/index', '2021-02-04 15:57:50', '2021-02-04 15:58:13'),
+	(3, '商品管理', '', 1, 0, 1, 1, '', '2021-02-04 15:59:19', '2021-02-04 15:59:19'),
+	(4, '添加商品', 'add_goods', 0, 3, 1, 1, '', '2021-02-04 15:59:48', '2021-02-04 15:59:48'),
+	(5, '销售管理', '', 1, 0, 1, 1, '', '2021-02-05 10:01:28', '2021-02-05 10:01:32'),
+	(6, '线上销售', '', 0, 5, 1, 1, '', '2021-02-05 10:02:04', '2021-02-05 10:02:06'),
+	(7, '销售记录', 'goods_sale_online', 0, 6, 1, 1, '', '2021-02-05 10:02:55', '2021-02-05 10:02:55');

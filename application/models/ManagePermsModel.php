@@ -15,6 +15,7 @@ class ManagePermsModel extends BaseModel
         $result = $this->db
             ->where_in('id', $ids)
             ->where('status', 1)
+            ->order_by('parent_id', 'asc')
             ->get('manage_perms')
             ->result_array();
 

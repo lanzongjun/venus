@@ -31,14 +31,14 @@ class BaseNavNode extends BaseModel
         $uid = $this->session->s_user->u_id;
         $permsKey = 'vms_perm_key_'.$uid;
         $perms = $this->my_redis->get($permsKey);
-
+//dd($this->my_redis->del($permsKey));
         if (!$perms) {
             $perms = $this->initCache($uid);
         } else {
-
             $perms = json_decode($perms, true);
         }
-        echo $perms;
+
+        return $perms;
     }
 
     public function initCache($uid)
@@ -49,12 +49,12 @@ class BaseNavNode extends BaseModel
         $this->load->model("ManagePermsModel");
         $userPermsList = $this->ManagePermsModel->getRulesByIds(explode(',', $userPerms->perms));
 
-        $o_struct = $this->getPermsTree($userPermsList);
-        $s_json = json_encode($o_struct);
-        $s_file_name = "nav_$s_userid.json";
-        $s_path = $this->__base_cache_path . $s_file_name;
-        $s_json_safe = $this->encrypt($s_json, 'E', $this->__json_key);
-        return $s_json;
+        $treePerms = $this->getPermsTree($userPermsList);
+        $jsonTreePerms = json_encode($treePerms);
+        $this->my_redis->set('vms_perm_key_'.$uid, $jsonTreePerms, 3600);
+
+
+        return $jsonTreePerms;
     }
 
     public function getPermsTree($userPermsList)
@@ -112,17 +112,62 @@ class BaseNavNode extends BaseModel
 //    "update_time" => "2021-02-04 15:59:48"
 //  ]
 //]
-        $node = [];
-        foreach ($userPermsList as $perms) {
-            if ($perms['parent_id'] == 0) { // 父类
-                $node[$perms['id']] = $perms;
-                $node[$perms['id']]['children'] = [];
+
+        $navNode = [];
+        foreach ($userPermsList as $node) {
+            if ($node['parent_id'] == 0) { // 父类
+
+                $node['text'] = $node['name'];
+                $navNode[] = $node;
+
             } else {
-                $node[$perms['parent_id']]['children'][] = $perms;
+
+                $navNode = $this->getChildrenNode($navNode, $node);
+
             }
         }
 
-        dd($node);
+        return $navNode;
+    }
+
+    public function getChildrenNode(&$navNode, $node)
+    {
+
+        foreach ($navNode as &$navItem) {
+            if ($navItem['id'] == $node['parent_id']) {
+
+                if (!empty($node['identity_code'])) {
+                    $node['id'] = $node['identity_code'];
+                }
+                $node['text'] = $node['name'];
+                $navItem['children'][] = $node;
+            } else {
+                if (!empty($navItem['children'])) {
+                    $this->getChildrenNode($navItem['children'], $node);
+                }
+            }
+        }
+
+        return $navNode;
+    }
+
+    public function getTreeNode($userPermsList, $perm)
+    {
+        $children = array();
+        foreach ($userPermsList as $item) {
+            if ($item['id'] == $perm['parent_id']) {
+                $node = $this->getChildrenNode($perm);
+                $node_children = $this->getTreeNode($userPermsList, $node);
+                if (count($node_children) > 0) {
+                    $node['children'] = $node_children;
+                }
+//                if (count($a_node_children) > 0 || $o_node->bnn_code <> '') {
+//                    //TODO 增加权限判断
+//                    array_push($a_children, $o_node);
+//                }
+            }
+        }
+        return $children;
     }
 
     /* * *******************************************************************

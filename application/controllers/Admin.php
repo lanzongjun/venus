@@ -102,4 +102,12 @@ class Admin extends CI_Controller
         echo $i_result;
     }
 
+    public function loadNav()
+    {
+        $this->load->model('BaseNavNode');
+        $s_json = $this->BaseNavNode->loadUserNav();
+
+        echo json_encode($s_json);
+    }
+
 }
