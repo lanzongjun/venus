@@ -31,6 +31,7 @@ class BaseNavNode extends BaseModel
         $uid = $this->session->s_user->u_id;
         $permsKey = 'vms_perm_key_'.$uid;
         $perms = $this->my_redis->get($permsKey);
+//        $this->my_redis->del($permsKey);
 //dd($this->my_redis->del($permsKey));
         if (!$perms) {
             $perms = $this->initCache($uid);
@@ -59,65 +60,12 @@ class BaseNavNode extends BaseModel
 
     public function getPermsTree($userPermsList)
     {
-
-
-
-//array:4 [▼
-//  0 => array:10 [▼
-//    "id" => "1"
-//    "name" => "供应商管理"
-//    "identity_code" => ""
-//    "is_open" => "1"
-//    "parent_id" => "0"
-//    "is_show" => "1"
-//    "status" => "1"
-//    "url" => ""
-//    "create_time" => "2021-02-04 15:57:00"
-//    "update_time" => "2021-02-04 15:57:20"
-//  ]
-//  1 => array:10 [▼
-//    "id" => "2"
-//    "name" => "添加供应商"
-//    "identity_code" => "add_provider"
-//    "is_open" => "0"
-//    "parent_id" => "1"
-//    "is_show" => "1"
-//    "status" => "1"
-//    "url" => "ProviderController/index"
-//    "create_time" => "2021-02-04 15:57:50"
-//    "update_time" => "2021-02-04 15:58:13"
-//  ]
-//  2 => array:10 [▼
-//    "id" => "3"
-//    "name" => "商品管理"
-//    "identity_code" => ""
-//    "is_open" => "1"
-//    "parent_id" => "0"
-//    "is_show" => "1"
-//    "status" => "1"
-//    "url" => ""
-//    "create_time" => "2021-02-04 15:59:19"
-//    "update_time" => "2021-02-04 15:59:19"
-//  ]
-//  3 => array:10 [▼
-//    "id" => "4"
-//    "name" => "添加商品"
-//    "identity_code" => "add_goods"
-//    "is_open" => "0"
-//    "parent_id" => "3"
-//    "is_show" => "1"
-//    "status" => "1"
-//    "url" => ""
-//    "create_time" => "2021-02-04 15:59:48"
-//    "update_time" => "2021-02-04 15:59:48"
-//  ]
-//]
-
         $navNode = [];
         foreach ($userPermsList as $node) {
             if ($node['parent_id'] == 0) { // 父类
 
                 $node['text'] = $node['name'];
+                $node['state'] = $node['is_open'] == 1 ? 'open' : 'closed';
                 $navNode[] = $node;
 
             } else {
