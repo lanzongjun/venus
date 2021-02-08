@@ -2,9 +2,13 @@
 
 include_once 'BaseController.php';
 
+/**
+ * 供应商商品SKU
+ * Class ProviderGoodsSkuController
+ */
 class ProviderGoodsSkuController extends BaseController
 {
-    public $_s_view  = 'ProviderGoodsSkuView';
+    public $_s_view = 'ProviderGoodsSkuView';
     public $_s_model = 'ProviderGoodsSkuModel';
 
     /**
@@ -17,14 +21,18 @@ class ProviderGoodsSkuController extends BaseController
         $this->load->view("admin/baseCheck/$this->_s_view", $data);
     }
 
+    /**
+     * 获取列表
+     * @author zongjun.lan
+     */
     public function getList()
     {
         $getData = $this->input->get();
 
-        $skuCode = isset($getData['sku_code']) ? $getData['sku_code'] : '';
+        $skuCode           = isset($getData['sku_code']) ? $getData['sku_code'] : '';
         $providerGoodsName = isset($getData['provider_goods_name']) ? $getData['provider_goods_name'] : '';
-        $page = isset($getData['page']) ? $getData['page'] : 1;
-        $rows = isset($getData['rows']) ? $getData['rows'] : 50;
+        $page              = isset($getData['page']) ? $getData['page'] : 1;
+        $rows              = isset($getData['rows']) ? $getData['rows'] : 50;
 
         $this->load->model($this->_s_model);
 
@@ -32,6 +40,10 @@ class ProviderGoodsSkuController extends BaseController
         echo json_encode($o_result);
     }
 
+    /**
+     * 获取商品SKU信息
+     * @author zongjun.lan
+     */
     public function getProviderGoodsSkuInfo()
     {
         $getData = $this->getGetData();
@@ -47,13 +59,17 @@ class ProviderGoodsSkuController extends BaseController
         }
     }
 
+    /**
+     * 添加商品SKU信息
+     * @author zongjun.lan
+     */
     public function addProviderGoodsSku()
     {
         $postData = $this->getPostData();
 
-        $skuCode = isset($postData['cs_code']) ? $postData['cs_code'] : '';
+        $skuCode       = isset($postData['cs_code']) ? $postData['cs_code'] : '';
         $providerGoods = isset($postData['pg_id']) ? $postData['pg_id'] : '';
-        $num = isset($postData['pgs_num']) ? $postData['pgs_num'] : '';
+        $num           = isset($postData['pgs_num']) ? $postData['pgs_num'] : '';
 
         if (empty($skuCode) || empty($providerGoods) || empty($num)) {
             echo json_encode(array(
@@ -80,17 +96,21 @@ class ProviderGoodsSkuController extends BaseController
         echo json_encode($result);
     }
 
+    /**
+     * 修改商品SKU信息
+     * @author zongjun.lan
+     */
     public function editProviderGoodsSku()
     {
         $postData = $this->getPostData();
 
         $providerGoodsSkuId = isset($postData['pgs_id']) ? $postData['pgs_id'] : '';
-        $providerGoodsId = isset($postData['pg_id']) ? $postData['pg_id'] : '';
-        $skuCode = isset($postData['cs_code']) ? $postData['cs_code'] : '';
-        $num = isset($postData['pgs_num']) ? $postData['pgs_num'] : '';
+        $providerGoodsId    = isset($postData['pg_id']) ? $postData['pg_id'] : '';
+        $skuCode            = isset($postData['cs_code']) ? $postData['cs_code'] : '';
+        $num                = isset($postData['pgs_num']) ? $postData['pgs_num'] : '';
 
         if (empty($providerGoodsSkuId) || empty($providerGoodsId)
-        || empty($skuCode) || empty($num)) {
+            || empty($skuCode) || empty($num)) {
             echo json_encode(array(
                 'state' => false,
                 'msg'   => '参数错误'

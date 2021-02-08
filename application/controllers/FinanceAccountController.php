@@ -2,6 +2,10 @@
 
 include_once 'BaseController.php';
 
+/**
+ * 财务
+ * Class FinanceAccountController
+ */
 class FinanceAccountController extends BaseController
 {
     public $_s_view  = 'FinanceAccountView';
@@ -17,6 +21,10 @@ class FinanceAccountController extends BaseController
         $this->load->view("admin/stock/$this->_s_view", $data);
     }
 
+    /**
+     * 获取财务列表
+     * @author zongjun.lan
+     */
     public function getList()
     {
         $getData = $this->getGetData();
@@ -65,6 +73,12 @@ class FinanceAccountController extends BaseController
         echo json_encode($o_result);
     }
 
+    /**
+     * 数据格式化
+     * @param $data
+     * @return array
+     * @author zongjun.lan
+     */
     private function formatDownloadData($data)
     {
         $returnData = [];

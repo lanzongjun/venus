@@ -35,8 +35,6 @@ CREATE TABLE `vms_manage_role` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色表';
 
-
-
 INSERT INTO `vms_manage_perms` (`id`, `name`, `identity_code`, `is_open`, `parent_id`, `is_show`, `status`, `url`, `create_time`, `update_time`)
 VALUES
 	(1, '供应商管理', '', 1, 0, 1, 1, '', '2021-02-07 15:39:30', '2021-02-07 15:39:30'),

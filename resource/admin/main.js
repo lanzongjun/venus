@@ -2,6 +2,7 @@ function initNavCache(){
     $('#sys_root').tree({
         url:'../Admin/loadNav',
         onLoadSuccess:function(node,data){
+            console.log(data);
             _init_tree_node_bind();
         }
     });
@@ -9,7 +10,6 @@ function initNavCache(){
 
 function __tree_node_bind(s_node_id){
     var o_node = $('#sys_root').tree('find', s_node_id);
-
     if (o_node){
         // if (o_node.bnn_lnk-0 === 1){
         //     __lnk_node_bind('lnk_'+s_node_id,o_node.bnn_lnk_name,o_node.bnn_url);
@@ -26,88 +26,45 @@ function __tree_node_bind(s_node_id){
 
 $(function () {
 
-    // $('#add_provider').bind('click', function () {
-    //     doAddProvider();
-    // });
-    //
-    // $('#add_provider_goods').bind('click', function () {
-    //     doAddProviderGoods();
-    // });
-    //
-    // $('#provider_goods_check').bind('click', function () {
-    //     doProviderGoodsCheck();
-    // });
-    //
-    // $('#provider_goods_sample').bind('click', function () {
-    //     doProviderGoodsSample();
-    // });
-    //
-    // $('#provider_goods_sku').bind('click', function () {
-    //     doProviderGoodsSku();
-    // });
-    //
-    // $('#goods_sale_offline').bind('click', function () {
-    //     doGoodsSaleOffline();
-    // });
-    //
-    // $('#goods_loss_shop').bind('click', function () {
-    //     doGoodsLossShop();
-    // });
-    //
-    // $('#goods_loss_order').bind('click', function () {
-    //     doGoodsLossOrder();
-    // });
-    //
-    // $('#goods_loss').bind('click', function () {
-    //     doGoodsLoss();
-    // });
-    //
-    // $('#goods_stock').bind('click', function () {
-    //     doGoodsStock();
-    // });
-    //
-    // $('#goods_change').bind('click', function () {
-    //     doGoodsChange();
-    // });
-    //
-    // $('#goods_staff_meal').bind('click', function () {
-    //     doGoodsStaffMeal();
-    // });
-    //
-    // $('#goods_sale_online').bind('click', function () {
-    //     doGoodsSaleOnline();
-    // });
-    //
-    // $('#goods_sale_online_summary').bind('click', function () {
-    //     doGoodsSaleOnlineSummary();
-    // });
-    //
-    // $('#goods_exception').bind('click', function () {
-    //     doGoodsException();
-    // });
-    //
-    // $('#base_stock').bind('click', function () {
-    //     doShowBaseStock();
-    // });
-    //
-    // $('#sku_list').bind('click', function () {
-    //     doShowSkuList();
-    // });
-    //
-    // $('#repertory_list').bind('click', function () {
-    //     doShowRepertoryList();
-    // });
-    //
-    // $('#finance_account_list').bind('click', function () {
-    //     doFinanceAccountList();
-    // });
-
     initNavCache();
 
 });
 
 function _init_tree_node_bind(){
+
     __tree_node_bind('add_provider');
+
+    __tree_node_bind('add_provider_goods');
+
+    __tree_node_bind('provider_goods_check');
+
+    __tree_node_bind('provider_goods_sample');
+
+    __tree_node_bind('provider_goods_sku');
+
+    __tree_node_bind('goods_sale_offline');
+
+    __tree_node_bind('goods_loss');
+
+    __tree_node_bind('goods_stock');
+
+    __tree_node_bind('goods_change');
+
+    __tree_node_bind('goods_staff_meal');
+
+    __tree_node_bind('goods_exception');
+
+    __tree_node_bind('goods_sale_online');
+
+    __tree_node_bind('goods_sale_online_summary');
+
+    __tree_node_bind('base_stock');
+
+    __tree_node_bind('sku_list');
+
+    __tree_node_bind('repertory_list');
+
+    __tree_node_bind('finance_account_list');
 
 }
 
