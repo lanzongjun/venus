@@ -21,4 +21,60 @@ class ManagePermsModel extends BaseModel
 
         return $result;
     }
+
+    public function getUserPerms($uid)
+    {
+        $this->load->model("ManageModel");
+        $userPerms = $this->ManageModel->getPermsByUID($uid);
+
+        $userPermsList = $this->getRulesByIds(explode(',', $userPerms->perms));
+
+        $treePerms = $this->getPermsTree($userPermsList);
+
+        return $treePerms;
+
+    }
+
+    public function getAllPermsList()
+    {
+        $result = $this->db
+            ->where('status', 1)
+            ->get('manage_perms')
+            ->result_array();
+
+        return $result;
+    }
+
+    public function getPermsTree($userPermsList)
+    {
+        $navNode = [];
+        foreach ($userPermsList as $node) {
+            if ($node['parent_id'] == 0) { // 父类
+                $navNode[] = $node;
+
+            } else {
+
+                $navNode = $this->getChildrenNode($navNode, $node);
+
+            }
+        }
+
+        return $navNode;
+    }
+
+    public function getChildrenNode(&$navNode, $node)
+    {
+
+        foreach ($navNode as &$navItem) {
+            if ($navItem['id'] == $node['parent_id']) {
+                $navItem['children'][] = $node;
+            } else {
+                if (!empty($navItem['children'])) {
+                    $this->getChildrenNode($navItem['children'], $node);
+                }
+            }
+        }
+
+        return $navNode;
+    }
 }
