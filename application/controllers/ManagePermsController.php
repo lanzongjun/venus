@@ -10,6 +10,13 @@ require_once APPPATH . 'controllers/BaseController.php';
 
 class ManagePermsController extends BaseController
 {
+    public function index()
+    {
+        $data['c_name'] = 'ManagePermsController';
+        $this->load->helper('url');
+        $this->load->view("admin/sys/PowerManagerView", $data);
+    }
+    
     public function getList()
     {
 
@@ -17,7 +24,7 @@ class ManagePermsController extends BaseController
 
         $this->load->model('ManagePermsModel');
         $result = $this->ManagePermsModel->getUserPerms($uid);
-
+        
         echo json_encode($result);
     }
 }

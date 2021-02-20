@@ -10,6 +10,14 @@ include_once 'BaseModel.php';
 
 class ManageRoleModel extends BaseModel
 {
+
+    public function getList()
+    {
+        $result = $this->db->where('status', 1)->where('is_deleted', 0)->get('vms_manage_role')->result_array();
+
+        return $result;
+    }
+
     public function add($name, $desc, $permsIds, $status)
     {
         $insertData = [

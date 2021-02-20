@@ -65,7 +65,10 @@ function _init_tree_node_bind(){
     __tree_node_bind('repertory_list');
 
     __tree_node_bind('finance_account_list');
+    
+    __tree_node_bind('sys_power_manager');
 
+    __tree_node_bind('sys_role_list');
 }
 
 
