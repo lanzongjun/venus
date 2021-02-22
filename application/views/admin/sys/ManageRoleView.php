@@ -35,68 +35,73 @@ rownumbers:true,singleSelect:true,method:'get',url:'../<?php echo $c_name; ?>/ge
         <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
     </div>
 </div>
-<div id="w_edit_sku" class="easyui-window" title="编辑SKU信息" data-options="modal:true,closed:true,iconCls:'icon-edit'" style="width:500px;height:210px;padding:5px;">
-    <form id="f_edit_sku" method="post">
-        <table>
-            <tr>
-                <td>
-                    <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-textbox" name="cs_code" data-options="labelWidth:'100',label:'SKU:',width:'300px'">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-textbox" name="cs_name" data-options="labelWidth:'100',label:'名称:',width:'400px'">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-textbox" name="cs_description" data-options="labelWidth:'100',label:'描述:',width:'400px'">
-                    </div>
-                </td>
-            </tr>
-        </table>
-        <input name="cs_id" type="hidden"/>
-        <div style="text-align:center;padding:5px 0">
-            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="saveEditForm()" style="width:80px">保存</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="closeEditWin()" style="width:80px">取消</a>
+<div id="w_edit_manage_role" class="easyui-window" title="编辑SKU信息" data-options="modal:true,closed:true,
+iconCls:'icon-edit'" style="width:1000px;height:800px;padding:5px;">
+    <div class="easyui-layout" data-options="fit:true">
+        <div id="w_pm_edit_role" title="角色信息" data-options="region:'west',split:true,border:false,width:400">
+            <form id="f_pm_edit_role" method="post" data-options="fit:true,border:false,width:340" style="margin:50px 30px 0px 30px;">
+                <div style="margin-left:5px;margin-bottom:5px">
+                    <input class="easyui-textbox" name="name" data-options="labelWidth:'80px',label:'角色名称:',width:'320px',required:true">
+                </div>
+                <div style="margin-left:5px;margin-bottom:5px">
+                    <label style="width:80px;display:inline-block">角色状态:</label>
+                    <input class="easyui-radiobutton" name="status" value="1" label="启用:" checked labelWidth="40px">
+                    <input class="easyui-radiobutton" name="status" value="0" label="禁用:" labelWidth="40px">
+                </div>
+                <div style="margin-left:5px;margin-bottom:5px">
+                    <input class="easyui-textbox" style="height:80px" name="desc" data-options="multiline:true,labelWidth:'80px',label:'角色描述:',width:'320px'">
+                </div>
+                <input id="f_pm_edit_role_perms_ids" type="hidden" name="perms_ids"/>
+                <div style="text-align:center;padding:5px 0">
+                    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="ManagerRole.saveEditForm()"
+                       style="width:80px">保存</a>
+                    <!--                    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="PowerManager.closeAddWin()" style="width:80px">取消</a>-->
+                </div>
+            </form>
         </div>
-    </form>
+        <div title="角色权限" data-options="region:'center',border:false">
+            <ul id="pm_power_tree" class="easyui-tree"
+                url='<?php echo base_url("ManagePermsController/getList")?>'
+                checkbox="true">
+            </ul>
+        </div>
+        <input name="id" type="hidden"/>
+    </div>
+
 </div>
-<div id="w_add_sku" class="easyui-window" title="新增SKU信息" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:500px;height:210px;padding:5px;">
-    <form id="f_add_sku" method="post">
-        <table>
-            <tr>
-                <td>
-                    <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-textbox" name="cs_code" data-options="labelWidth:'100',label:'SKU:',width:'300px'">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-textbox" name="cs_name" data-options="labelWidth:'100',label:'名称:',width:'400px'">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div style="margin-left:5px;margin-bottom:5px">
-                        <input class="easyui-textbox" name="cs_description" data-options="labelWidth:'100',label:'描述:',width:'400px'">
-                    </div>
-                </td>
-            </tr>
-        </table>
-        <div style="text-align:center;padding:5px 0">
-            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="saveAddForm()" style="width:80px">保存</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="closeAddWin()" style="width:80px">取消</a>
+<div id="w_add_manage_role" class="easyui-window" title="新增SKU信息" data-options="modal:true,closed:true,
+iconCls:'icon-add'" style="width:1000px;height:800px;padding:5px;">
+
+    <div class="easyui-layout" data-options="fit:true">
+        <div id="w_pm_add_role" title="角色信息" data-options="region:'west',split:true,border:false,width:400">
+            <form id="f_pm_add_role" method="post" data-options="fit:true,border:false,width:340" style="margin:50px 30px 0px 30px;">
+                <div style="margin-left:5px;margin-bottom:5px">
+                    <input class="easyui-textbox" name="name" data-options="labelWidth:'80px',label:'角色名称:',width:'320px',required:true">
+                </div>
+                <div style="margin-left:5px;margin-bottom:5px">
+                    <label style="width:80px;display:inline-block">角色状态:</label>
+                    <input class="easyui-radiobutton" name="status" value="1" label="启用:" checked labelWidth="40px">
+                    <input class="easyui-radiobutton" name="status" value="0" label="禁用:" labelWidth="40px">
+                </div>
+                <div style="margin-left:5px;margin-bottom:5px">
+                    <input class="easyui-textbox" style="height:80px" name="desc" data-options="multiline:true,labelWidth:'80px',label:'角色描述:',width:'320px'">
+                </div>
+                <input id="f_pm_add_role_perms_ids" type="hidden" name="perms_ids"/>
+                <div style="text-align:center;padding:5px 0">
+                    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="ManagerRole.saveAddForm()" style="width:80px">保存</a>
+<!--                    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="PowerManager.closeAddWin()" style="width:80px">取消</a>-->
+                </div>
+            </form>
         </div>
-    </form>
+        <div title="角色权限" data-options="region:'center',border:false">
+            <ul id="pm_power_tree" class="easyui-tree"
+                url='<?php echo base_url("ManagePermsController/getList")?>'
+                checkbox="true">
+            </ul>
+        </div>
+    </div>
+
+
 </div>
 <style type="text/css">
     .datagrid-header-rownumber, .datagrid-cell-rownumber {
@@ -106,6 +111,6 @@ rownumbers:true,singleSelect:true,method:'get',url:'../<?php echo $c_name; ?>/ge
 <script type="text/javascript">
     var __s_c_name = '<?php echo $c_name; ?>';
 </script>
-<script src="<?php echo base_url("/resource/admin/sku/Sku.js?" . rand()) ?>" type="text/javascript"></script>
+<script src="<?php echo base_url("/resource/admin/sys/ManageRole.js?" . rand()) ?>" type="text/javascript"></script>
 </body>
 </html>

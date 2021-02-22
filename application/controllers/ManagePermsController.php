@@ -20,10 +20,9 @@ class ManagePermsController extends BaseController
     public function getList()
     {
 
-        $uid = $this->session->s_user->u_id;
 
         $this->load->model('ManagePermsModel');
-        $result = $this->ManagePermsModel->getUserPerms($uid);
+        $result = $this->ManagePermsModel->getUserPerms();
         
         echo json_encode($result);
     }

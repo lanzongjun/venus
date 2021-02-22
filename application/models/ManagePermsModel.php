@@ -12,23 +12,27 @@ class ManagePermsModel extends BaseModel
 {
     public function getRulesByIds($ids)
     {
-        $result = $this->db
-            ->where_in('id', $ids)
-            ->where('status', 1)
-            ->select('id, name , name `text`, identity_code, is_open, parent_id, is_show, status, url ')
-            ->order_by('parent_id', 'asc')
-            ->get('manage_perms')
-            ->result_array();
+        $query = $this->db;
+
+        if ($ids != '*') {
+            $query->where_in('id', $ids);
+        }
+
+        $query->where('status', 1)
+        ->select('id, name , name `text`, identity_code, is_open, parent_id, is_show, status, url ')
+        ->order_by('parent_id', 'asc');
+
+        $result = $query->get('manage_perms')->result_array();
 
         return $result;
     }
 
-    public function getUserPerms($uid)
+    public function getUserPerms()
     {
-        $this->load->model("ManageModel");
-        $userPerms = $this->ManageModel->getPermsByUID($uid);
+//        $this->load->model("ManageModel");
+//        $userPerms = $this->ManageModel->getPermsByUID($uid);
 
-        $userPermsList = $this->getRulesByIds(explode(',', $userPerms->perms));
+        $userPermsList = $this->getRulesByIds('*');
 
         $treePerms = $this->getPermsTree($userPermsList);
 

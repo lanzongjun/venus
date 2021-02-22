@@ -10,9 +10,29 @@ require_once APPPATH . 'controllers/BaseController.php';
 
 class ManageRoleController extends BaseController
 {
+    public $_s_view = 'ManageRoleView';
+    public $_s_model = 'ManageRoleModel';
+
+    public function index()
+    {
+        $data['c_name'] = 'ManageRoleController';
+        $this->load->helper('url');
+        $this->load->view("admin/sys/$this->_s_view", $data);
+    }
+
+    /**
+     * 获取角色列表
+     * @author zongjun.lan
+     */
     public function getList()
     {
+        $getData = $this->getGetData();
 
+        $this->load->model('ManageRoleModel');
+
+        $result = $this->ManageRoleModel->getList();
+
+        echo json_encode($result);
     }
 
     /**
@@ -50,5 +70,26 @@ class ManageRoleController extends BaseController
     public function delete()
     {
 
+    }
+
+    public function getManageRoleInfo()
+    {
+        $getData = $this->getGetData();
+
+        $id = isset($getData['id']) ? $getData['id'] : '';
+
+        if (empty($id)) {
+            echo json_encode(array(
+                'state' => false,
+                'msg'   => 'ID不能为空'
+            ));
+            exit();
+        }
+
+        $this->load->model('ManageRoleModel');
+
+        $result = $this->ManageRoleModel->getManageRoleInfo($id);
+
+        echo json_encode($result);
     }
 }
