@@ -27,10 +27,12 @@ class ManageRoleController extends BaseController
     public function getList()
     {
         $getData = $this->getGetData();
+        $name = isset($getData['name']) ? $getData['name'] : '';
+        $desc = isset($getData['desc']) ? $getData['desc'] : '';
 
         $this->load->model('ManageRoleModel');
 
-        $result = $this->ManageRoleModel->getList();
+        $result = $this->ManageRoleModel->getList($name, $desc);
 
         echo json_encode($result);
     }
@@ -62,14 +64,48 @@ class ManageRoleController extends BaseController
         echo json_encode($result);
     }
 
-    public function update()
+    public function edit()
     {
+        $postData = $this->getPostData();
+        $permsIds = isset($postData['perms_ids']) ? $postData['perms_ids'] : '';
+        $name = isset($postData['name']) ? $postData['name'] : '';
+        $desc = isset($postData['desc']) ? $postData['desc'] : '';
+        $status = isset($postData['status']) ? $postData['status'] : 1;
+        $id = isset($postData['id']) ? $postData['id'] : '';
 
+        if (empty($permsIds) || empty($name) || empty($desc) || empty($id)) {
+            echo json_encode(array(
+                'state' => false,
+                'msg'   => '参数不能为空'
+            ));
+            exit();
+        }
+
+        $this->load->model('ManageRoleModel');
+
+        $result = $this->ManageRoleModel->edit($id, $name, $desc, $permsIds, $status);
+
+        echo json_encode($result);
     }
 
     public function delete()
     {
+        $postData = $this->getPostData();
+        $id = isset($postData['id']) ? $postData['id'] : '';
 
+        if (empty($id)) {
+            echo json_encode(array(
+                'state' => false,
+                'msg'   => '参数不能为空'
+            ));
+            exit();
+        }
+
+        $this->load->model('ManageRoleModel');
+
+        $result = $this->ManageRoleModel->delete($id);
+
+        echo json_encode($result);
     }
 
     public function getManageRoleInfo()

@@ -19,8 +19,7 @@ class ManagePermsController extends BaseController
     
     public function getList()
     {
-
-
+        
         $this->load->model('ManagePermsModel');
         $result = $this->ManagePermsModel->getUserPerms();
         

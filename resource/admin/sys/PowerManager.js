@@ -25,7 +25,6 @@ PowerManager.saveAddForm = function () {
         // a_id_list = PowerManager.appendSelectedNode(a_id_list, a_id_temp);
     }
     var s_ids = a_id_list.join();
-    console.log(s_ids);
     $('#f_pm_add_role_perms_ids').val(s_ids);
     $('#f_pm_add_role').form('submit');
 };
