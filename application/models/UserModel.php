@@ -51,4 +51,11 @@ class UserModel extends BaseModel
         return true;
     }
 
+    public function getUserList()
+    {
+        $result = $this->db->get('user')->result_array();
+
+        return $result;
+    }
+
 }

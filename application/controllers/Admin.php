@@ -110,4 +110,12 @@ class Admin extends CI_Controller
         echo json_encode($s_json);
     }
 
+    public function getUserList()
+    {
+        $this->load->model('UserModel');
+        $result = $this->UserModel->getUserList();
+
+        echo json_encode($result);
+    }
+
 }

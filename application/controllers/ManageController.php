@@ -22,7 +22,13 @@ class ManageController extends BaseController
 
     public function getList()
     {
+        $getData = $this->getGetData();
 
+        $this->load->model($this->_s_model);
+
+        $result = $this->{$this->_s_model}->getList();
+
+        echo json_encode($result);
     }
 
     public function add()

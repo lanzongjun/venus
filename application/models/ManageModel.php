@@ -25,4 +25,19 @@ class ManageModel extends BaseModel
 
         return $result;
     }
+
+    public function getList()
+    {
+        $query = $this->db->where('manage.is_deleted', 0);
+
+        $query->join('user', 'uid = u_id', 'left');
+        $query->join('manage_role', 'role_id = manage_role.id', 'left');
+        $query->where('manage_role.is_deleted', 0);
+
+        $query->select('manage.id, manage.status as manage_status, manage_role.name as role_name, u_name as username');
+
+        $result = $query->get('manage')->result_array();
+
+        return $result;
+    }
 }

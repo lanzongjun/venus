@@ -22,16 +22,15 @@ rownumbers:true,singleSelect:true,method:'get',url:'../<?php echo $c_name; ?>/ge
 </table>
 <div id="dom_toolbar1">
     <div>
-        <input id="cs_code" class="easyui-textbox" labelWidth="40" style="width:220px;" label="sku:" labelPosition="left"/>
-        <input id="cs_name" class="easyui-textbox" labelWidth="40" style="width:220px;" label="名称:" labelPosition="left"/>
-        <input id="cs_description" class="easyui-textbox" labelWidth="40" style="width:220px;" label="描述:" labelPosition="left"/>
+        <input id="name" class="easyui-textbox" labelWidth="40" style="width:220px;" label="名称:" labelPosition="left"/>
+        <input id="desc" class="easyui-textbox" labelWidth="40" style="width:220px;" label="描述:" labelPosition="left"/>
         <a id="btn_search" href="#" data-options="iconCls:'icon-search'" class="easyui-linkbutton">查询</a>
         <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
         <a id="btn_add" href="#" data-options="iconCls:'icon-add'" class="easyui-linkbutton">新增</a>
         <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
         <a id="btn_edit" href="#" data-options="iconCls:'icon-edit'" class="easyui-linkbutton">编辑</a>
         <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
-        <a id="btn_print" href="#" data-options="iconCls:'icon-remove'" class="easyui-linkbutton">删除</a>
+        <a id="btn_remove" href="#" data-options="iconCls:'icon-remove'" class="easyui-linkbutton">删除</a>
         <span class="datagrid-btn-separator" style="vertical-align: middle;display:inline-block;float:none"></span>
     </div>
 </div>
@@ -52,20 +51,18 @@ iconCls:'icon-edit'" style="width:1000px;height:800px;padding:5px;">
                     <input class="easyui-textbox" style="height:80px" name="desc" data-options="multiline:true,labelWidth:'80px',label:'角色描述:',width:'320px'">
                 </div>
                 <input id="f_pm_edit_role_perms_ids" type="hidden" name="perms_ids"/>
+                <input name="id" type="hidden"/>
                 <div style="text-align:center;padding:5px 0">
                     <a href="javascript:void(0)" class="easyui-linkbutton" onclick="ManagerRole.saveEditForm()"
                        style="width:80px">保存</a>
-                    <!--                    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="PowerManager.closeAddWin()" style="width:80px">取消</a>-->
                 </div>
             </form>
         </div>
         <div title="角色权限" data-options="region:'center',border:false">
             <ul id="pm_power_tree" class="easyui-tree"
-                url='<?php echo base_url("ManagePermsController/getList")?>'
                 checkbox="true">
             </ul>
         </div>
-        <input name="id" type="hidden"/>
     </div>
 
 </div>
