@@ -2,7 +2,6 @@ function initNavCache(){
     $('#sys_root').tree({
         url:'../Admin/loadNav',
         onLoadSuccess:function(node,data){
-            console.log(data);
             _init_tree_node_bind();
         }
     });
@@ -69,6 +68,8 @@ function _init_tree_node_bind(){
     __tree_node_bind('sys_power_manager');
 
     __tree_node_bind('sys_role_list');
+
+    __tree_node_bind('sys_manage_list');
 }
 
 
