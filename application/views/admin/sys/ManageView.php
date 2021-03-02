@@ -16,7 +16,7 @@ rownumbers:true,singleSelect:true,method:'get',url:'../<?php echo $c_name; ?>/ge
         <th data-options="width:100,align:'center',field:'id'">ID</th>
         <th data-options="width:400,align:'center',field:'username'">用户名</th>
         <th data-options="width:400,align:'center',field:'role_name'">角色名称</th>
-        <th data-options="width:200,align:'center',field:'manage_status'">管理员状态</th>
+        <th data-options="width:200,align:'center',field:'manage_status_text'">管理员状态</th>
     </tr>
     </thead>
 </table>
